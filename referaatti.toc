@@ -1,2 +1,0 @@
-\select@language {finnish}
-\contentsline {section}{\numberline {1}Johdanto}{1}
