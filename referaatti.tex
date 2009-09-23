@@ -16,47 +16,47 @@
 \usepackage{color}
 \usepackage{graphicx}
 
+% juhon paketti
+\usepackage{verbatim}
+
 \begin{document}
 \title{Lyhyt johdatus funktionaaliseen ohjelmointiin}
 \author{Juho Naalisvaara}
 \date{\today}
 \level{Tieteellisen kirjoittamisen kurssin referaatti}
 \maketitle
+\pagenumbering{arabic}
 
-\thispagestyle{empty} 
+% t‰m‰ poistaa sivun sivunumeron
+%\thispagestyle{empty} 
 
 \onehalfspacing
 
 Funktionaalinen ohjelmointi on ohjelmointityyli jossa ongelmia ratkotaan
-evaluoimalla matemaattisia funktioita (ts. funktioita joilla ei ole tilaa, ja
-jotka samoilla parametreilla laskevat aina saman tuloksen). Funktionaalinen
-ohjelmoinnin teoreettisena perustana on Alonzo Churchin 1932 kehitt‰m‰ lambda-kalkyyli\cite{lambda}.
+laskemalla funktioita (ts. funktioita joilla ei ole tilaa, ja
+jotka samoilla argumenteilla laskevat aina saman tuloksen). Funktionaalinen
+ohjelmoinnin teoreettisena perustana on Alonzo Churchin 1932 kehitt‰m‰ lambda-kalkyyli \cite{lambda} viitteen sivun!!!.
 
-John McCarthyn vuonna 1958\cite{lisp} kehitt‰m‰ Lisp (LISt Processing language), oli ensimm‰inen funktionaalinen
-ohjelmointikieli. Lispin erikoisuuksia on mm. lista natiivina tietorakenteena ja
-LISP koodin esitt‰minen LISP-datana. 
+John McCarthyn vuonna 1958 \cite{lisp} kehitt‰m‰ Lisp (LISt Processing language), oli ensimm‰inen funktionaalinen
+ohjelmointikieli. Lisp on myˆs toiseksi vanhin korkean tason kieli, vanhimman ollessa Fortran. Lispin ominaisuuksia ovat lista perustietorakenteena ja Lisp koodin esitt‰minen Lisp-listoina. 
  
-Muita kieli‰ joilla voi ohjelmoida funktionaalisesti ovat mm. Scheme
-(LISP-murre), Scala, Standard ML, Erlang ja Haskell.
+Muita funktionaaliseen ohjelmointiin sopivia kieli‰ ovat muun muassa Scheme (Lisp-murre), Scala, Standard ML, Python, Ruby, Erlang ja Haskell. N‰ist‰ Haskell on ``puhdas'' funktionaalinen kieli, tarkoittaen mit‰?
 
-Funktionaalisessa ohjelmoinnissa funktioita k‰sitell‰‰n ensi-luokkaisina olioina
-joita voi v‰litt‰‰ parametreina toisille funktioille. Koska funktionaalisessa
+Ensiluokkaiseksi olioksi sanotaan oliota jonka voi v‰litt‰‰ argumenttina funktiolle. Funktionaalisessa ohjelmoinnissa myˆs itse funktiot ovat ensiluokkaisia olioita, eli niit‰ voi v‰litt‰‰ argumentteina. Koska funktionaalisessa
 ohjelmoinnissa laskennalla ei ole tilaa, ovat funktiot sivuvaikutuksettomia,
 jolloin niiden suorituksen rinnakkaistaminen helpottuu huomattavasti. Lis‰ksi
 funktionaalisten ohjelmien oikeellisuuden todistaminen ja verifiointi on
 huomattavasti helpompaa. etc etc 
 
 
-
-
-
-
-
+\begin{comment}
 Funktionaalisen ohjelmoinnin teoreettisena perustana on Alonzo Churchin vuonna 1932 kehitt‰m‰ Lambda-kalkyyli.. Varsinainen ensimm‰inen funktionaalinen ohjelmointikieli on Macarthyn vuonna 1958 MIT: teko‰ly-labrassa kehitt‰m‰ LISP(LISt Processing language). LISP on myˆs toiseksi vanhin kehitetty korkean tason kieli (vanhimman ollessa Fortran.) Lispin perusoivalluksia oli esitt‰‰ data ja koodi samalla tavalla, jolloin esimerkiksi Lisp-ohjelmat ovat automaattisesti omia abstrakteja syntaksipuitaan, ja helpoin tapa tulkata LISpi‰ on kirjoittaa LISP-tulkki Lispill‰ itsell‰‰n. Lisp ei kuitenkaan ole varsinaisesti puhdas funktionaalinen ohjelmointikieli, koska se sallii sivuvaikutukset? ja proseduraalisen ohjelmoinnin. Vuonna 1991 p‰iv‰nvalon n‰hnyt The Haskell Report esitteli puhtaan, sivuvaikutuksettoman funktionaalisen ohjelmointikielen. Haskelia kehitet‰‰n edelleen aktiivisesti. Mik‰‰n funktionaalinen ohjelmointikieli ei kuitenkaan ole varsinaisesti lyˆnyt itse‰‰n l‰pi valtavirtaan, mutta funktionaaliset ohjelmointikielet ovat vaikuttaneet valtavirran kieliin, esim pythoniin, rubyyn, javaan ja microsoftin .Net alustaan.
 
 Puhtaassa funktionaalisessa ohjelmoinnissa kirjoitetaan funktioita, joilla ei ole sivuvaikutuksia (ts. funktioiden suoritus voidaan rinnakkaistaa helposti), ja jotka palauttavat samoilla argumenteilla aina samat tulokset. Funktiot ovat ensimm‰isen luokan olioita (tarkista), siten ett‰ niit‰ voi v‰litt‰‰ argumentteina, ja funktio voi palauttaa toisen funktion paluuarvonaan. Funktioilla ei ole tilaa, ja kaikki tietorakenteet ovat muuttumattomia. Jos siis kirjoitamme funktion list-add list value jokaa lis‰‰ listaan list arvon value, niin funktiomme paluuarvo on uusi lista joka on ensimm‰isen‰ argumenttina annetun listan kopio johon on lis‰tty toisena argumenttina annettu arvo. Vaikuttaa tehottomalta, eikˆ? Nyt on kuitenkin niin ett‰ n‰in ei v‰ltt‰m‰tt‰ ole. Funktionaalinen ohjelmointi vaikuttaa(l‰hde?) tehokkaammalta kuin perinteiset tyylit, ohjelmoijan tuottaessa virheettˆm‰mp‰‰ ja voimakkaampaa(?!) koodia kuin perinteisill‰ tyyleill‰. Lis‰ksi on melko selv‰‰ ett‰ ohjelmoijan aika on huomattavasti arvokkaampaa kuin prosessorin kellosyklit. Lis‰ksi funktionaalinen ohjelmointi tyˆnt‰‰ kehitt‰j‰‰ suuntaan jossa kirjoitetaan paljon pieni‰ hyvin helposti testattavia funktioita 
+\end{comment}
 
-
+\newpage
+\thispagestyle{empty}
 
 
 \bibliographystyle{tktl}
