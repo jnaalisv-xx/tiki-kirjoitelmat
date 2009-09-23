@@ -18,7 +18,7 @@
 \usepackage{graphicx}
 
 \begin{document}
-\title{Metalingvistinen abstraktio}
+\title{Lyhyt johdatus funktionaaliseen ohjelmointiin}
 \author{Juho Naalisvaara}
 \date{\today}
 \level{Tieteellisen kirjoittamisen kurssin referaatti}
@@ -26,16 +26,17 @@
 
 \onehalfspacing
 
-Tämä kirjoitelma on referaatti \cite{SICP}:n kappaleesta 4.
+Funktionaalinen ohjelmointi on ohjelmointityyli jossa ongelmia ratkotaan kirjoittamalla evaluoimalla 
 
-\section{Metalingvistinen abstraktio}
-Ohjelmointi on alati kasvavan kompleksisuuden hallintaa muodostamalla käytetyn kielen tarjoamista primitiiveistä suurempia kokonaisuuksia, kuten olioita ja funktiota, ja edelleen kokoamalla niitä suurempiin komponentteihin ja moduuleihin. Itseasiassa nämä ohjelmoijan määrittämät uudet primitiivit, muodostavat sovellusaluekohtaisen kielen, jonka kautta on helpompi kuvata ja ratkoa sovellusalueen ongelmia. Eli ohjelmoijata ongelmia ratkoessaan tavallaan suunnittelevat uusia kieliä.
+Funktionaalisen ohjelmoinnin teoreettisena perustana on Alonzo Churchin vuonna 1932 kehittämä Lambda-kalkyyli. \cite{Joku}. Varsinainen ensimmäinen funktionaalinen ohjelmointikieli on Macarthyn vuonna 1958 MIT: tekoäly-labrassa kehittämä LISP(LISt Processing language). LISP on myös toiseksi vanhin kehitetty korkean tason kieli (vanhimman ollessa Fortran.) Lispin perusoivalluksia oli esittää data ja koodi samalla tavalla, jolloin esimerkiksi Lisp-ohjelmat ovat automaattisesti omia abstrakteja syntaksipuitaan, ja helpoin tapa tulkata LISpiä on kirjoittaa LISP-tulkki Lispillä itsellään. Lisp ei kuitenkaan ole varsinaisesti puhdas funktionaalinen ohjelmointikieli, koska se sallii sivuvaikutukset? ja proseduraalisen ohjelmoinnin. Vuonna 1991 päivänvalon nähnyt The Haskell Report\cite{JOKU} esitteli puhtaan, sivuvaikutuksettoman funktionaalisen ohjelmointikielen. Haskelia kehitetään edelleen aktiivisesti. Mikään funktionaalinen ohjelmointikieli ei kuitenkaan ole varsinaisesti lyönyt itseään läpi valtavirtaan, mutta funktionaaliset ohjelmointikielet ovat vaikuttaneet valtavirran kieliin, esim pythoniin, rubyyn, javaan ja microsoftin .Net alustaan.
 
-Evaluoija eli tulkki on proseduuri joka osaa evaluoida syötteenä saamansa kohdekielen lauseen ja kääntää sen semanttisesti vastaaviksi operaatioiksi. Tässä kirjoituksessa käsitellään Lispillä kirjoitettua Lisp-tulkkia. Tulkki joka on kirjoitettu kielellä jota se tulkkaa, sanotaan olevan metasirkulaarinen.
+Puhtaassa funktionaalisessa ohjelmoinnissa kirjoitetaan funktioita, joilla ei ole sivuvaikutuksia (ts. funktioiden suoritus voidaan rinnakkaistaa helposti), ja jotka palauttavat samoilla argumenteilla aina samat tulokset. Funktiot ovat ensimmäisen luokan olioita (tarkista), siten että niitä voi välittää argumentteina, ja funktio voi palauttaa toisen funktion paluuarvonaan. Funktioilla ei ole tilaa, ja kaikki tietorakenteet ovat muuttumattomia. Jos siis kirjoitamme funktion \verb{list-add list value} jokaa lisää listaan \verb{list} arvon \verb{value}, niin funktiomme paluuarvo on uusi lista joka on ensimmäisenä argumenttina annetun listan kopio johon on lisätty toisena argumenttina annettu arvo. Vaikuttaa tehottomalta, eikö? Nyt on kuitenkin niin että näin ei välttämättä ole. Funktionaalinen ohjelmointi vaikuttaa(lähde?) tehokkaammalta kuin perinteiset tyylit, ohjelmoijan tuottaessa virheettömämpää ja voimakkaampaa(?!) koodia kuin perinteisillä tyyleillä. Lisäksi on melko selvää että ohjelmoijan aika on huomattavasti arvokkaampaa kuin prosessorin kellosyklit. Lisäksi funktionaalinen ohjelmointi työntää kehittäjää suuntaan jossa kirjoitetaan paljon pieniä hyvin helposti testattavia funktioita joiden ylläpito ja verifioitavuus on aivan eri luokkaa kuin esim vastaavan java-koodin. 
 
-Tulkkauksessa voidaan erottaa kaksi vaihetta.
-1.Evaluoitaessa kombinaatioota, evaluoidaan ensin alilausekkeet minkä jälkeen sovelletaan operaattori-lausekkeen arvoa operandi lausekkeiden arvoihin.
-2.Sovellettaessa proseduuria argumenteilleen, evaluoidaan proseduurin vartalo uudessa ympäristössä missä proseduurin argumenttien arvot ovat sidottuna muodollisiin parametreihin.
+Myös java-koodia voi kirjoittaa funktionaaliseen tyyliin.  
+
+
+
+
 
 \bibliographystyle{tktl}
 \bibliography{lahteet}
