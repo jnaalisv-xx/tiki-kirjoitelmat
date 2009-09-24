@@ -1,9 +1,4 @@
 
-%
-% 58110 Kandidaatin tutkielma 
-% referaatti
-% Juho Naalisvaara, juho.naalisvaara@cs.helsinki.fi
-%
 % rubber: module pdftex
 % rubber: path tktl
 % rubber: bibtex.stylepath tktl
@@ -32,28 +27,34 @@
 
 \onehalfspacing
 
-Funktionaalinen ohjelmointi on ohjelmointityyli jossa ongelmia ratkotaan
-laskemalla funktioita (ts. funktioita joilla ei ole tilaa, ja
-jotka samoilla argumenteilla laskevat aina saman tuloksen). Funktionaalinen
-ohjelmoinnin teoreettisena perustana on Alonzo Churchin 1932 kehittämä lambda-kalkyyli \cite{lambda} viitteen sivun!!!.
+% JOHDANTO
+% Funktionaalinen ohjelmointi on lausekkeiden sievennystä
+\textit{Funktionaalinen ohjelmointiparadigma} on ohjelmointitapa, jossa ohjelma rakennetaan funktioista, jotka palauttavat aina saman arvon samoilla argumenteilla. Puhtaassa funktionaalisessa ohjelmoinnissa ei ole tilaa, eikä siinä suoriteta peräkkäisiä käskyjä kuten proseduraalisessa- tai olio-ohjelmoinnissa. Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan sieventämällä funktioita sisältävää lauseketta \textit{Lambda-kalkyyliin} perustuvien sievennysääntöjen mukaan. Sievennyssäännöt mahdollistavat funktioiden välittämisen argumentteina, jolloin funktiot ovat niin sanottuja \textit{ensimmäisen luokan olioita}. Funktiot jotka saavat argumentteinaan toisia funktioita, kutsutaan \textit{korkeamman asteen funktioiksi}. Niitä voidaan voidaan myös rakentaa ajonaikana ja palauttaa toisten funktioiden arvoina.
 
-John McCarthyn vuonna 1958 \cite{lisp} kehittämä Lisp (LISt Processing language), oli ensimmäinen funktionaalinen
-ohjelmointikieli. Lisp on myös toiseksi vanhin korkean tason kieli, vanhimman ollessa Fortran. Lispin ominaisuuksia ovat lista perustietorakenteena ja Lisp koodin esittäminen Lisp-listoina. 
- 
-Muita funktionaaliseen ohjelmointiin sopivia kieliä ovat muun muassa Scheme (Lisp-murre), Scala, Standard ML, Python, Ruby, Erlang ja Haskell. Näistä Haskell on ``puhdas'' funktionaalinen kieli, tarkoittaen mitä?
+%% HISTORIAA JA LISP
+Ensimmäinen funktionaalinen ohjelmointikieli oli listojen käsittelyyn ja symboliseen laskentaan kehitetty \textit{Lisp} (LISt Processing language). Sen kehitti vuonna 1958 John Mccarty \cite{lisp}. Lisp on toiseksi vanhin korkean tason kieli, Fortranin ollessa vanhin. Lispissä (kuten lähes kaikissa funktionaalisissa kielissä) on perustietorakenteena lista ja alkeisoperaattoreina funktiot jotka palauttavat listan ensimmäisen solmun tai listan hännän. Mcarthy perusti kielensä Alonzo Churchin 1932 kehittämään Lambda-kalkyyliin \cite{lambda} s.5.
 
-Ensiluokkaiseksi olioksi sanotaan oliota jonka voi välittää argumenttina funktiolle. Funktionaalisessa ohjelmoinnissa myös itse funktiot ovat ensiluokkaisia olioita, eli niitä voi välittää argumentteina. Koska funktionaalisessa
-ohjelmoinnissa laskennalla ei ole tilaa, ovat funktiot sivuvaikutuksettomia,
-jolloin niiden suorituksen rinnakkaistaminen helpottuu huomattavasti. Lisäksi
-funktionaalisten ohjelmien oikeellisuuden todistaminen ja verifiointi on
-huomattavasti helpompaa. etc etc 
+%% LAMBDA KALKYYLI
+Lambda-kalkyyli kehitettiin formalismiksi matemaattisten funktioiden määrittelyyn.(Ja laskettavuuden määrittelyyn?) Ilmaisuvoimaltaan se on yhtäläinen turingin koneiden kanssa \cite{lambda} s.5. Lambda-kalkyylissa funktioita ja niiden sovelluksia sisältäviä lausekkeita sievennetään kunnes päästään normaalimuotoon, eli lauseketta ei voi enää sieventää. Tämä normaalimuoto on lambda-laskennan tulos. Lambda-kalkyyli on hyvin yksinkertainen mutta ilmaisuvoimainen sievennyssäännöstö.
 
+%Lambda-kalkyylissa funktiot esitetään \textit{lambda-abstraktioina} ja \textit{sovellus} mahdollistaa määriteltyjen funktioiden soveltamisen. \textit{Muuttujaan} voidaan sitoa mikä tahansa lambda-lauseke
+% ja lambda-kalkyyli onkin sievennysjärjestelmä lambda-lausekkeille. Lambda-lauseke koostuu muuttujista, vakioista ja funktion sovelluksista. 
 
-\begin{comment}
-Funktionaalisen ohjelmoinnin teoreettisena perustana on Alonzo Churchin vuonna 1932 kehittämä Lambda-kalkyyli.. Varsinainen ensimmäinen funktionaalinen ohjelmointikieli on Macarthyn vuonna 1958 MIT: tekoäly-labrassa kehittämä LISP(LISt Processing language). LISP on myös toiseksi vanhin kehitetty korkean tason kieli (vanhimman ollessa Fortran.) Lispin perusoivalluksia oli esittää data ja koodi samalla tavalla, jolloin esimerkiksi Lisp-ohjelmat ovat automaattisesti omia abstrakteja syntaksipuitaan, ja helpoin tapa tulkata LISpiä on kirjoittaa LISP-tulkki Lispillä itsellään. Lisp ei kuitenkaan ole varsinaisesti puhdas funktionaalinen ohjelmointikieli, koska se sallii sivuvaikutukset? ja proseduraalisen ohjelmoinnin. Vuonna 1991 päivänvalon nähnyt The Haskell Report esitteli puhtaan, sivuvaikutuksettoman funktionaalisen ohjelmointikielen. Haskelia kehitetään edelleen aktiivisesti. Mikään funktionaalinen ohjelmointikieli ei kuitenkaan ole varsinaisesti lyönyt itseään läpi valtavirtaan, mutta funktionaaliset ohjelmointikielet ovat vaikuttaneet valtavirran kieliin, esim pythoniin, rubyyn, javaan ja microsoftin .Net alustaan.
+%% FUNKTIONAALISIA KIELIÄ
+Muita funktionaaliseen ohjelmointiin sovelutuvia kieliä ovat \textit{Scheme} (Lisp-murre), \textit{Standard ML}, \textit{Erlang}, \textit{Haskell}, \textit{Ruby}, \textit{Python} ja \textit{Scala}. Näistä ainoastaan Haskell on \textit{puhdas} funktionaalinen kieli. Muut kielet ovat joko multiparadigmakieliä tai mahdollistavat piirteitä jotka eivät kuulu funktionaaliseen ohjelmointiin. Esimerkiksi Schemessä on \textit{Let-lause} jonka avulla voi määritellä muuttujia. Erlang on Ericsonin kehittämä tosiaikaohjelmointiin soveltuva kieli. Scala on java-alustalla toimiva kieli
 
-Puhtaassa funktionaalisessa ohjelmoinnissa kirjoitetaan funktioita, joilla ei ole sivuvaikutuksia (ts. funktioiden suoritus voidaan rinnakkaistaa helposti), ja jotka palauttavat samoilla argumenteilla aina samat tulokset. Funktiot ovat ensimmäisen luokan olioita (tarkista), siten että niitä voi välittää argumentteina, ja funktio voi palauttaa toisen funktion paluuarvonaan. Funktioilla ei ole tilaa, ja kaikki tietorakenteet ovat muuttumattomia. Jos siis kirjoitamme funktion list-add list value jokaa lisää listaan list arvon value, niin funktiomme paluuarvo on uusi lista joka on ensimmäisenä argumenttina annetun listan kopio johon on lisätty toisena argumenttina annettu arvo. Vaikuttaa tehottomalta, eikö? Nyt on kuitenkin niin että näin ei välttämättä ole. Funktionaalinen ohjelmointi vaikuttaa(lähde?) tehokkaammalta kuin perinteiset tyylit, ohjelmoijan tuottaessa virheettömämpää ja voimakkaampaa(?!) koodia kuin perinteisillä tyyleillä. Lisäksi on melko selvää että ohjelmoijan aika on huomattavasti arvokkaampaa kuin prosessorin kellosyklit. Lisäksi funktionaalinen ohjelmointi työntää kehittäjää suuntaan jossa kirjoitetaan paljon pieniä hyvin helposti testattavia funktioita 
-\end{comment}
+% TODO: viite haskell raporttiin
+%Haskell on alusta lähtien suunniteltu puhtaaksi funktionaaliseksi ohjelmointikieleksi. 
+
+%% FUNKTIONAALISEN OHJELMOINNIN ERITYISPIIRTEITÄ
+Funktionaalista ohjelmaa voi evaluoida kahdella tavalla, \textit{laiskasti} (lazy), ja \textit{tiukasti} (non-lazy, strict). Tiukassa mallissa kaikki lausekkeet evaluoidaan aina, oli se sitten tarpeellista tai ei.  Laiskassa mallissa lauseke evaluoidaan vasta tarvittaessa. Tämä mahdollistaa äärettömien tietorakenteiden luonnin. Laiska malli on myös tehokkaampi koska turhia argumentteja ei evaluoida. Funktionaalisista ohjelmointikielistä Haskell tukee laiskaa evaluaatiota ja Lisp tiukkaa evaluaatiota. Laiskaa evaluaatiota käyttävässä kielessä voidaan esimerkiksi käsitellä päättymättömiä tietorakenteita, ilman että nämä tietorakenteet veisivät äärettömästi tilaa.
+
+Koska funktioilla ei ole sivuvaikutuksia, ne voidaan evaluoida missä järjestyksessä tahansa, ja kahden minkä tahansa funktion suoritus voidaan rinnakkaistaa huoletta. Näin funktionaalinen ohjelmointi tukee luonnostaan laskennan rinnakkaistamista monille prosessoriytimille.
+
+Muistinhallinta on funktionaalisessa ohjelmoinnissa implisiittistä. Ohjelmoija ei koskaan varaa muistia, koska muuttujia ei ole. Näin funktionaalisiin ohjelmointikieliin sopii \textit{roskien keruu} luonnostaan. Itseasiassa Mccarthy lanseerasi roskien keruun Lispin yhteydessä.
+
+% REKURSIO?
+Lista on funktionaalisen ohjelmoinnin perustietorakenne, ja useimmissa funktionaalisissa kielissä se on osa kielen määrittelyä. Listoja käsitellään rekursiivisesti. Funktionaalisissa ohjelmointikielissä ei ole silmukoita ja suurten tietomäärien käsittely hoidetaan rekursion avulla.
 
 \newpage
 \thispagestyle{empty}
