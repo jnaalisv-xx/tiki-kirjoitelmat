@@ -1,93 +1,112 @@
-
 % rubber: module pdftex
 % rubber: path tktl
 % rubber: bibtex.stylepath tktl
 % rubber: bibtex.path .
 
 \documentclass{tktltiki}
-\usepackage{ae,aecompl}
+\usepackage[pdftex]{graphicx}
+\usepackage{subfigure}
 \usepackage{url}
-\usepackage{amsfonts}
-\usepackage{color}
-\usepackage{graphicx}
-
-% juhon paketti
-\usepackage{verbatim}
-
 \begin{document}
+\onehalfspacing
+
 \title{Funktionaalinen ohjelmointi}
 \author{Juho Naalisvaara}
 \date{\today}
-\level{Tieteellisen kirjoittamisen kurssin aine}
+
 \maketitle
 
-\onehalfspacing
-
-\level{Tutkielma}
-\faculty{Matemaattis-luonnontieteellinen}
-\department{Tietojenk‰sittelytieteen laitos}
-\subject{Tietojenk‰sittelytiede}
-\numberofpagesinformation{\numberofpages\ sivua}
-\classification{ \\
+\numberofpagesinformation{\numberofpages\ sivua + \numberofappendixpages\ liitesivua}
+\classification{\protect{\ \\
   D.1.1 [Programming Techniques]: Applicative (Functional) Programming, \\
-  D.3.2 [Programming Languages]: Language Classifications, \\
-  D.3.3 [Programming Languages]: Language Constructs and Features, \\
-  F.1.1 [Computation by Abstract Devices]: Models of Computation, \\
-  F.3.2 [Logics and Meanings of Programs]: Semantics of Programming Languages, \\
-  F.4.1 [Mathematical Logic and Formal Languages]: Mathematical Logic
-}
-\keywords{esimerkki}
+  D.3.2 [Programming Languages]: Language Classifications - \\
+  \textit{applicative languages;nonprocedural languages; 
+	very high-level languages}, \\
+  F.4.1 [Mathematical Logic and Formal Languages]: Mathematical Logic - \\ 
+	\textit{lambda calculus and related systems}, \\
+  K.2 [History of Computing]: Software
+}}
+
+\keywords{funktionaalinen ohjelmointi, korkeamman asteen funktiot, laiska evaluaatio}
 
 \begin{abstract}
-    Johdatus funktionaaliseen ohjelmointiin, Lambda-kalkyyli, Lisp, funktiot arvoina.
+
+T‰m‰ kirjoitus esittelee funktionaalisen ohjelmointiparadigman.
+
 \end{abstract}
 
 \mytableofcontents
 
-
-% Funktionaalinen ohjelmointi on lausekkeiden sievennyst‰
-%% TODO: eka lause!!!
 \section{Johdanto}
-\textit{Funktionaalinen ohjelmointiparadigma} on ohjelmointitapa, jossa ohjelma rakennetaan funktioista, jotka palauttavat aina saman arvon samoilla argumenteilla. Puhtaassa funktionaalisessa ohjelmoinnissa ei ole tilaa, eik‰ siin‰ suoriteta per‰kk‰isi‰ k‰skyj‰ kuten proseduraalisessa- tai olio-ohjelmoinnissa. Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan sievent‰m‰ll‰ funktioita sis‰lt‰v‰‰ lauseketta \textit{Lambda-kalkyyliin} perustuvien sievennys‰‰ntˆjen mukaan. Sievennyss‰‰nnˆt mahdollistavat funktioiden v‰litt‰misen argumentteina, jolloin funktiot ovat niin sanottuja \textit{ensimm‰isen luokan olioita}. Funktiot jotka saavat argumentteinaan toisia funktioita, kutsutaan \textit{korkeamman asteen funktioiksi}. Niit‰ voidaan voidaan myˆs rakentaa ajonaikana ja palauttaa toisten funktioiden arvoina. Funktionaalisessa ohjelmoinnissa ei k‰ytet‰ silmukoita, vaan suuret tietom‰‰r‰t l‰pik‰yd‰‰n rekursion avulla.
+%% WANHAA KAMAA
+\textit{Funktionaalinen ohjelmointiparadigma} on ohjelmointitapa, jossa ohjelma rakennetaan funktioista, jotka palauttavat aina saman arvon samoilla argumenteilla. Puhtaassa funktionaalisessa ohjelmoinnissa ei ole tilaa, eik‰ siin‰ suoriteta per‰kk‰isi‰ k‰skyj‰ kuten proseduraalisessa- tai olio-ohjelmoinnissa. Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan sievent‰m‰ll‰ funktioita sis‰lt‰v‰‰ lauseketta \textit{lambda-kalkyyliin} perustuvien sievennys‰‰ntˆjen mukaan. Sievennyss‰‰nnˆt mahdollistavat funktioiden v‰litt‰misen argumentteina, jolloin funktiot ovat niin sanottuja \textit{ensimm‰isen luokan olioita}. Funktiot jotka saavat argumentteinaan toisia funktioita, kutsutaan \textit{korkeamman asteen funktioiksi}. Niit‰ voidaan voidaan myˆs rakentaa ajonaikana ja palauttaa toisten funktioiden arvoina. Funktionaalisessa ohjelmoinnissa ei k‰ytet‰ silmukoita, vaan suuret tietom‰‰r‰t l‰pik‰yd‰‰n rekursion avulla.
+%% /WANHAA KAMAA
 
-\section{Historiaa ja Lisp}
-Ensimm‰inen funktionaalinen ohjelmointikieli oli listojen k‰sittelyyn ja symboliseen laskentaan kehitetty \textit{Lisp} (LISt Processing language). Sen kehitti vuonna 1958 John McCarthy \cite{lisp}. Lisp on toiseksi vanhin korkean tason kieli, Fortranin ollessa vanhin. Lispiss‰ (kuten l‰hes kaikissa funktionaalisissa kieliss‰) on perustietorakenteena lista ja alkeisoperaattoreina funktiot jotka palauttavat listan ensimm‰isen solmun tai listan h‰nn‰n. McCarthy perusti kielens‰ Alonzo Churchin 1932 kehitt‰m‰‰n \textit{Lambda-kalkyyliin} \cite{lambda} s.5.
+%%Ohjelmointi ilman sivuvaikutuksia, ohjelmointi funktioarvoilla. Imperatiivisessa ohjelmoinnissa ohjelmalla on tila, joka %%%%koostuu muuttujien arvoista ja olioiden kenttien arvoista. Ohjelmassa suoritetaan lausekkeita jotka muuttavat ohjelman tilaa.
 
-\section{Lambda-kalkyyli}
-%% Church m‰‰ritteli laskettavan funktion lambdan avulla?
-Lambda-kalkyyli kehitettiin formalismiksi matemaattisten funktioiden m‰‰rittelyyn. Ilmaisuvoimaltaan se on yht‰l‰inen turingin koneiden kanssa \cite{lambda} s.5. Lambda-kalkyylissa funktioita ja niiden sovelluksia sis‰lt‰vi‰ lausekkeita sievennet‰‰n kunnes p‰‰st‰‰n normaalimuotoon, eli lauseketta ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on lambda-laskennan tulos. Lambda-kalkyyli on hyvin yksinkertainen mutta ilmaisuvoimainen sievennyss‰‰nnˆstˆ. Lambda-kalkyyli koostuu \textit{Lambda-lausekkeista} joita ovat \textit{abstraktio}, joka m‰‰rittelee funktion, \textit{sovellus}, joka on funktion sovellus argumenttiinsa, tai \textit{muuttuja}. Funktion vartalo on Lambda-lauseke, ja funktioilla on vain yksi argumentti. Mik‰li halutaan esimerkiksi kaksiargumenttinen funktio, voidaan m‰‰ritell‰ funktio joka palauttaa toisen funktion sitoen argumenttinsa palauttamansa funktion vartalossa.
+\section{Historiaa}
+%% WANHAA KAMAA
+Lambda-kalkyyli kehitettiin formalismiksi matemaattisten funktioiden m‰‰rittelyyn. Ilmaisuvoimaltaan se on yht‰l‰inen turingin koneiden kanssa \cite{lambda} s.5. Lambda-kalkyylissa funktioita ja niiden sovelluksia sis‰lt‰vi‰ lausekkeita sievennet‰‰n kunnes p‰‰st‰‰n normaalimuotoon, eli lauseketta ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on lambda-laskennan tulos. Lambda-kalkyyli on hyvin yksinkertainen mutta ilmaisuvoimainen sievennyss‰‰nnˆstˆ. Lambda-kalkyyli koostuu \textit{lambda-lausekkeista} joita ovat \textit{abstraktio}, joka m‰‰rittelee funktion, \textit{sovellus}, joka on funktion sovellus argumenttiinsa, tai \textit{muuttuja}. Funktion vartalo on lambda-lauseke, ja funktioilla on vain yksi argumentti. Mik‰li halutaan esimerkiksi kaksiargumenttinen funktio, voidaan m‰‰ritell‰ funktio joka palauttaa toisen funktion sitoen argumenttinsa palauttamansa funktion vartalossa.
 
+Ensimm‰inen funktionaalinen ohjelmointikieli oli listojen k‰sittelyyn ja symboliseen laskentaan kehitetty \textit{Lisp} (LISt Processing language). Sen kehitti vuonna 1958 John McCarthy \cite{lisp}. Lisp on toiseksi vanhin korkean tason kieli, Fortranin ollessa vanhin. Lispiss‰ (kuten l‰hes kaikissa funktionaalisissa kieliss‰) on perustietorakenteena lista ja alkeisoperaattoreina funktiot jotka palauttavat listan ensimm‰isen solmun tai listan h‰nn‰n. McCarthy perusti kielens‰ Alonzo Churchin 1932 kehitt‰m‰‰n lambda-kalkyyliin \cite[s.5]{lambda} 
 
 %Lambda-lauseke voi olla \textit{abstraktio} eli funktiom‰‰ritelm‰, joka m‰‰rittelee funktion jolla on yksi argumentti ja vartalo joka on Lambda-lauseke, \textit{sovellus} joka on 
 
 %Lambda-kalkyylissa funktiot esitet‰‰n \textit{lambda-abstraktioina} ja \textit{sovellus} mahdollistaa m‰‰riteltyjen funktioiden soveltamisen. \textit{Muuttujaan} voidaan sitoa mik‰ tahansa lambda-lauseke
 % ja lambda-kalkyyli onkin sievennysj‰rjestelm‰ lambda-lausekkeille. Lambda-lauseke koostuu muuttujista, vakioista ja funktion sovelluksista. 
 
-\section{Muita funktionaalisia kieli‰}
-Muita funktionaaliseen ohjelmointiin sovelutuvia kieli‰ ovat \textit{Scheme} (Lisp-murre), \textit{Standard ML}, \textit{Erlang}, \textit{Haskell}, \textit{Ruby}, \textit{Python} ja \textit{Scala}. N‰ist‰ ainoastaan Haskell on \textit{puhdas} funktionaalinen kieli. Muut kielet ovat joko multiparadigmakieli‰ tai mahdollistavat piirteit‰ jotka eiv‰t kuulu funktionaaliseen ohjelmointiin. Esimerkiksi Schemess‰ on \textit{Let-lause} jonka avulla voi m‰‰ritell‰ muuttujia. Erlang on Ericsonin kehitt‰m‰ tosiaikaohjelmointiin soveltuva kieli. Scala on java-alustalla toimiva kieli
+Muita funktionaaliseen ohjelmointiin sovelutuvia kieli‰ ovat \textit{Scheme} (Lisp-murre), \textit{Standard ML}, \textit{Erlang}, \textit{Haskell}, \textit{Ruby}, \textit{Python} ja \textit{Scala}. N‰ist‰ ainoastaan Haskell on \textit{puhdas} funktionaalinen kieli. Muut kielet ovat joko multiparadigmakieli‰ tai mahdollistavat piirteit‰ jotka eiv‰t kuulu funktionaaliseen ohjelmointiin. Esimerkiksi Schemess‰ on \textit{let-lause} jonka avulla voi m‰‰ritell‰ muuttujia. Erlang on Ericsonin kehitt‰m‰ tosiaikaohjelmointiin soveltuva kieli. Scala on java-alustalla toimiva kieli
 
-% TODO: viite haskell raporttiin
-%Haskell on alusta l‰htien suunniteltu puhtaaksi funktionaaliseksi ohjelmointikieleksi. 
+%% /WANHAA KAMAA
+
 
 \section{Funktionaalisen ohjelmoinnin erityispiirteit‰}
-Funktionaalista ohjelmaa voi evaluoida kahdella tavalla, \textit{laiskasti} (lazy), ja \textit{tiukasti} (non-lazy, strict). Tiukassa mallissa kaikki lausekkeet evaluoidaan aina, oli se sitten tarpeellista tai ei.  Laiskassa mallissa lauseke evaluoidaan vasta tarvittaessa. Laiska malli on myˆs tehokkaampi koska turhia argumentteja ei evaluoida. Funktionaalisista ohjelmointikielist‰ Haskell tukee laiskaa evaluaatiota ja Lisp tiukkaa evaluaatiota. Laiskaa evaluaatiota k‰ytt‰v‰ss‰ kieless‰ voidaan esimerkiksi m‰‰ritell‰ p‰‰ttym‰ttˆmi‰ tietorakenteita, ilman ett‰ n‰m‰ tietorakenteet veisiv‰t ‰‰rettˆm‰sti tilaa.
 
-\subsection{Sivuvaikutukset}
-Koska funktioilla ei ole sivuvaikutuksia, ne voidaan evaluoida miss‰ j‰rjestyksess‰ tahansa, ja kahden mink‰ tahansa funktion suoritus voidaan rinnakkaistaa huoletta. N‰in funktionaalinen ohjelmointi tukee luonnostaan laskennan rinnakkaistamista monille prosessoriytimille.
+\textit{Puhtaat funktiot} (engl. \textit{pure functions}) ovat funktioita niiden matemaattisessa merkityksess‰. Ohjelmoinnista puhuttaessa saatetaan kutsua funktioiksi aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta jolloin saattaa p‰te‰ \textit{f(x)!=f(x)} eri suoritushetkin‰. Matemaattisilla funktioilla ei ole tilaa (engl. state), eik‰ \textit{sivuvaikutuksia} (engl. \textit{side-effects}). Sivuvaikutuksettomuus tarkoittaa ett‰ funktio ei p‰‰se muuttamaan ohjelman tilaa. Matemaattiset funktiot ovat kuvauksia l‰htˆjoukosta (parametrit) maalijoukkoon (paluuarvo), ja funktio palauttaa samoilla parametreilla aina saman paluuarvon. Funktion suoritus ei siis ole riippuvainen ohjelman tilasta, eik‰ se pysty muuttaamaan ohjelman tilaa. Funktionaalisilla ohjelmilla ei siten olekkaan tilaa. Sivuvaikutuksettomuudella on sek‰ myˆnteisi‰ ett‰ kielteisi‰ seurauksia. Persistenttej‰ tietorakenteita kuten tietokantoja ei voida toteuttaa ilman sivuvaikutuksia tehokkaasti, lis‰ksi siirr‰nt‰ on luonteeltaan sivuvaikutuksellista, tosin siirr‰nt‰‰n on kehitetty elegantteja funktionaalisia ratkaisuja. (TODO: l‰hde, haskelin stream ja monad io) Sivuvaikutuksettomuudesta kuitenkin seuraa ett‰ funktioiden suoritus voidaan rinnastaa huoletta ja ohjelmien tuotantokustannukset laskevat koska ohjelmia on helpompi kirjoittaa, debugata ja yll‰pit‰‰\cite[s.527]{scott}. TODO: jotain muuta sivuvaikutuksettomuudesta?
 
-\subsection{Muistinhallinta}
-Muistinhallinta on funktionaalisessa ohjelmoinnissa implisiittist‰. Ohjelmoija ei koskaan varaa muistia, koska muuttujia ei ole. N‰in funktionaalisiin ohjelmointikieliin sopii \textit{roskien keruu} luonnostaan. Itseasiassa McCarthy lanseerasi roskien keruun Lispin yhteydess‰ \cite{lisp} s.27.
+Funktiot \textit{ensimm‰isen luokan arvoina.} Ensimm‰isen luokan arvo (engl.\textit{first class value}) voidaan v‰litt‰‰ parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa siis funktioilla voi tehd‰ kaikkea t‰t‰. Proseduraalisessa (imperatiivisessa?, algoritmisessa?) ohjelmoinnissa funktiot ovat yleens‰ toisen luokan arvoja, niit‰ ei voi v‰litt‰‰ parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien v‰litt‰mist‰ parametreina, funktioita ei C:ss‰ kuitenkaan voi luoda suoritusaikana jolloin ne eiv‰t ole ensimm‰isen luokan arvoja. Oliokielist‰ SmallTalk tukee funktioita ensimm‰isen luokan arvoina. Yleisesti k‰ytˆss‰ olevissa "mainstream"??kieliss‰ primitiivit kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimm‰isen luokan arvoja. 
 
-\subsection{Rekursio}
-Puhtaissa funktionaalisissa ohjelmointikieliss‰ ei ole silmukoita, vaan suurten tietom‰‰rien k‰sittely hoidetaan rekursiolla. Lista on funktionaalisen ohjelmoinnin perustietorakenne, ja useimmissa funktionaalisissa kieliss‰ se on osa kielen m‰‰rittely‰. Listoja k‰sitell‰‰n rekursiivisesti. 
+\textit{Korkeamman kertaluvun funktioiksi} (engl. \textit{higher order functions, functional forms}) kutsutaan funktioita jotka ottavat parametrinaan toisen funktion, tai palauttavat paluuarvonaan funktion\cite[s.546]{scott}. Yksi yleisimpi‰ tapoja k‰ytt‰‰ korkeamman kertaluvun funktioita on rakentaa niiden avulla uusia funktioita. Esimerkiksi Haskelin \textit{map}-funktio ottaa parametrinaan funktion ja listan, ja k‰y listan rekursiivisesti l‰pi soveltaen parametrinaan saamaa funktioita jokaiselle listan alkiolle. 
 
-\newpage
-\thispagestyle{empty}
+%% TODO: rekursio
+Rekursiolla tehd‰‰n funktionaalisessa ohjelmoinnissa toistoa vaativat asiat.
 
 
+
+
+Listat ovat funktionaalisissa kieliss‰ t‰rkeit‰ koska niill‰ on luonnollinen rekursiivinen m‰‰ritelm‰. Lista voidaan m‰‰ritell‰ parina, jonka ensimm‰inen alkio on listan ensimm‰inen alkio, jolloin parin toinen alkio on listan loppuosa ja samalla myˆs lista ja n‰in alkupe
+
+
+
+
+
+
+
+\textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}) blah blah \textit{laiska funktio} blah blah
+
+Yht‰lˆt ja hahmontunnistus
+
+\textit{Vahva staattinen tyypitys} (engl. \textit{strong static typing}) blah blah
+
+Tiedon abstrahointi, 
+
+\textit{Tyyppien johtaminen} (engl. \textit{type inference})
+\textit{Monimuotoisuus} (engl. \textit{polymorphism}) on funktionaalisissa kieliss‰ t‰rke‰ ominaisuus, koska se sallii funktioiden k‰ytˆn mahdollisimman monentyyppisill‰ parametreilla. Lisp ja sen johdannaiset ovat dynaamisesti tyypitettyj‰, ja siten luonnostaan monimuotoisia. Haskell saavuttaa monimuotoisuuden tyyppien johtamisen kautta.
+
+
+
+
+
+\section{Yhteenveto}
+
+\nocite{*}
 \bibliographystyle{tktl}
 \bibliography{lahteet}
 
 \lastpage
+
+\appendices
+
+\pagestyle{empty}
 
 \end{document}
