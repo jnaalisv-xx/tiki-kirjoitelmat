@@ -62,40 +62,28 @@ Muita funktionaaliseen ohjelmointiin sovelutuvia kieliä ovat \textit{Scheme} (Li
 
 \section{Funktionaalisen ohjelmoinnin erityispiirteitä}
 
-\textit{Puhtaat funktiot} (engl. \textit{pure functions}) ovat funktioita niiden matemaattisessa merkityksessä. Ohjelmoinnista puhuttaessa saatetaan kutsua funktioiksi aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta jolloin saattaa päteä \textit{f(x)!=f(x)} eri suoritushetkinä. Matemaattisilla funktioilla ei ole tilaa (engl. state), eikä \textit{sivuvaikutuksia} (engl. \textit{side-effects}). Sivuvaikutuksettomuus tarkoittaa että funktio ei pääse muuttamaan ohjelman tilaa. Matemaattiset funktiot ovat kuvauksia lähtöjoukosta (parametrit) maalijoukkoon (paluuarvo), ja funktio palauttaa samoilla parametreilla aina saman paluuarvon. Funktion suoritus ei siis ole riippuvainen ohjelman tilasta, eikä se pysty muuttaamaan ohjelman tilaa. Funktionaalisilla ohjelmilla ei siten olekkaan tilaa. Sivuvaikutuksettomuudella on sekä myönteisiä että kielteisiä seurauksia. Persistenttejä tietorakenteita kuten tietokantoja ei voida toteuttaa ilman sivuvaikutuksia tehokkaasti, lisäksi siirräntä on luonteeltaan sivuvaikutuksellista, tosin siirräntään on kehitetty elegantteja funktionaalisia ratkaisuja. (TODO: lähde, haskelin stream ja monad io) Sivuvaikutuksettomuudesta kuitenkin seuraa että funktioiden suoritus voidaan rinnastaa huoletta ja ohjelmien tuotantokustannukset laskevat koska ohjelmia on helpompi kirjoittaa, debugata ja ylläpitää\cite[s.527]{scott}. TODO: jotain muuta sivuvaikutuksettomuudesta?
+%% Puhtaat funktiot
+\textit{Puhtaat funktiot} (engl. \textit{pure functions}) ovat funktioita niiden matemaattisessa merkityksessä. Ohjelmoinnista puhuttaessa saatetaan kutsua funktioiksi aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta jolloin saattaa päteä \textit{f(x)!=f(x)} eri suoritushetkinä. Matemaattisilla funktioilla ei ole tilaa (engl. state), eikä \textit{sivuvaikutuksia} (engl. \textit{side-effects}). Sivuvaikutuksettomuus tarkoittaa että funktio ei pääse muuttamaan ohjelman tilaa. Matemaattiset funktiot ovat kuvauksia lähtöjoukosta (parametrit) maalijoukkoon (paluuarvo), ja funktio palauttaa samoilla parametreilla aina saman paluuarvon. Funktion suoritus ei siis ole riippuvainen ohjelman tilasta, eikä se pysty muuttaamaan ohjelman tilaa. Funktionaalisilla ohjelmilla ei siten olekkaan tilaa. Sivuvaikutuksettomuudella on sekä myönteisiä että kielteisiä seurauksia. Persistenttejä tietorakenteita kuten tietokantoja ei voida toteuttaa ilman sivuvaikutuksia tehokkaasti, lisäksi siirräntä on luonteeltaan sivuvaikutuksellista, tosin siirräntään on kehitetty elegantteja funktionaalisia ratkaisuja. (TODO: lähde, haskelin stream ja monad io) Sivuvaikutuksettomuudesta kuitenkin seuraa että funktioiden suoritus voidaan rinnastaa huoletta ja ohjelmien tuotantokustannukset laskevat koska ohjelmia on helpompi kirjoittaa, debugata ja ylläpitää\cite[s.527]{scott}. 
+%TODO: jotain muuta sivuvaikutuksettomuudesta? Tietorakenteen ja sivuvaikutukset? Funktionaaliset tietorakenteet? sivuvaikutusten parempi määritelmä
 
+%% Ensimmäisen luokan arvot
 Funktiot \textit{ensimmäisen luokan arvoina.} Ensimmäisen luokan arvo (engl.\textit{first class value}) voidaan välittää parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa siis funktioilla voi tehdä kaikkea tätä. Proseduraalisessa (imperatiivisessa?, algoritmisessa?) ohjelmoinnissa funktiot ovat yleensä toisen luokan arvoja, niitä ei voi välittää parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien välittämistä parametreina, funktioita ei C:ssä kuitenkaan voi luoda suoritusaikana jolloin ne eivät ole ensimmäisen luokan arvoja. Oliokielistä SmallTalk tukee funktioita ensimmäisen luokan arvoina. Yleisesti käytössä olevissa "mainstream"??kielissä primitiivit kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimmäisen luokan arvoja. 
 
+%% Korkeamman kertaluvun funktiot
 \textit{Korkeamman kertaluvun funktioiksi} (engl. \textit{higher order functions, functional forms}) kutsutaan funktioita jotka ottavat parametrinaan toisen funktion, tai palauttavat paluuarvonaan funktion\cite[s.546]{scott}. Yksi yleisimpiä tapoja käyttää korkeamman kertaluvun funktioita on rakentaa niiden avulla uusia funktioita. Esimerkiksi Haskelin \textit{map}-funktio ottaa parametrinaan funktion ja listan, ja käy listan rekursiivisesti läpi soveltaen parametrinaan saamaa funktioita jokaiselle listan alkiolle. 
 
 %% TODO: rekursio
-Rekursiolla tehdään funktionaalisessa ohjelmoinnissa toistoa vaativat asiat.
+Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin muuttujan arvosta, ei sivuvaikutuksettomassa ohjelmoinnissa voida käyttää perinteisiä silmukoita toiston aikaansaamiseen. Funktionaalisessa ohjelmoinnissa toisto aikaansaadaan rekursiolla. Listat ovat funktionaalisissa kielissä tärkeitä koska niillä on luonnollinen rekursiivinen määritelmä. Lista voidaan määritellä parina, jonka ensimmäinen alkio on listan ensimmäinen alkio, jolloin parin toinen alkio on listan loppuosa. Listan loppuosa on lista, tai tyhjä arvo. Listoille on funktionaalisissa kielissä usein valmiiksi määriteltyjä alkeisoperaatioita kuten \textit{head} joka palauttaa parametrina annetun listan ensimmäisen alkion, tai \textit{tail}, joka palauttaa paramatrina annetun listan ilman ensimmäistä alkiotaan.
+ 
+%\textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}) blah blah \textit{laiska funktio} blah blah
 
+%Yhtälöt ja hahmontunnistus
 
+%% Tyypitys, monimuotoisuus Tiedon abstrahointi, 
+%\textit{Vahva staattinen tyypitys} (engl. \textit{strong static typing}) blah blah
+%\textit{Tyyppien johtaminen} (engl. \textit{type inference})
 
-
-Listat ovat funktionaalisissa kielissä tärkeitä koska niillä on luonnollinen rekursiivinen määritelmä. Lista voidaan määritellä parina, jonka ensimmäinen alkio on listan ensimmäinen alkio, jolloin parin toinen alkio on listan loppuosa ja samalla myös lista ja näin alkupe
-
-
-
-
-
-
-
-\textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}) blah blah \textit{laiska funktio} blah blah
-
-Yhtälöt ja hahmontunnistus
-
-\textit{Vahva staattinen tyypitys} (engl. \textit{strong static typing}) blah blah
-
-Tiedon abstrahointi, 
-
-\textit{Tyyppien johtaminen} (engl. \textit{type inference})
 \textit{Monimuotoisuus} (engl. \textit{polymorphism}) on funktionaalisissa kielissä tärkeä ominaisuus, koska se sallii funktioiden käytön mahdollisimman monentyyppisillä parametreilla. Lisp ja sen johdannaiset ovat dynaamisesti tyypitettyjä, ja siten luonnostaan monimuotoisia. Haskell saavuttaa monimuotoisuuden tyyppien johtamisen kautta.
-
-
-
-
 
 \section{Yhteenveto}
 
