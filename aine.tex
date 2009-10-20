@@ -71,13 +71,15 @@ Tässä kappaleessa esitellään funktionaalisen ohjelmointityylin käsitteitä ja omi
 \subsection{Puhtaat funktiot ja sivuvaikutuksettomuus}
 Funktiolla sanotaan olevan \textit{sivuvaikutuksia} (engl. \textit{side effects}) jos se muuttaa jotain tilaa (engl. \textit{state}) tai vaikuttaa ulkomaailmaan muuten kuin paluuarvonsa kautta.%% TODO: lähde! 
 
-\textit{Puhtaat funktiot} (engl. \textit{pure functions}) ovat funktioita matemaattisessa merkityksessä. Ohjelmoinnista puhuttaessa saatetaan funktioiksi kutsua jopa aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta jolloin saattaa päteä \textit{f(x) $\ne$ f(x)} eri kutsuhetkinä. 
+\textit{Puhtaat funktiot} (engl. \textit{pure functions}) ovat funktioita matemaattisessa merkityksessä. Ohjelmoinnista puhuttaessa saatetaan funktioiksi kutsua jopa aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta, jolloin saattaa päteä \textit{f(x) $\ne$ f(x)} eri kutsuhetkinä. Matemaattisilla funktioilla ei ole tilaa, eikä sivuvaikutuksia. Matemaattiset funktiot ovat kuvauksia lähtöjoukosta (parametrit) maalijoukkoon (paluuarvo), ja ne palauttavat samoilla parametreilla aina saman paluuarvon. 
 
-Matemaattisilla funktioilla ei ole tilaa, eikä sivuvaikutuksia. Matemaattiset funktiot ovat kuvauksia lähtöjoukosta (parametrit) maalijoukkoon (paluuarvo), ja ne palauttavat samoilla parametreilla aina saman paluuarvon. 
+Funktionaalinesessa ohjelmoinnissa ohjelma koostetaan puhtaista funktiosta, joilla ei siis ole tilaa eikä sivuvaikutuksia. Näin funktionaalinen ohjelmointi on tila- ja sivuvaikutuksetonta. Jotkin kielet, kuten Lisp ja sen johdannaiset, sallivat sivuvaikutukset joten ne eivät ole puhtaita funktionaalisia kieliä, vaan pikemminkin hybridikieliä joissa on tuki funktionaaliselle ohjelmoinnille. Tilattomuudesta seuraa että muuttujien arvoja ei voi muuttaa niiden luonnin jälkeen. 
+%% TODO: Scheme tarjoaa let-lauseen??? SICP
+%% TODO: sivuvaikutusten sallimisille
+%% TODO: tässä kirjoitelmassa muuttuja ei ole kuin imperatiivisessa
 
-Funktionaalisessa ohjelmoinnissa funktiot ovat puhtaita eli sivuvaikutuksettomia. Tästä seuraan että myöskaan funktionaalisessa ohjelmalla ei ole tilaa.
-
-Sivuvaikutuksettomuudella on sekä myönteisiä että kielteisiä seurauksia. Koska funktionaalisessa ohjelmoinnissa ei muokata tilaa, ei myöskään tietorakenteita pysty muokkaamaan niiden luonnin jälkeen, vaan esimerkiksi poistettaessa listasta alkio, luodaan uusi lista vanhan listan kopiona ilman poistettavaa alkiota. Suuria tietorakenteita kuten tietokantoja ei voida toteuttaa ilman sivuvaikutuksia tehokkaasti. Lisäksi siirräntä, syöttö ja tulostus, on luonteeltaan sivuvaikutuksellista. Siirräntään tosin on kehitetty elegantteja funktionaalisia ratkaisuja. %%(TODO: lähde, haskelin stream ja monad io) 
+Sivuvaikutuksettomuudella on sekä myönteisiä että kielteisiä seurauksia. Koska funktionaalisessa ohjelmoinnissa ei muokata tilaa, ei myöskään tietorakenteita pysty muokkaamaan niiden luonnin jälkeen, vaan esimerkiksi poistettaessa listasta alkio, luodaan uusi lista vanhan listan kopiona ilman poistettavaa alkiota. Suuria tietorakenteita kuten tietokantoja ei voida toteuttaa ilman sivuvaikutuksia tehokkaasti. Jos esimerkiksi halutaan muuttaa yhden rivin yhden sarakkeen arvo tietokannassa jossa on miljoonia rivejä, tulisi muutoksen tekevän funktion palauttaa kokonaan uusi tietokanta. Lisäksi siirräntä, syöttö ja tulostus, on luonteeltaan sivuvaikutuksellista. Siirräntään tosin on kehitetty elegantteja funktionaalisia ratkaisuja. 
+%%(TODO: lähde, haskelin stream ja monad io),tietorakenteista, optimoiva kääntäjä?P
 
 Sivuvaikutuksettomuudesta kuitenkin seuraa että funktioiden suoritus voidaan huoletta rinnakkaistaa ja ohjelmien tuotantokustannukset laskevat koska ohjelmia on helpompi laatia, korjata ja ylläpitää\cite[s.527]{scott}.
 %TODO: jotain muuta sivuvaikutuksettomuudesta? Tietorakenteen ja sivuvaikutukset? Funktionaaliset tietorakenteet? sivuvaikutusten parempi määritelmä
@@ -85,11 +87,19 @@ Sivuvaikutuksettomuudesta kuitenkin seuraa että funktioiden suoritus voidaan huo
 \subsection{Funktiot ensimmäisen luokan arvoina}
 \textit{Ensimmäisen luokan arvo} (engl.\textit{first class value}) voidaan välittää parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa siis funktioilla voi tehdä kaikkea tätä. Proseduraalisessa (imperatiivisessa?, algoritmisessa?) ohjelmoinnissa funktiot ovat yleensä toisen luokan arvoja, niitä ei voi välittää parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien välittämistä parametreina, funktioita ei C:ssä kuitenkaan voi luoda suoritusaikana jolloin ne eivät ole ensimmäisen luokan arvoja. Oliokielistä SmallTalk tukee funktioita ensimmäisen luokan arvoina. Yleisesti käytössä olevissa "mainstream"??kielissä primitiivit kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimmäisen luokan arvoja. 
 
+Koska ensimmäisen luokan arvoja voi luoda ohjelmalohkojen sisällä, voidaan määritellä funktio jonka määrittelyssä käytetään sen määrittelylohkossa näkyviä muuttujia. Funktio voidaan edelleen välittää parametrina toiselle funktiolle jolloin funktion käyttämät muuttujat ovat näkyvyysalueensa ulkopuolella, ja niitä ei voi vapauttaa muistinhallinnan toimesta kun funktion määrittelylohkon käyttämä muisti vapautetaan. Funktiota jonka määrittelyssä näin käytetään määrittelylohkonsa muuttujia, kutsutaan \textit{sulkeumaksi} (engl. \textit{closure}).
+%% Sulkeumilla voidaan toteuttaa tila?
+
 \subsection{Korkeamman kertaluvun funktiot}
 \textit{Korkeamman kertaluvun funktioiksi} (engl. \textit{higher order functions, functional forms}) kutsutaan funktioita jotka ottavat parametrinaan toisen funktion, tai palauttavat paluuarvonaan funktion\cite[s.546]{scott}. Yksi yleisimpiä tapoja käyttää korkeamman kertaluvun funktioita on rakentaa niiden avulla uusia funktioita. Esimerkiksi Haskelin \textit{map}-funktio ottaa parametrinaan funktion ja listan, ja käy listan rekursiivisesti läpi soveltaen parametrinaan saamaa funktioita jokaiselle listan alkiolle. 
 
 \subsection{Rekursio}
 Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin muuttujan arvosta, ei sivuvaikutuksettomassa ohjelmoinnissa voida käyttää perinteisiä silmukoita toiston aikaansaamiseen. Funktionaalisessa ohjelmoinnissa toisto aikaansaadaan rekursiolla. Listat ovat funktionaalisissa kielissä tärkeitä koska niillä on luonnollinen rekursiivinen määritelmä. Lista voidaan määritellä parina, jonka ensimmäinen alkio on listan ensimmäinen alkio, jolloin parin toinen alkio on listan loppuosa. Listan loppuosa on lista, tai tyhjä arvo. Listoille on funktionaalisissa kielissä usein valmiiksi määriteltyjä alkeisoperaatioita kuten \textit{head} joka palauttaa parametrina annetun listan ensimmäisen alkion, tai \textit{tail}, joka palauttaa paramatrina annetun listan ilman ensimmäistä alkiotaan.
+%% TODO: esimerkki
+%%\begin{displaymath}
+%%Lista a = Pair a (Lista a)
+%%        | Nil
+%%\end{displaymath} 
  
 %% TODO: mitä on laiska evaluaatio Suomeksi?
 \subsection{Laiska evaluaatio}
@@ -103,6 +113,9 @@ Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin
 %\textit{Tyyppien johtaminen} (engl. \textit{type inference})
 
 \textit{Monimuotoisuus} (engl. \textit{polymorphism}) on funktionaalisissa kielissä tärkeä ominaisuus, koska se sallii funktioiden käytön mahdollisimman monentyyppisillä parametreilla. Lisp ja sen johdannaiset ovat dynaamisesti tyypitettyjä, ja siten luonnostaan monimuotoisia. Haskell saavuttaa monimuotoisuuden tyyppien johtamisen kautta.
+
+\subsection{Funktionaalinen siirräntä}
+Haskell IO monadi, kuvaus.
 
 \section{Yhteenveto}
 Funktionaalinen ohjelmointi on kehittynyt matemaattisesta formalismista varteenotettavaksi ohjelmointiparadigmaksi vastaamaan modernin ohjelmistokehityksen haasteisiin. Funktionaalinen paradigma tarjoaa voimakkaat työkalut abstraktioiden rakentamiseen. 
