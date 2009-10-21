@@ -64,12 +64,17 @@ Muita funktionaaliseen ohjelmointiin sovelutuvia kieli‰ ovat \textit{Scheme} (Li
 
 %% TODO: imperatiivinen vs proseduraalinen vs algoritminen
 %% vs olio-ohjelmointi, termit yhdenmukaisiksi!!!
+%% \section{Lyhyt Haskell-johdanto}
+%% Joitakin esimerkkej‰ on esitetty Haskell-kielell‰. T‰ss‰ lyhyt johdanto jonka perusteella esimerkit voi ymm‰rt‰‰ vaikkei kielt‰ tuntisikaan aikaisemmin.
+%% Haskell-ohjelmoijan perustyˆkalu on funktio. Funktion m‰‰ritell‰‰n n‰in: funktio parametri = laskennan tulos
+%% Tietotyypit. data, tyyppi-konstruktorit, konstruktorit, omien tyyppien rakentaminen
 
 \section{Funktionaalisen ohjelmoinnin erityispiirteit‰}
 T‰ss‰ kappaleessa esitell‰‰n funktionaalisen ohjelmointityylin k‰sitteit‰ ja ominaisuuksia. 
 
 \subsection{Puhtaat funktiot ja sivuvaikutuksettomuus}
-Funktiolla sanotaan olevan \textit{sivuvaikutuksia} (engl. \textit{side effects}) jos se muuttaa jotain tilaa (engl. \textit{state}) tai vaikuttaa ulkomaailmaan muuten kuin paluuarvonsa kautta.%% TODO: l‰hde! 
+Funktiolla sanotaan olevan \textit{sivuvaikutuksia} (engl. \textit{side effects}) jos se muuttaa ohjelman tilaa (engl. \textit{state}) tai vaikuttaa ulkomaailmaan muuten kuin paluuarvonsa kautta. Ohjelman tila on sen paikallisten ja globaalien muuttujien arvo tiettyn‰ hetken‰, ja kaikki ohjelmointi miss‰ muutetaan kyseisten muuttujien arvoa on sivuvaikutuksellista ohjelmointia. Imperatiivinen ohjelmointityyli perustuu nimenomaan ohjelman tilan muuttamiseen.
+%% TODO: l‰hde! 
 
 \textit{Puhtaat funktiot} (engl. \textit{pure functions}) ovat funktioita matemaattisessa merkityksess‰. Ohjelmoinnista puhuttaessa saatetaan funktioiksi kutsua jopa aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta, jolloin saattaa p‰te‰ \textit{f(x) $\ne$ f(x)} eri kutsuhetkin‰. Matemaattisilla funktioilla ei ole tilaa, eik‰ sivuvaikutuksia. Matemaattiset funktiot ovat kuvauksia l‰htˆjoukosta (parametrit) maalijoukkoon (paluuarvo), ja ne palauttavat samoilla parametreilla aina saman paluuarvon. 
 
@@ -85,7 +90,7 @@ Sivuvaikutuksettomuudesta kuitenkin seuraa ett‰ funktioiden suoritus voidaan huo
 %TODO: jotain muuta sivuvaikutuksettomuudesta? Tietorakenteen ja sivuvaikutukset? Funktionaaliset tietorakenteet? sivuvaikutusten parempi m‰‰ritelm‰
 
 \subsection{Funktiot ensimm‰isen luokan arvoina}
-\textit{Ensimm‰isen luokan arvo} (engl.\textit{first class value}) voidaan v‰litt‰‰ parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa siis funktioilla voi tehd‰ kaikkea t‰t‰. Proseduraalisessa (imperatiivisessa?, algoritmisessa?) ohjelmoinnissa funktiot ovat yleens‰ toisen luokan arvoja, niit‰ ei voi v‰litt‰‰ parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien v‰litt‰mist‰ parametreina, funktioita ei C:ss‰ kuitenkaan voi luoda suoritusaikana jolloin ne eiv‰t ole ensimm‰isen luokan arvoja. Oliokielist‰ SmallTalk tukee funktioita ensimm‰isen luokan arvoina. Yleisesti k‰ytˆss‰ olevissa "mainstream"??kieliss‰ primitiivit kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimm‰isen luokan arvoja. 
+\textit{Ensimm‰isen luokan arvo} (engl.\textit{first class value}) voidaan v‰litt‰‰ parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa siis funktioilla voi tehd‰ kaikkea t‰t‰. Proseduraalisessa (imperatiivisessa?, algoritmisessa?) ohjelmoinnissa funktiot ovat yleens‰ toisen luokan arvoja, niit‰ ei voi v‰litt‰‰ parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien v‰litt‰mist‰ parametreina, funktioita ei C:ss‰ kuitenkaan voi luoda suoritusaikana jolloin ne eiv‰t ole ensimm‰isen luokan arvoja. Oliokielist‰ SmallTalk tukee funktioita ensimm‰isen luokan arvoina. Yleisesti k‰ytˆss‰ olevissa kieliss‰ primitiivit kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimm‰isen luokan arvoja. 
 
 Koska ensimm‰isen luokan arvoja voi luoda ohjelmalohkojen sis‰ll‰, voidaan m‰‰ritell‰ funktio jonka m‰‰rittelyss‰ k‰ytet‰‰n sen m‰‰rittelylohkossa n‰kyvi‰ muuttujia. Funktio voidaan edelleen v‰litt‰‰ parametrina toiselle funktiolle jolloin funktion k‰ytt‰m‰t muuttujat ovat n‰kyvyysalueensa ulkopuolella, ja niit‰ ei voi vapauttaa muistinhallinnan toimesta kun funktion m‰‰rittelylohkon k‰ytt‰m‰ muisti vapautetaan. Funktiota jonka m‰‰rittelyss‰ n‰in k‰ytet‰‰n m‰‰rittelylohkonsa muuttujia, kutsutaan \textit{sulkeumaksi} (engl. \textit{closure}).
 %% Sulkeumilla voidaan toteuttaa tila?
@@ -102,6 +107,7 @@ Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin
 %%\end{displaymath} 
  
 %% TODO: mit‰ on laiska evaluaatio Suomeksi?
+%% referential transparency
 \subsection{Laiska evaluaatio}
 \textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}) tarkoittaa blah blah \textit{laiska funktio} blah blah
 
