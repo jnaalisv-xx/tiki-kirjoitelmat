@@ -30,9 +30,7 @@
 \keywords{funktionaalinen ohjelmointi, korkeamman asteen funktiot, laiska evaluaatio}
 
 \begin{abstract}
-
-T‰m‰ kirjoitus esittelee funktionaalisen ohjelmointiparadigman.
-
+T‰m‰ kirjoitelma esittelee funktionaalisen ohjelmointiparadigman. Kirjoitelman tarkoituksena ei ole olla kattava funktionaalisen ohjelmoinnin esitys, vaan tiivis esitys funktionaalisen ohjelmoinnin teoreettisesta taustasta, historiasta, ja merkitt‰vista piirteist‰. Kirjoitelma alkaa funktionaalisen ohjelmoinnin taustalla olevan formalismin, lambda-kalkyylin esittelyll‰. T‰st‰ jatketaan ensimm‰iseen funktionaalisen ohjelmoinnin mahdollistavan kielen, Lispin esittelyyn. Lis‰ksi kirjoitelmassa esitet‰‰n funktionaalisen ohjelmoinnin perusk‰sitteet ja erityispiirteet.
 \end{abstract}
 
 \mytableofcontents
@@ -48,9 +46,10 @@ T‰m‰ kirjoitus esittelee funktionaalisen ohjelmointiparadigman.
 %% WANHAA KAMAA
 \subsection{Lambda-kalkyyli}
 Lambda-kalkyyli kehitettiin formalismiksi matemaattisten funktioiden m‰‰rittelyyn. Ilmaisuvoimaltaan se on yht‰l‰inen turingin koneiden kanssa \cite{lambda} s.5. Lambda-kalkyylissa funktioita ja niiden sovelluksia sis‰lt‰vi‰ lausekkeita sievennet‰‰n kunnes p‰‰st‰‰n normaalimuotoon, eli lauseketta ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on lambda-laskennan tulos. Lambda-kalkyyli on hyvin yksinkertainen mutta ilmaisuvoimainen sievennyss‰‰nnˆstˆ. Lambda-kalkyyli koostuu \textit{lambda-lausekkeista} joita ovat \textit{abstraktio}, joka m‰‰rittelee funktion, \textit{sovellus}, joka on funktion sovellus argumenttiinsa, tai \textit{muuttuja}. Funktion vartalo on lambda-lauseke, ja funktioilla on vain yksi argumentti. Mik‰li halutaan esimerkiksi kaksiargumenttinen funktio, voidaan m‰‰ritell‰ funktio joka palauttaa toisen funktion sitoen argumenttinsa palauttamansa funktion vartalossa.
+%% TODO: argumentti vs parametri
 
 \subsection{Lisp}
-Ensimm‰inen funktionaalinen ohjelmointikieli oli listojen k‰sittelyyn ja symboliseen laskentaan kehitetty \textit{Lisp} (LISt Processing language). Sen kehitti vuonna 1958 John McCarthy \cite{lisp}. Lisp on toiseksi vanhin korkean tason kieli, Fortranin ollessa vanhin. Lispiss‰ (kuten l‰hes kaikissa funktionaalisissa kieliss‰) on perustietorakenteena lista ja alkeisoperaattoreina funktiot jotka palauttavat listan ensimm‰isen solmun tai listan h‰nn‰n. McCarthy perusti kielens‰ Alonzo Churchin 1932 kehitt‰m‰‰n lambda-kalkyyliin \cite[s.5]{lambda} 
+Ensimm‰inen funktionaaliseen ohjelmointii soveltuva kieli oli listojen k‰sittelyyn ja symboliseen laskentaan kehitetty \textit{Lisp} (LISt Processing language). Sen kehitti vuonna 1958 John McCarthy \cite{lisp}. Lisp on toiseksi vanhin korkean tason kieli, Fortranin ollessa vanhin. Lispiss‰ (kuten l‰hes kaikissa funktionaalisissa kieliss‰) on perustietorakenteena lista ja alkeisoperaattoreina funktiot jotka palauttavat listan ensimm‰isen solmun tai listan h‰nn‰n. McCarthy perusti kielens‰ Alonzo Churchin 1932 kehitt‰m‰‰n lambda-kalkyyliin \cite[s.5]{lambda} 
 
 %Lambda-lauseke voi olla \textit{abstraktio} eli funktiom‰‰ritelm‰, joka m‰‰rittelee funktion jolla on yksi argumentti ja vartalo joka on Lambda-lauseke, \textit{sovellus} joka on 
 
@@ -83,7 +82,7 @@ Funktiolla sanotaan olevan \textit{sivuvaikutuksia} (engl. \textit{side effects}
 %% imperatiivinen on laskentaa sivuvaikutusten avulla.
 %% imperatiivinen laskenta == tilan muuttaminen == sivuvaikutuksellinen ohjelmointi
 
-\textit{Puhtaat funktiot} (engl. \textit{pure functions}) ovat funktioita matemaattisessa merkityksess‰. Ohjelmoinnista puhuttaessa saatetaan funktioiksi kutsua jopa aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta, jolloin saattaa p‰te‰ \textit{f(x) $\ne$ f(x)} eri kutsuhetkin‰. Matemaattisilla funktioilla ei ole tilaa, eik‰ sivuvaikutuksia. Matemaattiset funktiot ovat kuvauksia l‰htˆjoukosta (parametrit) maalijoukkoon (paluuarvo), ja ne palauttavat samoilla argumenteilla aina saman paluuarvon. T‰st‰ seuraa ett‰ funktiokutsu voidaan korvata sen laskennan tuloksella, ja toisinp‰in. T‰t‰ ominaisuutta kutsutaan \textit{viittausten l‰pikuultavuudeksi} (engl. \textit{referential transparency}). Imperatiivisess‰ ohjelmassa t‰m‰ ei v‰ltt‰m‰tt‰ p‰de koska laskennan tulos voi riippua ulkopuolisten muuttujien arvoista jolloin funktio laskisi eri tuloksen eri kutsukerroilla. Toisaalta jokin toinen funktio voi kirjoittaa muuttujaan johon on tallennettu funktion paluuarvo ja n‰in funktiokutsua ei voi korvata muuttujalla johon on sijoitettu sen laskennan tulos. Viittausten l‰pikuultavuus helpottaa suuresti ohjelmien oikeellisuuden todistamista \cite[s.362]{Hudak89}.
+\textit{Puhtaat funktiot} (engl. \textit{pure functions}) ovat funktioita matemaattisessa merkityksess‰. Ohjelmoinnista puhuttaessa saatetaan funktioiksi kutsua jopa aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta, jolloin saattaa p‰te‰ \textit{f(x) $\ne$ f(x)} eri kutsuhetkin‰. Matemaattisilla funktioilla ei ole tilaa, eik‰ sivuvaikutuksia. Matemaattiset funktiot ovat kuvauksia l‰htˆjoukosta (engl. \textit{domain} maalijoukkoon (engl. \textit{range}), ja ne palauttavat samoilla argumenteilla aina saman paluuarvon. T‰st‰ seuraa ett‰ funktiokutsu voidaan korvata sen laskennan tuloksella, ja toisinp‰in. T‰t‰ ominaisuutta kutsutaan \textit{viittausten l‰pikuultavuudeksi} (engl. \textit{referential transparency}). Imperatiivisess‰ ohjelmassa t‰m‰ ei v‰ltt‰m‰tt‰ p‰de koska laskennan tulos voi riippua ulkopuolisten muuttujien arvoista jolloin funktio laskisi eri tuloksen eri kutsukerroilla. Toisaalta jokin toinen funktio voi kirjoittaa muuttujaan johon on tallennettu funktion paluuarvo ja n‰in funktiokutsua ei voi korvata muuttujalla johon on sijoitettu sen laskennan tulos. Viittausten l‰pikuultavuus helpottaa suuresti ohjelmien oikeellisuuden todistamista \cite[s.362]{Hudak89}.
 
 %% -> funktioden laskennan j‰rjestys voidaan vaihtaa
 %% sivuvaikutuksettomuus -> viitausten l‰pikuultavuus
@@ -108,7 +107,7 @@ Koska ensimm‰isen luokan arvoja voi luoda ohjelmalohkojen sis‰ll‰, voidaan m‰‰ri
 %% Sulkeumilla voidaan toteuttaa tila?
 
 \subsection{Korkeamman kertaluvun funktiot}
-\textit{Korkeamman kertaluvun funktioiksi} (engl. \textit{higher order functions, functional forms}) kutsutaan funktioita jotka ottavat parametrinaan toisen funktion, tai palauttavat paluuarvonaan funktion\cite[s.546]{scott}. Yksi yleisimpi‰ tapoja k‰ytt‰‰ korkeamman kertaluvun funktioita on rakentaa niiden avulla uusia funktioita. Esimerkiksi Haskelin \textit{map}-funktio ottaa parametrinaan funktion ja listan, ja k‰y listan rekursiivisesti l‰pi soveltaen parametrinaan saamaa funktioita jokaiselle listan alkiolle. 
+\textit{Korkeamman kertaluvun funktioiksi} (engl. \textit{higher order functions, functional forms}) kutsutaan funktioita jotka ottavat parametrinaan toisen funktion, tai palauttavat paluuarvonaan funktion\cite[s.546]{scott}. Yksi yleisimpi‰ tapoja k‰ytt‰‰ korkeamman kertaluvun funktioita on rakentaa niiden avulla uusia funktioita. Esimerkiksi Haskelin \textit{map}-funktio ottaa parametrinaan funktion ja listan, ja k‰y listan rekursiivisesti l‰pi soveltaen parametrinaan saamaa funktiota jokaiselle listan alkiolle. 
 
 \subsection{Rekursio}
 Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin muuttujan arvosta, ei sivuvaikutuksettomassa ohjelmoinnissa voida k‰ytt‰‰ perinteisi‰ silmukoita toiston aikaansaamiseen. Funktionaalisessa ohjelmoinnissa toisto aikaansaadaan rekursiolla. Listat ovat funktionaalisissa kieliss‰ t‰rkeit‰ koska niill‰ on luonnollinen rekursiivinen m‰‰ritelm‰. Lista voidaan m‰‰ritell‰ parina, jonka ensimm‰inen alkio on listan ensimm‰inen alkio, jolloin parin toinen alkio on listan loppuosa. Listan loppuosa on lista, tai tyhj‰ arvo. Listoille on funktionaalisissa kieliss‰ usein valmiiksi m‰‰riteltyj‰ alkeisoperaatioita kuten \textit{head} joka palauttaa parametrina annetun listan ensimm‰isen alkion, tai \textit{tail}, joka palauttaa paramatrina annetun listan ilman ensimm‰ist‰ alkiotaan.
@@ -118,12 +117,19 @@ Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin
 %%        | Nil
 %%\end{displaymath} 
 
- 
+\subsection{Evaluaatioj‰rjestys}
+Funktionaalisten ohjelmien evaluoimiseen on vakiintunut kaksi tapaa. \textit{Tiukkassa evaluaatiossa} (engl. \textit{strict evaluation}) lausekkeet, erityisesti funktioiden argumentit, evaluoidaan aina, oli siihen tarvetta tai ei. Tiukan mallin avulla voidaan k‰‰nnˆsaikana tunnistaa p‰‰ttym‰ttˆm‰t lausekkeet, toisin sanoen lausekkeet jotka eiv‰t evaluoidu, vaan hajaantuvat. Haittapuolena pit‰‰ ohjelmien m‰‰rittelyss‰ olla tarkkana, v‰‰r‰ m‰‰rittelyj‰rjestys voi johtaa siihen ett‰ sin‰ns‰ validi ohjelma ei k‰‰nny. 
 
-\subsection{Laiska evaluaatio}
+Tiukan evaluaation vastakohta on \textit{laiska evaluaatio} (engl. \textit{lazy evaluation}), jossa lausekkeiden arvot evaluoidaan vasta kun niit‰ tarvitaan. Esimerkiksi jos listan ensimm‰isen alkion palauttavalle funktiolle annetaan argumenttina p‰‰ttym‰tˆn lista niin tiukkaa evaluaatiota k‰ytt‰v‰ ohjelma ei edes k‰‰nny kun taas laiskaa evaluaatiota k‰ytt‰v‰ ohjelma evaluoi listasta vain sen ensimm‰isen alkion. Funktionaalinen ohjelmointikieli on laiska, jos se evaluoi lausekkeensa laiskasti. Yleisesti ottaen laiskat kielet ovat nopeampia kuin tiukat, johtuen siit‰ ett‰ ne eiv‰t yrit‰ evaluoida kaikkia lausekkeita.
+%% TODO: funktionaalisen ohjelmointikielen laiskuus, l‰hde!!
+%% TODO: hajaantuvat? selitys 
 
-\textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}), sivuvaikutuksettomuuden seuraus, mit‰ siit‰ seuraa, tiukka evaluaatio, laiskat tietorakenteet, haskell ja lisp, \textit{laiska funktio} 
+Yleisesti imperatiiviset kielet k‰ytt‰v‰t tiukkaa evaluaatiota. Funktionaaliseen ohjelmointiin sopivista kielist‰ Lisp ja sen johdannaiset k‰ytt‰v‰t tiukkaa evaluaatiota, tosin Schemeen on lis‰tty tuki laiskalle evaluaatiolle. Haskell sen sijaan k‰ytt‰‰ laiskaa evaluaatiota. 
+%% TODO: scheme l‰hde
 
+%\textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}), sivuvaikutuksettomuuden seuraus, mit‰ siit‰ seuraa, tiukka evaluaatio, laiskat tietorakenteet, haskell ja lisp, \textit{laiska funktio} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Yht‰lˆt ja hahmontunnistus}
 
 \subsection{Tyypitys, monimuotoisuus ja tiedon abstrahointi}
@@ -135,10 +141,18 @@ Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin
 
 \subsection{Funktionaalinen siirr‰nt‰}
 Haskell IO monadi, kuvaus.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 
 \section{Yhteenveto}
-Funktionaalinen ohjelmointi on kehittynyt matemaattisesta formalismista varteenotettavaksi ohjelmointiparadigmaksi vastaamaan modernin ohjelmistokehityksen haasteisiin. Funktionaalinen paradigma tarjoaa voimakkaat tyˆkalut abstraktioiden rakentamiseen. 
-%% TODO: lis‰‰
+Funktionaalinen ohjelmointi on kehittynyt matemaattisesta formalismista varteenotettavaksi ohjelmointiparadigmaksi. Taustalla on halu saada ohjelmille esitysmuoto jossa ohjelmien oikeaksitodistaminen olisi helpompaa. Lis‰ksi funktionaalinen ohjelmointi tarjoaa voimmakkaita korkean tason k‰sitteit‰ ohjelmien kirjoittamiseen ja ongelmien ratkontaan. 
+
+Funktionaalisen ohjelmoinnin taustalla olevaa teoriaa kutsutaan lambda-laskennaksi. Lambda-laskenta kehitettiin alun perin formalismiksi jonka avulla voi esitt‰‰ kaikki laskettavissa olevat funktiot. Hyvin pian huomattiin ett‰ lambda-laskenta on ilmaisuvoimaltaan yht‰l‰inen turingin koneiden kanssa. 
+
+John McCarthy kehitti vuonna 1958 teko‰lyyn ja symboliseen laskentaan soveltuvan Lisp-kielen. McCarthy halusi kieleens‰ funktiot ensimm‰isen luokan arvoina, ja sopiv‰ malli t‰h‰n lˆytyi lambda-laskennasta. Lisp ei kuitenkaan varsinaisesti ollut puhdas funktionaalinen ohjelmointikieli, koska se salli tilan. Toinen merkitt‰v‰ Lispin ominaisuus oli Lisp-koodin esitt‰minen Lisp-listoina. 
+
+Lispin j‰lkeen on tullut monia muita kieli‰ jotka tukevat funktionaalista ohjelmointiparadigmaa. Merkitt‰vimm‰t n‰ist‰ lienev‰t Scheme, Erlang, Scala, ML ja Haskell. Haskell on alun alkaen suunniteltu puhtaaksi ja laiskaksi funktionaaliseksi kieleksi. Haskell on lis‰ksi vahvasti tyypitetty, monimuotoinen ja tukee tyyppien johtamista. 
+
+Funktionaalisessa ohjelmoinnissa on tyypillist‰ ett‰ funktioita k‰sitell‰‰n ensimm‰isen luokan arvoina. Lista on m‰‰ritelty perustietorakenteena l‰hes kaikiss‰ funktionaalista ohjelmointia tukevissa kieliss‰, samoin eri listaoperaatiot. Toisto saavutetaan rekursion avulla. Funktionaalisista ohjelmointikielist‰ Haskell tukee lausekkeiden laiskaa evaluaatiota, mik‰ on tehokkaampaa kuin tiukka evaluaatio, ja mahdollistaa p‰‰ttym‰ttˆm‰t tietorakenteet. Funktionaalisen mallin kannalta ongelmallinen siirr‰nt‰ on toteuttu Haskelissa monadien avulla.  
 
 \newpage
 
