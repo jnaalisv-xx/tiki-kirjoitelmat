@@ -43,6 +43,8 @@ Tämä kirjoitelma esittelee funktionaalisen ohjelmointiparadigman. Kirjoitelman t
 %%Ohjelmointi ilman sivuvaikutuksia, ohjelmointi funktioarvoilla. Imperatiivisessa ohjelmoinnissa ohjelmalla on tila, joka %%%%koostuu muuttujien arvoista ja olioiden kenttien arvoista. Ohjelmassa suoritetaan lausekkeita jotka muuttavat ohjelman tilaa.
 
 \section{Historiaa}
+Funktionaalinen ohjelmointiparadigma on lähes yhtä vanha kuin tietokoneet, ja sen teoreettinen pohja luotiin ennenkuin ensimmäinen elektroninen tietokone oli nähnyt päivänvalon. Tässä kappaleessa kerrotaan lyhyesti funktionaalisen ohjelmoinnin taustalla vaikuttavasta teoriasta, ensimäisestä funktionaaliseen ohjelmointiin soveltuvasta ohjelmointikielestä ja lopuksi mainitaan muutamia suosituimpia nykyisin käytössä olevia funktionaalisia kieliä.
+
 %% WANHAA KAMAA
 \subsection{Lambda-kalkyyli}
 Lambda-kalkyyli kehitettiin formalismiksi matemaattisten funktioiden määrittelyyn. Ilmaisuvoimaltaan se on yhtäläinen turingin koneiden kanssa \cite{lambda} s.5. Lambda-kalkyylissa funktioita ja niiden sovelluksia sisältäviä lausekkeita sievennetään kunnes päästään normaalimuotoon, eli lauseketta ei voi enää sieventää. Tämä normaalimuoto on lambda-laskennan tulos. Lambda-kalkyyli on hyvin yksinkertainen mutta ilmaisuvoimainen sievennyssäännöstö. Lambda-kalkyyli koostuu \textit{lambda-lausekkeista} joita ovat \textit{abstraktio}, joka määrittelee funktion, \textit{sovellus}, joka on funktion sovellus argumenttiinsa, tai \textit{muuttuja}. Funktion vartalo on lambda-lauseke, ja funktioilla on vain yksi argumentti. Mikäli halutaan esimerkiksi kaksiargumenttinen funktio, voidaan määritellä funktio joka palauttaa toisen funktion sitoen argumenttinsa palauttamansa funktion vartalossa.
@@ -129,19 +131,33 @@ Yleisesti imperatiiviset kielet käyttävät tiukkaa evaluaatiota. Funktionaaliseen
 
 %\textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}), sivuvaikutuksettomuuden seuraus, mitä siitä seuraa, tiukka evaluaatio, laiskat tietorakenteet, haskell ja lisp, \textit{laiska funktio} 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Yhtälöt ja hahmontunnistus}
 
-\subsection{Tyypitys, monimuotoisuus ja tiedon abstrahointi}
-%% Tyypitys, monimuotoisuus Tiedon abstrahointi, 
-%\textit{Vahva staattinen tyypitys} (engl. \textit{strong static typing}) blah blah
-%\textit{Tyyppien johtaminen} (engl. \textit{type inference})
+\subsection{Tyypitys ja monimuotoisuus funktionaalisissa kielissä}
 
-\textit{Monimuotoisuus} (engl. \textit{polymorphism}) on funktionaalisissa kielissä tärkeä ominaisuus, koska se sallii funktioiden käytön mahdollisimman monentyyppisillä parametreilla. Lisp ja sen johdannaiset ovat dynaamisesti tyypitettyjä, ja siten luonnostaan monimuotoisia. Haskell saavuttaa monimuotoisuuden tyyppien johtamisen kautta.
+\textit{Dynaaminen tyypitys} (engl. \textit{dynamic typing}) tarkoittaa tyyppijärjestelmää jossa tyypit tarkastatetaan vasta suoritusaikana \cite[s.310]{scott}. Esimerkiksi useat skripti-kielet ja Lisp ovat dynaamisesti tyypitettuja. Dynaaminen tyypitys tarkoittaa että mahdollisia tyyppivirheitä ei saada kiinni vielä käännösaikana, vaan vasta suoritusaikana. Lisäksi suoritusaikainen tyyppitarkastus lisää ohjelman resurssivaatimuksia.
+
+Ohjelmointikielen sanotaan olevan \textit{vahvasti tyypitetty} (engl. \textit{strongly typed}) \cite[s.309]{scott}, jos se kieltää operaattorin tai funktion sovelluksen tyypille jos funktio tai operaattori ei tue kyseistä tyyppiä. Lisäksi ohjelmointikielen sanotaan olevan \textit{staattisesti tyypitetty} \cite[s.309]{scott}, jos on vahvasti tyypitetty ja tyyppien tarkastus voidaan tehdä käännösaikana. Funktionaalisista ohjelmointikielistä Haskell on staattisesti tyypitetty. Imperatiivisista ohjelmointikielistä muun muassa Java ja C++ ovat staattisesti tyypitettyjä. Staattisen tyypitys auttaa ohjelmoijaa saamaan kiinni tyyppivirheet käännösaikana.
+ 
+\textit{Tyypin johtaminen} (engl. \textit{type inference}), tarkoittaa sitä että lausekkeen tyyppi voidaan johtaa lausekkeen käyttöympäristöstä, tai joistain lausekkeen osista \cite[s.308]{scott}. Useat dynaamisesti tyypitetyt skriptikielet johtavat lausekkeiden tyypit suoritusiaikana. Tyyppien johtaminen on yleisesti tuettua funktionaalisissa ohjelmointikielissä. Näin esimerkiksi Haskell-funktion määrittelystä voidaan jättää parametrien tyypitys pois.  
+
+\textit{Monimuotoisuus} (engl. \textit{polymorphism}) tarkoittaa sitä että yksi ohjelmalohko, funktio tai kokonainen ohjelma voidaan suorittaa monilla eri tyypeillä. \cite[s.309]{scott} Funktionaalisissa kielissä monimuotoisuus tärkeä ominaisuus, koska se sallii funktioiden käytön mahdollisimman monentyyppisillä parametreilla. Lisp ja sen johdannaiset ovat dynaamisesti tyypitettyjä, ja siten luonnostaan monimuotoisia. Koska Haskell-funtioiden parametrien tyyppiä ei tarvitse määritellä, saavuttaa Haskell monimuotoisuuden tyyppien johtamisen kautta. Esimerkiksi listoja käsittelevät funktiot ovat monimuotoisia, yleensä ne eivät edes tiedä mitä tyyppiä listan alkiot ovat, koska ne ovat kiinnostuneita vain listan rakenteesta.
+
+%% TODO: abstrakti tietotyyppi
+%% TODO: Haskelin tyyppijärjestelmä
 
 \subsection{Funktionaalinen siirräntä}
-Haskell IO monadi, kuvaus.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+Siirräntä on sivuvaikutuksellisen luonteensa vuoksi ongelmallinen funktionaalisille ohjelmointikielille. Puhtaissa funktionaalisissa ohjelmointikielissähän funktiot palauttavat samoilla argumenteilla aina saman paluuarvon. Käyttäjältä syötteen lukeva $read$-funktiohan taas palauttaa käyttäjän syöttämän merkin tai merkkijonon, jolloin funktion paluuarvo vaihtelee kutsukerrasta toiseen.
+
+\textit{Sekvenssointi} (engl. \textit{sequencing}) tarkoittaa ohjelmointikielen lauseiden suorittamista järjestyksessä. Funktionaalisissa ohjelmointikielissä lausekkeiden evaluointijärjestyksellä ei ole väliä. Siirräntää taas ei voi toteuttaa ilman että voidaan määrätä toimintojen järjestys.
+
+Haskell toteuttaa siirrännän \textit{monadien} (engl. \textit{monad}) avulla. Monadi on on abstrakti tietotyyppi joka tukee sekvenssoinnin käsitettä. Haskelin siirräntämonadin arvot ovat \textit{toimintoja} (engl. \textit{action}), jotka ohjelmoija voi pakottaa suoritettavaksi tietyssä järjestyksessä \cite[s.543]{scott}. Toiminnot ovat funktionaalisesta siirrännästä puhuttaessa erilaisia luku- tai kirjoitustoimintoja. Haskellin siirräntämonadin funktiot joko palauttavat tai ottavat parametreikseen toimintoja. Esimerkiksi $getChar$-funktio palauttaa siirräntätoiminnon joka lukee syötteestä yhden merkin. Vastaavasti $putChar$-funktio palauttaa toiminnon joka kirjoittaa merkin ulostuloon. Siirräntätoimintoja palauttavien funktioiden kutsut tulee sekvensoida $do$-operaattorin avulla. 
+
+%%Näin esimerkiksi yksinkertainen kaksi riviä tulostava Haskell ohjelma olisi seuraavanlainen:
+%%\begin{displaymath}
+%%main = do putStr "Hoi \n"
+%%          putStr "maailma!"
+%%\end{displaymath}
 
 \section{Yhteenveto}
 Funktionaalinen ohjelmointi on kehittynyt matemaattisesta formalismista varteenotettavaksi ohjelmointiparadigmaksi. Taustalla on halu saada ohjelmille esitysmuoto jossa ohjelmien oikeaksitodistaminen olisi helpompaa. Lisäksi funktionaalinen ohjelmointi tarjoaa voimmakkaita korkean tason käsitteitä ohjelmien kirjoittamiseen ja ongelmien ratkontaan. 
