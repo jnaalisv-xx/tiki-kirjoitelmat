@@ -36,18 +36,24 @@ T‰m‰ kirjoitelma esittelee funktionaalisen ohjelmointiparadigman. Kirjoitelman t
 \mytableofcontents
 
 \section{Johdanto}
+\textit{Funktionaalinen ohjelmointi} (engl. \textit{functional programming} on hieman erilainen tapa ohjelmoida kuin turinginkoneisiin perustuva imperatiivinen paradigma. Siin‰ miss‰ imperatiivisessa ohjelmassa ohjelman suoritus etenee muuttamalla ohjelman tilaa, funktionaalisessa ohjelmassa laskennan tulos on syˆtteen‰ saadun funktion sovellus argumentteihinsa. T‰h‰n saakka vaikuttaa viel‰ aivan normaalilta, onhan imperatiivisissakin kieliss‰ funktioita, ja jos niit‰ kutsuu tietyill‰ argumenteilla niin ne palauttavat tietyn arvon. Mutta, funktionaalisessa ohjelmointikieless‰ funktiot ovatkin hieman tiukemmin m‰‰riteltyj‰, itseasiassa ne ovat pikemminkin matematiikasta tuttuja funktioita kuin Javasta tai C:st‰. T‰st‰ seuraa ett‰ funktionaalisessa ohjelmoinnissa funktioilla ei ole tilaa, funktioita voidaan v‰litt‰‰ argumentteina ja tiettyyn argumenttiin sidottua arvoa ei voi j‰lkik‰teen muuttaa. T‰ss‰ kirjoitelmassa esitell‰‰n funktionaalinen ohjelmointiparadigma, ja mit‰ hyˆty‰ ja hupia siit‰ seuraa kun funktion m‰‰ritelm‰ksi otetaan tiukka matematiikasta tuttu m‰‰ritelm‰.
+
+Funktionaalisen ohjelmoinnin taustalla vaikuttavaa teoriaa kutsutaan \textit{lambda-laskennaksi}. Se otettiin laskennan malliksi koska er‰s teko‰lytutkija halusi kieleens‰ mahdollisuuden v‰litt‰‰ funktioita argumentteina, ja lambda-laskenta tarjosi sopivan notaation funktioiden v‰litt‰miseen argumentteina.
+
 %% WANHAA KAMAA
-\textit{Funktionaalinen ohjelmointiparadigma} on ohjelmointitapa, jossa ohjelma rakennetaan funktioista, jotka palauttavat aina saman arvon samoilla argumenteilla. Puhtaassa funktionaalisessa ohjelmoinnissa ei ole tilaa, eik‰ siin‰ suoriteta per‰kk‰isi‰ k‰skyj‰ kuten proseduraalisessa- tai olio-ohjelmoinnissa. Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan sievent‰m‰ll‰ funktioita sis‰lt‰v‰‰ lauseketta \textit{lambda-kalkyyliin} perustuvien sievennys‰‰ntˆjen mukaan. Sievennyss‰‰nnˆt mahdollistavat funktioiden v‰litt‰misen argumentteina, jolloin funktiot ovat niin sanottuja \textit{ensimm‰isen luokan olioita}. Funktiot jotka saavat argumentteinaan toisia funktioita, kutsutaan \textit{korkeamman asteen funktioiksi}. Niit‰ voidaan voidaan myˆs rakentaa ajonaikana ja palauttaa toisten funktioiden arvoina. Funktionaalisessa ohjelmoinnissa ei k‰ytet‰ silmukoita, vaan suuret tietom‰‰r‰t l‰pik‰yd‰‰n rekursion avulla.
+%\textit{Funktionaalinen ohjelmointiparadigma} on ohjelmointitapa, jossa ohjelma rakennetaan funktioista, jotka palauttavat aina saman arvon samoilla argumenteilla. Puhtaassa funktionaalisessa ohjelmoinnissa ei ole tilaa, eik‰ siin‰ suoriteta per‰kk‰isi‰ k‰skyj‰ kuten proseduraalisessa- tai olio-ohjelmoinnissa. Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan sievent‰m‰ll‰ funktioita sis‰lt‰v‰‰ lauseketta \textit{lambda-kalkyyliin} perustuvien sievennys‰‰ntˆjen mukaan. Sievennyss‰‰nnˆt mahdollistavat funktioiden v‰litt‰misen argumentteina, jolloin funktiot ovat niin sanottuja \textit{ensimm‰isen luokan olioita}. Funktiot jotka saavat argumentteinaan toisia funktioita, kutsutaan \textit{korkeamman asteen funktioiksi}. Niit‰ voidaan voidaan myˆs rakentaa ajonaikana ja palauttaa toisten funktioiden arvoina. Funktionaalisessa ohjelmoinnissa ei k‰ytet‰ silmukoita, vaan suuret tietom‰‰r‰t l‰pik‰yd‰‰n rekursion avulla.
 %% /WANHAA KAMAA
 
 %%Ohjelmointi ilman sivuvaikutuksia, ohjelmointi funktioarvoilla. Imperatiivisessa ohjelmoinnissa ohjelmalla on tila, joka %%%%koostuu muuttujien arvoista ja olioiden kenttien arvoista. Ohjelmassa suoritetaan lausekkeita jotka muuttavat ohjelman tilaa.
 
 \section{Historiaa}
-Funktionaalinen ohjelmointiparadigma on l‰hes yht‰ vanha kuin tietokoneet, ja sen teoreettinen pohja luotiin ennenkuin ensimm‰inen elektroninen tietokone oli n‰hnyt p‰iv‰nvalon. T‰ss‰ kappaleessa kerrotaan lyhyesti funktionaalisen ohjelmoinnin taustalla vaikuttavasta teoriasta, ensim‰isest‰ funktionaaliseen ohjelmointiin soveltuvasta ohjelmointikielest‰ ja lopuksi mainitaan muutamia suosituimpia nykyisin k‰ytˆss‰ olevia funktionaalisia kieli‰.
+Funktionaalinen ohjelmointiparadigma on l‰hes yht‰ vanha kuin tietokoneet, ja sen teoreettinen pohja luotiin ennenkuin ensimm‰inen elektroninen tietokone oli n‰hnyt p‰iv‰nvalon. T‰ss‰ kappaleessa kerrotaan lyhyesti lambda-laskennasta, johon funktionaalisen ohjelmoinnin malli pohjatuu, ensimm‰isest‰ funktionaaliseen ohjelmointiin soveltuvasta ohjelmointikielest‰ sek‰ lopuksi mainitaan muutamia suosituimpia nykyisin k‰ytˆss‰ olevia funktionaalisia kieli‰.
 
 %% WANHAA KAMAA
-\subsection{Lambda-kalkyyli}
-Lambda-kalkyyli kehitettiin formalismiksi matemaattisten funktioiden m‰‰rittelyyn. Ilmaisuvoimaltaan se on yht‰l‰inen turingin koneiden kanssa \cite{lambda} s.5. Lambda-kalkyylissa funktioita ja niiden sovelluksia sis‰lt‰vi‰ lausekkeita sievennet‰‰n kunnes p‰‰st‰‰n normaalimuotoon, eli lauseketta ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on lambda-laskennan tulos. Lambda-kalkyyli on hyvin yksinkertainen mutta ilmaisuvoimainen sievennyss‰‰nnˆstˆ. Lambda-kalkyyli koostuu \textit{lambda-lausekkeista} joita ovat \textit{abstraktio}, joka m‰‰rittelee funktion, \textit{sovellus}, joka on funktion sovellus argumenttiinsa, tai \textit{muuttuja}. Funktion vartalo on lambda-lauseke, ja funktioilla on vain yksi argumentti. Mik‰li halutaan esimerkiksi kaksiargumenttinen funktio, voidaan m‰‰ritell‰ funktio joka palauttaa toisen funktion sitoen argumenttinsa palauttamansa funktion vartalossa.
+\subsection{Lambda-laskenta}
+Vuonna 1936 Alonzo Church kehitti lambda-laskennan matemaattisena formalismina jonka avulla pystyttiin m‰‰rittelem‰‰n kaikki laskettavissa olevat funktiot. H‰nen tarkoituksenaan oli ratkaista \textit{pys‰htymisongelma} (saks. \textit{entscheidungsproblem}). Ratkaisu oli negativinen mik‰ tarkoittaa ett‰ ei voida m‰‰ritell‰ algoritmia jolla laskea kaikki laskettavissa olevat funktiot. Samaan aikaan Alan Turing p‰‰tyi samaan tulokseen omalla laskennan mallillaan, \textit{turing-koneella} (engl. \textit{turing machine}) \cite[s.5]{lambda}. Osoittautui myˆs ett‰ Churchin ja Turingin kehitt‰m‰t mallit kaikkien laskettavissa olevien funktioiden m‰‰rittelyyn olivat ilmaisuvoimaltaan yht‰l‰isi‰.
+
+Lambda-laskennassa on yksi sivennyss‰‰ntˆ, jonka mukaan funktion formaali parametri korvataan sille annetulla argumentilla funktion vartalossa. Funktioita ja niiden sovelluksia sis‰lt‰vi‰ lausekkeita sievennet‰‰n kunnes p‰‰st‰‰n normaalimuotoon, eli lauseketta ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on lambda-laskennan tulos. Lambda-laskenta on hyvin yksinkertainen mutta ilmaisuvoimainen sievennyss‰‰nnˆstˆ. Lambda-laskenta koostuu \textit{lambda-lausekkeista} joita ovat \textit{abstraktio}, joka m‰‰rittelee funktion, \textit{sovellus}, joka on funktion sovellus argumenttiinsa, tai \textit{muuttuja}. Funktion vartalo on lambda-lauseke, ja funktioilla on vain yksi argumentti. Mik‰li halutaan esimerkiksi kaksiargumenttinen funktio, voidaan m‰‰ritell‰ funktio joka palauttaa toisen funktion sitoen argumenttinsa palauttamansa funktion vartalossa.
 %% TODO: argumentti vs parametri
 
 \subsection{Lisp}
@@ -67,14 +73,26 @@ Muita funktionaaliseen ohjelmointiin sovelutuvia kieli‰ ovat \textit{Scheme} (Li
 %% vs olio-ohjelmointi, termit yhdenmukaisiksi!!!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%\section{Haskell}
-%%Esimerkit t‰ss‰ kirjoitelmassa on annettu Haskell-kielell‰. T‰ss‰ kappaleessa on lyhyt %%Haskell-johdanto, jonka avulla esimerkkej‰ on helpompi ymm‰rt‰‰.
+\section{Haskell}
+Esimerkit t‰ss‰ kirjoitelmassa on annettu Haskell-kielell‰. T‰ss‰ kappaleessa on lyhyt Haskell-johdanto, jonka avulla esimerkkej‰ on helpompi ymm‰rt‰‰.
 
-%%\subsection{Funktiot}
-%%Yll‰tt‰en Haskell-ohjelmoijan perustyˆkalu on funktio. Funktiot m‰‰ritell‰‰n n‰in: 
-%%\begin{displaymath}
-%%funktion_nimi parametrit = tulos_lasketaan_n‰in
-%%\end{displaymath}
+\subsection{Funktiot}
+Yll‰tt‰en Haskell-ohjelmoijan perustyˆkalu on funktio. Luvun neliˆn palauttava funktio m‰‰ritell‰‰n n‰in:
+\begin{verbatim}
+neliˆ x = x * x
+\end{verbatim}
+Funktion m‰‰ritelm‰ on yht‰lˆ jonka molemmat puolet ovat yht‰suuria. M‰‰ritelm‰ kertoo ett‰ selattaessa Haskell-koodia, jos tˆrm‰t‰‰n merkint‰‰n $nelio x $, se evaluoituu muotoon $x * x$, jonka Haskell-k‰‰nt‰j‰ tai -tulkki osaa k‰‰nt‰‰ konekieleksi joka laskee luvun neliˆn. Funktio on m‰‰ritelty kaikille tietotyypeille joille on m‰‰ritelty kertolaskuoperaatio. Funktiolle voi antaa parametrina toisen funktion
+
+\begin{verbatim}
+
+jokufunktio f x = (f x) + (f x)
+
+neliˆsumma = jokufunktio neliˆ  
+
+\end{verbatim}
+
+
+
 %% Tietotyypit. data, tyyppi-konstruktorit, konstruktorit, omien tyyppien rakentaminen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
