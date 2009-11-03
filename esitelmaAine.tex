@@ -5,6 +5,9 @@
 \usepackage[latin1]{inputenc}
 \usepackage[finnish]{babel}
 \usepackage[T1]{fontenc}
+\usepackage{verbatim}
+
+\newcommand{\koodikoko}{\footnotesize}
 
 \usecolortheme{rose}
 \usefonttheme{structurebold}
@@ -27,57 +30,72 @@
 % imperatiivinen ohjelmointi
 % miten funktionaalinen ohjelmointi vertautuu siihen, miten eroaa
 % miksi
-
-
+%Miten fp eroaa imperatiivistesta?
+%Mitä sivuvaikutuksettomuus käytännössä tarkoittaa?
 
 \section{Esimerkkejä}
-\subsection{Listoja}
+
+\subsection{Funktionaalinen ohjelmointi käytännössä}
 \begin{frame}
-    \frametitle{Listoja}
+    \frametitle{Funktionaalinen ohjelmointi käytännössä}
     \begin{itemize}
-    \item Ensimmäinen kohta
-    \item Toinen kohta
-    \item \alert{Tärkeä} asia
+    \item Imperatiivisessa ohjelmassa se mitä ohjelma tekee riipuu syötteistä ja ohjelman tilasta
+    \item Funktionaalisessa ohjelmassa ainoastaan syötteistä
     \end{itemize}
+Haskell Koodiesimerkki: \\
+\verbatiminput{hqs.hs}
+
 \end{frame}
 
-\subsection{Laatikoita}
 \begin{frame}
-    \frametitle{Laatikoita}
-    \begin{block}{Esimerkki 1}
-    Tekstiä\\
-    tekstiä\\
-    tekstiä
-    \end{block}
-    \begin{block}{Esimerkki 2}
-    Tekstiä\\
-    tekstiä\\
-    tekstiä
-    \end{block}
+Quicksort pseudokoodina: \\
+\verbatiminput{pseudo.qs}
 \end{frame}
 
-\subsection{Palstoja}
+%%\begin{frame}
+%%\verbatiminput{cqs1.c}
+%%\end{frame}
+
+%%\begin{frame}
+%%\verbatiminput{cqs2.c}
+%%\end{frame}
+
+\subsection{Tilattoman ohjelmoinnin edut 1}
 \begin{frame}
-    \frametitle{Palstoja}
-    \begin{columns}[onlytextwidth,T]
-        \column{5cm}
-        Tekstiä\\
-        tekstiä\\
-        tekstiä
-        \column{5cm}
-        Tekstiä\\
-        tekstiä\\
-        tekstiä
-    \end{columns}
+    \frametitle{Tilattoman ohjelmoinnin edut 1}
+    \begin{block}{Testattaessa imperatiivista ohjelmaa}
+    \begin{itemize}
+     \item Asetetaan olion tila, ja mahdollinen ulkoinen tila jota olio käyttää
+     \item Kutsutaan olion metodia
+     \item Tutkitaan olion ja ohjelman tilaa     
+     \item Mahdollisten testitapausten määrä = syötteet * tilat
+   \end{itemize}
+    \end{block}
+    \begin{block}{Testattaessa puhdasta funktiota}
+    \begin{itemize}
+    \item Ei ole ulkoista eikä sisäistä tilaa mitä asettaa
+    \item Testitapauksia on korkeintaan niin paljon kuin syötteitä
+    \item Voidaan testata funktion palauttama arvo isolla syötejoukolla, \\
+          imperatiivisessa ohjelmassa paluuarvon tulos voi riippua olion, \\
+	  metodin tai ohjelman tilasta
+    \end{itemize}	
+    \end{block}
 \end{frame}
 
-%\subsection{Kuva}
-%\begin{frame}
-%    \frametitle{Kuva}
-%    \begin{center}
-%        \input{esimerkkikuva.pdf_t}
-%    \end{center}
-%\end{frame}
-
+\subsection{Tilattoman ohjelmoinnin edut 2}
+\begin{frame}
+\frametitle{Tilattoman ohjelmoinnin edut 2}
+\begin{block}{Yhteenveto}
+  \begin{itemize}
+    \item Puhdas funktio on yksikkötestaajan "märkä uni"
+    \item Ei väliä missä järjestyksessä funktioita kutsutaan
+    \item Testien generointi voidaan automatisoida helpommin koska ei tarvitse asettaa tilaa
+  \item Tilattomuus vähentää yllätysten määrää, koska funktiot eivät pääse vaikuttamaan ulkomaailmaansa.
+    \item Funktionaalisessa ohjelmoinnissa ohjelma koostetaan pienistä helposti kattavasti testattavista funktioista. 
+  \item Lyhyet helposti testattavat koodilohkot ovat nosteessa myös imperatiivisella puolella (TDD.)
+   \item Virheenjäljitys huomattavasti helpompaa koska virheen ilmentyessä sen esiintyminen ei riipu ohjelman tilasta. Imperatiivisessa ohjelmassa virhe voi esiintyä vain ajoittain, kun ohjelma on tietyssä harvinaisessa tilassa.
+  \end{itemize} 
+    \end{block}
+\end{frame}
 
 \end{document}
