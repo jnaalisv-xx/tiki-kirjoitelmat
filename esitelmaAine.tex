@@ -1,0 +1,83 @@
+% rubber: module pdftex
+
+\documentclass[t,hyperref={pdfpagelabels=false}]{beamer}
+\usepackage{ae,aecompl}
+\usepackage[latin1]{inputenc}
+\usepackage[finnish]{babel}
+\usepackage[T1]{fontenc}
+
+\usecolortheme{rose}
+\usefonttheme{structurebold}
+
+\setbeamertemplate{navigation symbols}{}
+
+\title{Funktionaalinen ohjelmointi}
+\author{Juho Naalisvaara}
+\date{Kirjallisuuspiiri\\
+4.11.2009}
+
+\begin{document}
+
+\section{Etusivu}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Homman pihvi
+% imperatiivinen ohjelmointi
+% miten funktionaalinen ohjelmointi vertautuu siihen, miten eroaa
+% miksi
+
+
+
+\section{Esimerkkejä}
+\subsection{Listoja}
+\begin{frame}
+    \frametitle{Listoja}
+    \begin{itemize}
+    \item Ensimmäinen kohta
+    \item Toinen kohta
+    \item \alert{Tärkeä} asia
+    \end{itemize}
+\end{frame}
+
+\subsection{Laatikoita}
+\begin{frame}
+    \frametitle{Laatikoita}
+    \begin{block}{Esimerkki 1}
+    Tekstiä\\
+    tekstiä\\
+    tekstiä
+    \end{block}
+    \begin{block}{Esimerkki 2}
+    Tekstiä\\
+    tekstiä\\
+    tekstiä
+    \end{block}
+\end{frame}
+
+\subsection{Palstoja}
+\begin{frame}
+    \frametitle{Palstoja}
+    \begin{columns}[onlytextwidth,T]
+        \column{5cm}
+        Tekstiä\\
+        tekstiä\\
+        tekstiä
+        \column{5cm}
+        Tekstiä\\
+        tekstiä\\
+        tekstiä
+    \end{columns}
+\end{frame}
+
+%\subsection{Kuva}
+%\begin{frame}
+%    \frametitle{Kuva}
+%    \begin{center}
+%        \input{esimerkkikuva.pdf_t}
+%    \end{center}
+%\end{frame}
+
+
+\end{document}
