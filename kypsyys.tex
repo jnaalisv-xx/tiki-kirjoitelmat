@@ -6,13 +6,22 @@
 \begin{document}
 \onehalfspacing
 
+\begin{verbatim}
+Juho Naalisvaara               Kypsyysn‰yte               13.11.2009
+Ohjaaja: Arto Wikla
+Valvoja: Juha Vihavainen
+\end{verbatim}
+
 %% TODO: eka lause
 %% TODO: lause:  Mutta, funktionaalisessa ohjelmoin....
+%% TODO: lause: T‰h‰n saakka vaikuttaa viel‰ aika normaal... WTF!!!
+%% TODO: argumentin sidonta arvoonsa!!!
+
 \section{Johdanto}
-\textit{Funktionaalinen ohjelmointi} (engl. \textit{functional programming} on hieman erilainen tapa ohjelmoida kuin turinginkoneisiin perustuva imperatiivinen paradigma. Siin‰ miss‰ imperatiivisessa ohjelmassa ohjelman suoritus etenee muuttamalla ohjelman tilaa, funktionaalisessa ohjelmassa laskennan tulos on syˆtteen‰ saadun funktion sovellus argumentteihinsa. T‰h‰n saakka vaikuttaa viel‰ aivan normaalilta, onhan imperatiivisissakin kieliss‰ funktioita, ja jos niit‰ kutsuu tietyill‰ argumenteilla niin ne palauttavat tietyn arvon. Mutta, funktionaalisessa ohjelmointikieless‰ funktiot ovatkin tiukemmin m‰‰riteltyj‰, itseasiassa ne ovat pikemminkin matematiikasta tuttuja funktioita kuin Javasta tai C:st‰. T‰st‰ seuraa ett‰ funktionaalisessa ohjelmoinnissa funktioilla ei ole tilaa, funktioita voidaan v‰litt‰‰ argumentteina ja tiettyyn argumenttiin sidottua arvoa ei voi j‰lkik‰teen muuttaa. T‰ss‰ kirjoitelmassa esitell‰‰n funktionaalinen ohjelmointiparadigma, ja mit‰ hyˆty‰ ja hupia siit‰ seuraa kun funktion m‰‰ritelm‰ksi otetaan tiukka matematiikasta tuttu m‰‰ritelm‰.
+\textit{Funktionaalinen ohjelmointi} (functional programming) on erilainen tapa ohjelmoida kuin Turing koneisiin perustuva imperatiivinen paradigma. Siin‰ miss‰ imperatiivisessa ohjelmassa ohjelman suoritus etenee muuttamalla ohjelman tilaa, funktionaalisessa ohjelmassa laskennan tulos on syˆtteen‰ saadun funktion sovellus argumentteihinsa. T‰h‰n saakka vaikuttaa viel‰ aivan normaalilta, onhan imperatiivisissakin kieliss‰ funktioita, ja jos niit‰ kutsuu tietyill‰ argumenteilla niin ne palauttavat tietyn arvon. Mutta funktionaalisessa ohjelmointikieless‰ funktiot ovatkin tiukemmin m‰‰riteltyj‰, itseasiassa ne ovat pikemminkin matematiikasta tuttuja funktioita kuin Javasta tai C:st‰. T‰st‰ seuraa ett‰ funktionaalisessa ohjelmoinnissa funktioilla ei ole tilaa, funktioita voidaan v‰litt‰‰ argumentteina ja tiettyyn argumenttiin sidottua arvoa ei voi j‰lkik‰teen muuttaa. T‰ss‰ kirjoitelmassa esitell‰‰n funktionaalinen ohjelmointiparadigma, ja mit‰ hyˆty‰ ja hupia siit‰ seuraa kun funktion m‰‰ritelm‰ksi otetaan tiukka matematiikasta tuttu m‰‰ritelm‰.
 %% TODO: hyˆty‰ ja hupia, wtf!!
 
-Funktionaalisen ohjelmoinnin taustalla vaikuttavaa teoriaa kutsutaan \textit{lambda-laskennaksi}. Se otettiin laskennan malliksi koska er‰s teko‰lytutkija halusi kieleens‰ mahdollisuuden v‰litt‰‰ funktioita argumentteina, ja lambda-laskenta tarjosi sopivan notaation funktioiden v‰litt‰miseen argumentteina.
+Funktionaalisen ohjelmoinnin taustalla vaikuttavaa teoriaa kutsutaan \textit{lambda-laskennaksi}. Lambda-laskenta otettiin laskennan malliksi, koska er‰s teko‰lytutkija halusi kieleens‰ mahdollisuuden v‰litt‰‰ funktioita argumentteina, ja lambda-laskenta tarjosi sopivan notaation funktioiden v‰litt‰miseen argumentteina.
 
 %% WANHAA KAMAA
 %\textit{Funktionaalinen ohjelmointiparadigma} on ohjelmointitapa, jossa ohjelma rakennetaan funktioista, jotka palauttavat aina saman arvon samoilla argumenteilla. Puhtaassa funktionaalisessa ohjelmoinnissa ei ole tilaa, eik‰ siin‰ suoriteta per‰kk‰isi‰ k‰skyj‰ kuten proseduraalisessa- tai olio-ohjelmoinnissa. Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan sievent‰m‰ll‰ funktioita sis‰lt‰v‰‰ lauseketta \textit{lambda-kalkyyliin} perustuvien sievennys‰‰ntˆjen mukaan. Sievennyss‰‰nnˆt mahdollistavat funktioiden v‰litt‰misen argumentteina, jolloin funktiot ovat niin sanottuja \textit{ensimm‰isen luokan olioita}. Funktiot jotka saavat argumentteinaan toisia funktioita, kutsutaan \textit{korkeamman asteen funktioiksi}. Niit‰ voidaan voidaan myˆs rakentaa ajonaikana ja palauttaa toisten funktioiden arvoina. Funktionaalisessa ohjelmoinnissa ei k‰ytet‰ silmukoita, vaan suuret tietom‰‰r‰t l‰pik‰yd‰‰n rekursion avulla.
