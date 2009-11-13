@@ -1,4 +1,7 @@
 
+esitelma:
+	rubber -Wall esitelmaAine.tex
+
 tutkielma:
 	rubber -Wall tutkielma.tex
 
