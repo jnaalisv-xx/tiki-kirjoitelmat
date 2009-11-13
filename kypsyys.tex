@@ -14,6 +14,7 @@ Valvoja: Juha Vihavainen
 \end{verbatim}
 
 \section{Johdanto}
+
 Yleisimm‰t k‰ytˆss‰ olevat ohjelmointikielet perustuvat laskennan malliin, jossa ohjelmalla on \textit{tila} (state), ja t‰t‰ tilaa muokataan ohjelmointikielen tarjoamien lauseiden tai komentojen avulla. T‰ll‰isi‰ ohjelmointikieli‰, kuten Java tai C\#, kutsutaan \textit{imperatiivisiksi} (imperative language). Imperatiivisessa ohjelmoinnissa ohjelmoija kirjoittaa lauseita, jotka muokkaavat ohjelman tilaa tietyss‰ j‰rjestyksess‰. Imperatiivisen ohjelmointiparadigman laskennan mallia kutsutaan \textit{Turingin koneeksi} (Turing machine), kehitt‰j‰ns‰ Alan Turingin mukaan. Imperatiivisen mallin ongelmana voidaan pit‰‰ sit‰ ett‰ ohjelman oikeaksi todistaminen on hyvin hankalaa. Samoin ohjelman kaikkien mahdollisten suorituspolkujen testaaminen on yleens‰ mahdotonta, johtuen ohjelman eri tilojen lukum‰‰r‰st‰.
 
 \textit{Funktionaalinen ohjelmointiparadigma} (functional programming) vastaa n‰ihin haasteisiin tarjoamalla ohjelmointimallin jossa ohjelmilla ei ole tilaa. Tilattomuus helpottaa ohjelman testaamista huomattavasti, koska se v‰hent‰‰ mahdollisten suorituspolkujen m‰‰r‰‰. Funktionaalisten ohjelmien oikeaksi todistaminen on myˆs huomattavasti helpompaa kuin imperatiivisten, johtuen taustalla vaikuttavasta laskennan mallista. Lis‰ksi funktionaaliset ohjelmat ovat yleens‰ lyhyempi‰ kuin niiden imperatiiviset vastineensa, koska funktionaaliset kielet ovat yleens‰ korkeamman tason kieli‰ kuin imperatiiviset.
@@ -24,11 +25,8 @@ Funktionaalisen paradigman l‰htˆkohtana on koostaa ohjelma lukuisista pienist‰, 
 
 Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan evaluoimalla, eli sievent‰m‰ll‰ lausekkeita. Lauseke koostuu funktiosta ja sille annetuista argumentista. Argumentit voivat olla toisia funktioita, lausekkeita tai arvoja. Lausekkeen evaluoinnissa funktion formaalit parametrit korvataan argumenteilla. Tuloksena saatua lauseketta sievennet‰‰n kunnes p‰‰st‰‰n lausekkeen normaalimuotoon, jota ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on laskennan tulos.
 
-Funktionaalisen ohjelmoinnin laskennan malli on otettu Alonzo Churchin vuonna 1936 kehitt‰m‰st‰ \textit{lambda-laskennasta} (lambda-calculus). Church kehitti lambda-laskennan formalismiksi jolla m‰‰ritell‰ kaikki laskettavissa olevat funktiot. Lambda-laskenta otettiin ohjelmointiin laskennan malliksi, koska er‰s teko‰lytutkija halusi kieleens‰ mahdollisuuden v‰litt‰‰ funktioita argumentteina, ja lambda-laskenta tarjosi sopivan notaation funktioiden v‰litt‰miseen argumentteina.
+Funktionaalisen ohjelmoinnin laskennan malli on otettu Alonzo Churchin vuonna 1936 kehitt‰m‰st‰ \textit{lambda-laskennasta} (lambda-calculus). Church kehitti lambda-laskennan formalismiksi jolla m‰‰ritell‰ kaikki laskettavissa olevat funktiot. Vuonna 1958 kehitettiin ensimm‰inen funktionaaliseen ohjelmointiin soveltuva kieli, Lisp (LISt Processing Language). Kielen kehitt‰j‰, John McCarthy, halusi kieleens‰ mahdollisuuden v‰litt‰‰ funktioita argumentteina, ja lambda-kalkyyli tarjosi t‰h‰n sopivan notaation. 
 
-%Kielist‰
-%Funktionaalinen
-%Tausta historia teoria
-%mit‰ tarjoaa
+Lispin johdannaiset, Scheme ja Common Lisp, ovat edelleen k‰ytˆss‰. Muita funktionaaliseen ohjelmointiin soveltuvia kieli‰ ovat muun muassa, Scala, F\#, Standard ML, Erlang ja Python. Edell‰mainitut kielet eiv‰t kuitenkaan ole puhtaasti funktionaalisia, joko ne sallivat sivuvaikutukset, tai ovat moniparadigmakieli‰. Haskell on sivuvaikutukseton alun alkaen funktionaaliseen ohjelmointiin suunniteltu kieli. 
 
 \end{document}
