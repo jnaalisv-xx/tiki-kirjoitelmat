@@ -1,0 +1,217 @@
+% rubber: module pdftex
+
+\documentclass[t,hyperref={pdfpagelabels=false}]{beamer}
+\usepackage{ae,aecompl}
+\usepackage[latin1]{inputenc}
+\usepackage[finnish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{verbatim}
+
+\newcommand{\koodikoko}{\footnotesize}
+
+\usecolortheme{rose}
+\usefonttheme{structurebold}
+
+\setbeamertemplate{navigation symbols}{}
+
+\title{Lyhyt Haskell-johdanto}
+\author{Juho Naalisvaara}
+\date{Kirjallisuuspiiri\\
+25.11.2009}
+
+\begin{document}
+
+%%\section{Etusivu}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+%% Haskellissa muuttuja on tapa antaa nimi lausekkeelle.
+%% imperatiivisessa ohjelmoinnissa muuttuja on muistipaikan 
+%% osoite johon voidaan kirjoittaa eri arvoja.
+
+%%\section{Haskell}
+\begin{frame}
+\frametitle{Haskellin ominaisuuksia:}
+\begin{itemize}
+
+ \item Funktiot ensimmäisen luokan arvoina 
+% Ensimmäisen luokan arvo voidaan välittää parametrina,
+% palauttaa funktion paluuarvona, tai luoda suoritusaikana
+ \newline
+ \item Puhtaasti funktionaalinen, eli tilaton
+% Kaikki laskenta tapahtuu evaluoimalla lausekkeita
+% jotta vastauksena saadaan arvoja (vastauksia), jokaisella arvolla on tyyppi
+% => viitteiden läpikuultavuus, lauseke voidaan aina korvata vastaavalla arvolla
+% ja toisinpäin, imperatiivisella puolella tämä ei ole mahdollista koska
+% lauseen arvo voi riippua tilasta
+% Puhtaus tekee koodista helpommin ymmärrettävää, koska funktion toiminta
+% ei riipu mistään tilasta
+ \newline
+ \item Laiskasti evaluoituva
+% normal order evaluation, call-by-need evaluation 
+% argumentit evaluoidaan vasta kun niitä tarvitaan,
+% jos argumentteja ei koskaan käytetä, niitä ei myöskään evaluoida.
+% tiukassa evaluoinnissa argumentit evaluoidaan ennen funktioita
+% laiska evaluaatio antaa ohjelmoijalle luvan olla ajattelematta mitä evaluoidaan
+% ja mitä ei
+% mahdollisuus laskea äärettömillä tietorakenteilla
+ \newline
+ \item Vahvasti ja staattisesti tyypitetty
+ % staattisuus => tyypit tarkistetaan käännösaikana.
+ % vahva tyyppijärjestelmä = ei automaagista tyyppikonversiota
+ % lausekkeiden tyyppien pitää olla yhteensopivia. eri tyyppejä ei voi sekoittaa
+ \newline
+ \item Haskell kääntäjä (tai tulkki) osaa päätellä tyypin
+ % jokaiseen määritelmään voi liittyä tyyppiannotaatio joka kertoo 
+ % määritelmän tyypin, ei pakollinen, haskell osaa myös päätellä tyypin!
+ \newline 
+ \item Yhtälöt ja hahmontunnistus
+ % funktiot määritellään yhtälöinä. funktiolla voi olla useita määritelmiä
+ % joista valitaan sopiva hahmontunnistuksen avulla.
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Lausekkeita}
+%% Funktionaalisessa kielessä (kuten Haskell) laskenta tapahtuu 
+%% evaluoimalla lausekkeita. Jokaiseen lausekkeeseen liittyy arvo, 
+%% joka saadaan evaluoimalla lauseke.
+%% lauseke siis merkitsee arvoa
+%% Lausekkeet voivat olla atomisia arvoja kuten 5 tai b,
+%% tietorakenteita, kuten lista
+%% funktiomääritelmiä
+%% tai funktiokutsuja
+
+\verbatiminput{laus.hs}
+\end{frame}
+
+\begin{frame}
+\frametitle{Tyyppejä}
+%% Jokaisella arvolla on siihen liittyvä tyyppi
+\verbatiminput{tyyp.hs}
+\end{frame}
+
+%% Kaikki haskellin arvot ovat ensimmäisen luokan arvoja, tarkoittaen että niitä 
+%% voidaan välittää argumentteina funktioille, palauttaa paluuarvoina ja 
+%% sijoittaa tietorakenteisiin. 
+%% Lausekkeet evaluoituvat arvoiksi, ja joikaisella arvolla on siihen liittyvä tyyppi
+%% :: ~ "has type"
+\begin{frame}
+\frametitle{Lausekkeita ja niihin liittyviä tyyppejä}
+\verbatiminput{laustyyp.hs}
+\end{frame}
+
+
+%% Funktiot määritellään haskellissa yhtälöinä
+%% funktion factorial määritelmään on lisätty tyyppiannotaatio
+%% joka kertoo että funktio on kuvaus kokonaislukujen joukosta kokonaislukujen joukkoon.
+%% nimeen factorial liittyy kaksi määritelmää ja tyyppiannotaatio
+%% Haskell kääntäjä osaisi määritelmien perusteella määrätä lausekkeen tyypin
+%% funktiokutsu assosioi vasemmalle
+%% guards == ehto
+%% hahmo voi olla lukuliteraali, tyyppikonstruktori
+\begin{frame}
+\frametitle{Funktiot}
+\verbatiminput{fac.hs}
+\end{frame}
+
+%% Kun kääntäjä törmää factorial-kutsuun, se soveltaa hahmonsovitusta,
+%% ensiksi kokeillaan mätsääkö kutsu "factorial 0":aan
+%% seuraavaksi kokeillaan mätsääkö factorial n > 0
+
+
+%% TODO: MONIMUOTOISUUS, LISTAT JA REKURSIO
+%% funktion tyypissä voi olla tyyppimuuttuja, jolloin funktio on monimuotoinen:
+%% fst :: (a,b) -> a
+%% fst (a,b) = a
+
+
+% rakenteetllinen rekursio
+%lenght::[a] -> Integer
+%length [] = 0
+%length (x:xs) = length xs + 1
+% rekursiivinen tapaus, epätyhjä lista
+% rekursiokutsu: lasketaan hännän pituus
+% listan pituus on hännän pituus + 1
+% lenght on monimuotoinen funktio joka on määriteltey esim 
+% koklukulistolle, merkkilistoille, merkkijonolistoille jne
+
+
+%% jotkin tyypit on määritelty kaikille tyypeille:
+%% [a]  on kaikkien mahdollisten tyyppien muodostamien listojen tyyppi
+% [1,2,3] on kokona
+
+
+%% TODO: ABSTRAKTIT TIETOTYYPIT
+% tiedon abstrahointi parantaa modulaarisuutta, luettavuutta ja turvallisuutta
+% vahva staattinen tyypitys auttaa virheenjäljityksessä, koska jos ohjelma kääntyyy
+% ei tyyppivirheitä voi tapahtua suoritusaikana
+
+% induktiiviset tietotyypit, predfined in Haskell
+% Bool on (parametriton) tyyppikonstruktori
+%data Bool = False
+%          | True
+% False & True parametrittomia data konstruktoreita
+% samoin voitaisiin määritellä
+% data Color = Red | Green | Blue | Indigo | Violet
+
+% data Point a = Point a a
+% point monimuotoinen tyyppi
+% nyt Point 3 4 :: Point Integer
+%     Point 3.0 4.0 :: Point Float
+% mutta Point 3.0 4 ?
+
+%rekursiivinen tyyppi
+% data Tree a = Leaf a 
+%              | Branch (Tree a) (Tree a)
+% Tree tyyppikonstruktori
+% Leaf ja Branch on data konstruktoreita
+% Leaf :: a -> Tree a
+% Branch :: Tree a -> Tree a -> Tree a 
+
+% map ? foldr?
+
+fringe :: Tree a -> [a]
+fringe (Leaf x) = [x]
+fringe (Branch left right) = fringe left ++ fringe right
+
+
+%% TODO: LISTAT ja REKURSIO
+% LISTA lukuja, niiden summa
+% sum [] = 0
+% sum (x:xs) = x + sum xs
+
+%%data List a = Nil
+%%            | Cons a (List a)
+
+%% jolloin Cons 1 (Cons 2 (Cons 3))
+%% Haskellissa sisäänrakennettu erikoissyntaksi listoille:
+%% data [a] = []
+%%          | a : [a]
+%% listafunktioita
+%null :: [a] -> Bool
+%null [] = True
+%null (x:xs) = False
+
+%head :: [a] -> a
+%head (x:xs) = x
+%head [] = error "empty list"
+
+%tail :: [a] -> a
+%tail (x:xs) = xs
+%tail [] = error "empty list"
+
+% rakenteetllinen rekursio
+%lenght::[a] -> Integer
+%length [] = 0
+%length (x:xs) = length xs + 1
+% rekursiivinen tapaus, epätyhjä lista
+% rekursiokutsu: lasketaan hännän pituus
+% listan pituus on hännän pituus + 1
+
+
+
+
+\end{document}
