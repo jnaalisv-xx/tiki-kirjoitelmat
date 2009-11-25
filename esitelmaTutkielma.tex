@@ -122,29 +122,54 @@
 %% seuraavaksi kokeillaan mätsääkö factorial n > 0
 
 
-%% TODO: MONIMUOTOISUUS, LISTAT JA REKURSIO
 %% funktion tyypissä voi olla tyyppimuuttuja, jolloin funktio on monimuotoinen:
 %% fst :: (a,b) -> a
 %% fst (a,b) = a
-
-
-% rakenteetllinen rekursio
-%lenght::[a] -> Integer
-%length [] = 0
-%length (x:xs) = length xs + 1
 % rekursiivinen tapaus, epätyhjä lista
 % rekursiokutsu: lasketaan hännän pituus
 % listan pituus on hännän pituus + 1
-% lenght on monimuotoinen funktio joka on määriteltey esim 
-% koklukulistolle, merkkilistoille, merkkijonolistoille jne
+\begin{frame}
+\frametitle{Rekursio, listat}
+\verbatiminput{rec.hs}
+\end{frame}
+
+\begin{frame}
+\frametitle{abstraktit tietotyypit}
+\verbatiminput{tyyp2.hs}
+\end{frame}
+
+\begin{frame}
+\frametitle{syöttö ja tulostus}
+\verbatiminput{io.hs}
+\end{frame}
+
+% LISTA lukuja, niiden summa
+% sum [] = 0
+% sum (x:xs) = x + sum xs
+
+%%data List a = Nil
+%%            | Cons a (List a)
+
+%% jolloin Cons 1 (Cons 2 (Cons 3))
+%% Haskellissa sisäänrakennettu erikoissyntaksi listoille:
+%% data [a] = []
+%%          | a : [a]
+%% listafunktioita
+
+%head :: [a] -> a
+%head (x:xs) = x
+%head [] = error "empty list"
+
+%tail :: [a] -> a
+%tail (x:xs) = xs
+%tail [] = error "empty list"
+
 
 
 %% jotkin tyypit on määritelty kaikille tyypeille:
 %% [a]  on kaikkien mahdollisten tyyppien muodostamien listojen tyyppi
 % [1,2,3] on kokona
 
-
-%% TODO: ABSTRAKTIT TIETOTYYPIT
 % tiedon abstrahointi parantaa modulaarisuutta, luettavuutta ja turvallisuutta
 % vahva staattinen tyypitys auttaa virheenjäljityksessä, koska jos ohjelma kääntyyy
 % ei tyyppivirheitä voi tapahtua suoritusaikana
@@ -173,43 +198,10 @@
 
 % map ? foldr?
 
-fringe :: Tree a -> [a]
-fringe (Leaf x) = [x]
-fringe (Branch left right) = fringe left ++ fringe right
 
 
-%% TODO: LISTAT ja REKURSIO
-% LISTA lukuja, niiden summa
-% sum [] = 0
-% sum (x:xs) = x + sum xs
 
-%%data List a = Nil
-%%            | Cons a (List a)
 
-%% jolloin Cons 1 (Cons 2 (Cons 3))
-%% Haskellissa sisäänrakennettu erikoissyntaksi listoille:
-%% data [a] = []
-%%          | a : [a]
-%% listafunktioita
-%null :: [a] -> Bool
-%null [] = True
-%null (x:xs) = False
-
-%head :: [a] -> a
-%head (x:xs) = x
-%head [] = error "empty list"
-
-%tail :: [a] -> a
-%tail (x:xs) = xs
-%tail [] = error "empty list"
-
-% rakenteetllinen rekursio
-%lenght::[a] -> Integer
-%length [] = 0
-%length (x:xs) = length xs + 1
-% rekursiivinen tapaus, epätyhjä lista
-% rekursiokutsu: lasketaan hännän pituus
-% listan pituus on hännän pituus + 1
 
 
 
