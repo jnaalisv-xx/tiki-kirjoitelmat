@@ -76,43 +76,98 @@ Ensimmäinen funktionaaliseen ohjelmointiin soveltuva kieli oli listojen käsittel
 %Lambda-kalkyylissa funktiot esitetään \textit{lambda-abstraktioina} ja \textit{sovellus} mahdollistaa määriteltyjen funktioiden soveltamisen. \textit{Muuttujaan} voidaan sitoa mikä tahansa lambda-lauseke
 % ja lambda-kalkyyli onkin sievennysjärjestelmä lambda-lausekkeille. Lambda-lauseke koostuu muuttujista, vakioista ja funktion sovelluksista. 
 
-\subsection{Lispistä nykypäivään}
+\subsection{Muita funktionaalisiseen ohjelmointiin soveltuvia kieliä}
 Muita funktionaaliseen ohjelmointiin soveltuvia kieliä ovat \textit{Scheme} (Lisp-murre), \textit{Standard ML}, \textit{Erlang}, \textit{Haskell}, \textit{Ruby}, \textit{Python} ja \textit{Scala}. Näistä ainoastaan Haskell on \textit{puhdas} funktionaalinen kieli. Muut kielet ovat joko multiparadigmakieliä tai mahdollistavat piirteitä jotka eivät kuulu funktionaaliseen ohjelmointiin. Esimerkiksi Schemessä on \textit{let-lause} jonka avulla voi määritellä muuttujia. Erlang on Ericssonin kehittämä tosiaika-ohjelmointiin soveltuva kieli. Scala on Java-alustalla toimiva kieli.
 
-%% /WANHAA KAMAA
-
-%% TODO: imperatiivinen vs proseduraalinen vs algoritminen
-%% vs olio-ohjelmointi, termit yhdenmukaisiksi!!!
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TODO: Haskell 1990 LÄHDE!
+%% TODO: Haskell B CURRY LÄHDE!
 \section{Haskell}
-Esimerkit tässä kirjoitelmassa on annettu Haskell-kielellä. Tässä kappaleessa on lyhyt Haskell-johdanto, jonka avulla esimerkkejä on helpompi ymmärtää.
+Funktionaalisten ohjelmointikielten tutkimus oli kovassa nousussa 1980-luvun loppupuolella, jonka seurauksen myös funktionaalisten kielten määrä kasvoi voimakkaasti. Hyvin pian tutkijat pääsivät yhteisymmärrykseen siitä että tarvittiin yleinen standardoitu funktionaalinen ohjelmointikieli. Standardoinnin tuloksena syntyi loogikko Haskell B. Curryn mukaan nimetty Haskell. Kielen ensimmäinen versio julkaistiin vuonna 1990. Seuraavina vuosina Haskell kehittyi voimakkaasti, ja 1999 julkaistiin seuraava vakaa standardi, Haskell 98. Tässä kirjoitelmassa esitetyt esimerkit on kirjoitettu Haskell 98-standardin mukaisesti. Haskell kehittyy edelleen, seuraava versio, eli Haskell', on tulossa 2010.
 
+Haskell on moderni yleiskäyttöinen funktionaalinen ohjelmointikieli, ja de facto-standardi funktionaalisten ohjelmointikielten tutkimuksessa. 
+
+\subsection{Lausekkeita, arvoja ja tyyppejä}
+Funktionaalisessa ohjelmoinnissa kaikki laskenta tapahtuu evaluoimalla \textit{lausekkeita} (expression), jolloin tuloksena saadaan \textit{arvoja} (value). Jokaiseen arvoon liittyy \textit{tyyppi} (type). Lausekkeita ovat atomiset arvot kuten kokonaisluku \texttt{7} tai merkki \texttt{'a'}, funktiot kuten \texttt{$\backslash$x->x+1}, sekä yhdistelmätyypit kuten lista \texttt{[1,2,3]} ja pari \texttt{(1, 'a')}. 
+
+Arvoihin liittyviä tyyppejä voivat olla esimerkiksi \texttt{Integer} (kokonaisluvut), \texttt{Char} (merkit), \texttt{Integer->Integer} (funktiot jotka kuvaavat kokonaisluvut kokonaisluvuille), \texttt{[Integer]} (kokonaisluvuista koostuva lista) ja \texttt{(Integer, Char)} (kokonaisluvuista ja merkeistä koostuvat parit).
+
+Edelliset arvoesimerkit ja niihin liittyvät tyypit voidaan merkitä seuraavasti:
+\begin{verbatim}
+                          7 ::  Integer
+                        'a' ::  Char
+                    [1,2,3] :: [Integer]
+                   (1, 'a') :: (Integer, Char)
+                    \x->x+1 :: Integer -> Integer
+\end{verbatim}
+Merkintä \texttt{a :: b} tarkoittaa että lauseke \texttt{a} on tyyppiä \texttt{b}. Tyyppien, kuten \texttt{Integer}, nimet tulee kirjoittaa isolla alkukirjaimella, ja arvoa merkitsevien nimien pienellä.
+
+Uusia tyyppejä voi määritellä avainsanan \texttt{data} avulla. Esimerkiksi totuusarvot määritellään näin:
+\begin{verbatim}
+  data Bool         = False
+                    | True
+\end{verbatim}
+\texttt{Bool} on tyhjä tyyppikonstruktori. \texttt{False} ja \texttt{True} ovat parametrittomia arvokonstruktoreita, jotka luovat \texttt{Bool}-tyyppisiä arvoja. \texttt{Bool} on enumeroituva tyyppi, koska se koostuu äärellisestä määrästä parametrittomia arvokonstruktoreita. 
+
+Kokonaislukuja säilövä binääripuu voidaan määritellä seuraavasti:
+\begin{verbatim}
+data BinaryTree   = EmptyTree
+                  | BinaryTree Integer BinaryTree BinaryTree 
+\end{verbatim}
+Nyt tyyppikonstruktori ja toinen arvokonstruktori ovat samannimisiä. Tämä on mahdollista, koska Haskellissa tyyppikonstruktorit ja arvokonstruktorit asuvat eri nimiavaruuksissa, jolloin ei ole vaaraa niitten sekoittamisesta. \texttt{EmptyTree} on parametriton konstruktori joka luo tyhjän puun. Arvokonstruktori \texttt{BinaryTree} ottaa parametreikseen kokonaisluvun ja kaksi tyyppiä \texttt{BinaryTree} olevaa binääripuuta, joista ensimmäinen on puun vasen oksa, ja toinen on puun oikea oksa.
+
+\subsection{Tyyppiluokat}
+\textit{Tyyppiluokka} (type class) esittelee joukon funktioita, jotka kyseisen tyyppiluokan toteuttavien tyyppien tulee toteuttaa. Kyseessä on siis Javan rajapintoja vastaava ominaisuus. Merkintä \texttt{(TyyppiLuokka a) => a} tarkoittaa että tyyppi \texttt{a} toteuttaa tyyppiluokassa \texttt{TyyppiLuokka} esitellyt funktiot. Esimerkiksi yhtäsuuruusoperaattorin (\textit{==}) tyyppimerkintä \texttt{(==) :: (Eq a) => a -> a -> Bool} tarkoittaa että yhtäsuuruusoperaatorilla voidaan verrata kaikkia niitä tyyppejä \texttt{a}, jotka toteuttavat tyyppiluokan \texttt{Eq}. 
+
+%Esimerkiksi funktio joka laskee edellä määritellyn binääripuun syvyyden voidaan määritellä näin:
 \subsection{Funktiot}
-Haskell-ohjelmoijan perustyökalu on funktio. Luvun neliön palauttava funktio määritellään näin:
+Funktiot määritellään Haskellissa yhtälöinä. Esimerkiksi funktio joka ottaa parametrinaan yhden kokonaisluvun ja korottaa sen arvoa yhdellä, voidaan määritellä näin:
 \begin{verbatim}
-neliö x = x * x
+ inc n = n + 1
 \end{verbatim}
-Funktion määritelmä on yhtälö, jonka molemmat puolet ovat yhtäsuuria. Määritelmä kertoo että selattaessa Haskell-koodia, jos törmätään merkintään $nelio x $, se evaluoituu muotoon $x * x$, jonka Haskell-kääntäjä tai -tulkki osaa kääntää konekieleksi, joka laskee luvun neliön. Funktio on määritelty kaikille tietotyypeille, joille on määritelty kertolaskuoperaatio. Funktiolle voi antaa parametrina toisen funktion
-
+Haskellin tyyppijärjestelmä osaa päätellä lausekkeiden tyypit, mutta lisäämällä tyyppiannotaatio tehdään voidaan välttää virheitä, ja lisätä koodin luettavuutta. Funktion tyypin voi merkitä tyyppiannotaatiolla näin:
 \begin{verbatim}
-
-jokufunktio f x = (f x) + (f x)
-
-neliösumma = jokufunktio neliö  
-
+ inc          :: Integer -> Integer
 \end{verbatim}
+Funktio \texttt{inc} on siis kuvaus kokonaislukujen joukosta kokonaislukujen joukkoon. Funktion määritelmä voidaan kirjoittaa tyyppiannotaation kanssa seuraavasti:
+\begin{verbatim}
+ inc          :: Integer -> Integer
+ inc n = n + 1
+\end{verbatim}
+Ehtolausekkeita käytetään Haskellissa seuraavan esimerkin mukaisesti:
+\begin{verbatim}
+ boolToInt b = if b then 1 else 0
+\end{verbatim}
+Seuraava esimerkki havainnollistaa \textit{ehtojen} (guards) käyttöä funktion määrittelyssä:
+\begin{verbatim}
+ boolToInt2 b | b == True = 1
+              | otherwise = 0
+\end{verbatim}
+Ehto on pystyviivan ja yhtäsuuruusmerkin (\texttt{=}) välissä oleva lauseke, joka on tyyppiä \texttt{Bool}. \texttt{otherwise} on synonyymi arvolle \texttt{True}. Ehdot käydään järjestyksessä läpi ylhäältä alas. Jos jokin ehdoista evaluoituu todeksi, pysäytetään läpikäynti ja funktio saa arvoksi yhtälön oikean puolen arvon.
+
+\subsection{Operaattorit}
+Haskell sisältää kaikki tavanomaiset sisämerkintäoperaattorit, kuten yhteenlaskun \texttt{+}, miinuslaskun \texttt{-}, jakolaskun \texttt{/}, kertolaskun \texttt{*} sekä muita tarpeellisia operaattoreita. Operaattorit saattavat assosioida vasemmalle, kuten edellämainitut, tai oikealla, kuten potenssioperaattori \texttt{\^}. Lisäksi Haskell tarjoaa kaksi listojen käsittelyyn soveltuvaa operaattoria, listakonstruktori \texttt{:}, ja listojen yhdistysoperaattori \texttt{++}. Operaattoreille on määritelty normaalit presedenssit, esimerkiksi kertolasku sitoo tiukemmin kuin yhteenlasku. Sisämerkintäoperaattoreilla on myös tyyppi, esimerkiksi kertolaskuoperaattorin tyyppi on \texttt{(*) :: Num a => a -> a -> a}. Tässä merkintä \texttt{Num a =>} tarkoittaa että kertolaskuoperaattorin argumentit ovat tyyppiä \texttt{a} joka toteuttaa tyyppiluokassa \texttt{Num} määritellyt funktiot. Haskellin operaattorit eroavat funktioista kahdella tapaa, funktion sovellus argumenttiinsa sitoo tiukemmin kuin operaattorin sovellus argumenttiinsa ja funktioille ei voi määritellä presedenssiä.
+
+Listaoperaattoreita (\texttt{:}, \texttt{++}) voidaan käyttää listojen konstruoinnissa seuraavasti:
+\begin{verbatim}
+ concatenate :: [Integer] -> [Integer] -> [Integer]
+ concatenate l1 l2 = l1 ++ l2
+
+ addToList :: Integer -> [Integer] -> [Integer]
+ addToList n l = n:l
+\end{verbatim}
+Operaattori \texttt{++} siis yhdistää kaksi listaa. Lauseke \texttt{concatenate [1,2] [3,4]} saa arvokseen listan \texttt{[1,2,3,4]}. Operaattori \texttt{:} lisää ensimmäisenä argumenttinaan saamansa kokonaisluvun toisena argumenttina saadun kokonaislukulistan kärkeen. Lauseke \texttt{addToList 1 [2,3,4]} saa arvokseen listan \texttt{[1,2,3,4]}. 
 
 
-
-%% Tietotyypit. data, tyyppi-konstruktorit, konstruktorit, omien tyyppien rakentaminen
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%% FUNKTIONAALISEN OHJELMOINNIN ERITYISPIIRTEITÄ
 \section{Funktionaalisen ohjelmoinnin erityispiirteitä}
 Tässä kappaleessa esitellään funktionaalisen ohjelmointityylin käsitteitä ja ominaisuuksia. Funktionaalisen ohjelmoinnin piirteitä verrataan usein \textit{imperatiiviseen ohjelmointiin} (imperative programming). Imperatiivisella ohjelmoinnilla tarkoitetaan yleisintä olevaa ohjelmointitapaa, jossa laskentaa simuloidaan muuttamalla ohjelman tilaa (state), eli muuttujien arvoja, tietyssä järjestyksessä suoritetuilla lauseilla. Tälläisiä ohjelmointikieliä ovat mm. C, C++, Java ja Pascal. Imperatiivinen ohjelmointi siis kattaa proseduraalisen ja olio-ohjelmoinnin.
 
 \subsection{Puhtaat funktiot ja sivuvaikutuksettomuus}
-Funktiolla sanotaan olevan \textit{sivuvaikutuksia} (side effects) jos se muuttaa ohjelman tilaa tai vaikuttaa ulkomaailmaan muuten kuin paluuarvonsa kautta \cite[s.238]{scott}. Imperatiivisessa ohjelmoinnissa ohjelman tila on sen paikallisten ja globaalien muuttujien arvo tiettynä hetkenä, ja kaikki ohjelmointi, missä muutetaan kyseisten muuttujien arvoa on sivuvaikutuksellista ohjelmointia. Imperatiivinen ohjelmointityyli perustuu nimenomaan ohjelman tilan muuttamiseen. Funktionaalisessa ohjelmassa merkintä $nimi = arvo$ tarkoittaa, että \textit{nimi} on lyhennysmerkintä \textit{arvolle}.
+%% SIVUVAIKUTUKSET
+Funktiolla sanotaan olevan \textit{sivuvaikutuksia} (side effects) jos se muuttaa ohjelman tilaa tai vaikuttaa ulkomaailmaan muuten kuin paluuarvonsa kautta \cite[s.238]{scott}. Imperatiivisessa ohjelmoinnissa ohjelman tila on sen paikallisten ja globaalien muuttujien arvo tiettynä hetkenä, ja kaikki ohjelmointi, missä muutetaan kyseisten muuttujien arvoa on sivuvaikutuksellista ohjelmointia. Imperatiivinen ohjelmointityyli perustuu nimenomaan ohjelman tilan muuttamiseen. Kun imperaativisessa ohjelmoinnissa lause \texttt{nimi = arvo} tarkoittaa arvon sijoittamista johonkin muistipaikkaan, niin funktionaalisessa ohjelmassa vastaava merkintä tarkoittaa että \texttt{nimi} on lyhennysmerkintä arvolle.  
+
+
+%Imperatiivisessa ohjelmassa kyseistä arvoa ei kuitenkaan voi jokaisessa sen esiintymiskohdassa korvata sen sijoituspaikan nimellä, koska sijoituspaikkaan on voitu kirjoittaa uusi arvo. Puhtaassa funktionaalisessa ohjelmoinnissa taas \texttt{nimi} ja \texttt{arvo} merkitsevät samaa asiaa joten ne 
 
 %% nimi = arvo WTF!!!
 
@@ -121,17 +176,12 @@ Funktiolla sanotaan olevan \textit{sivuvaikutuksia} (side effects) jos se muutta
 %% fp:ssä ei sijoituslauseita, vaan merkintöjä x=y mitkä tarkoittavat tämä(y) on lyhennys tuolle(x)
 %% tämä nimi on lyhennysmerkintä tuolle arvolle nimi= arvo
 %% Imperatiivinen ohjelmointi on sarja järjestettyjä muutoksia ohjelman muuttujiin. jokainen muutos implikoi tilanvaihdosta
-%% imperatiivinen on laskentaa sivuvaikutusten avulla.
-%% imperatiivinen laskenta == tilan muuttaminen == sivuvaikutuksellinen ohjelmointi
 
-\textit{Puhtaat funktiot} (pure functions) ovat funktioita matemaattisessa merkityksessä. Ohjelmoinnista puhuttaessa saatetaan funktioiksi kutsua jopa aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta, jolloin saattaa päteä \textit{f(x) $\ne$ f(x)} eri kutsuhetkinä. Matemaattisilla funktioilla ei ole tilaa, eikä sivuvaikutuksia. Matemaattiset funktiot ovat kuvauksia lähtöjoukosta (domain) maalijoukkoon (range), ja ne palauttavat samoilla argumenteilla aina saman paluuarvon. Tästä seuraa että funktiokutsu voidaan korvata sen laskennan tuloksella, ja toisinpäin. Tätä ominaisuutta kutsutaan \textit{viittausten läpikuultavuudeksi} (referential transparency). Imperatiivisessa ohjelmassa tämä ei välttämättä päde koska laskennan tulos voi riippua ulkopuolisten muuttujien arvoista jolloin funktio laskisi eri tuloksen eri kutsukerroilla. Toisaalta jokin toinen funktio voi kirjoittaa muuttujaan johon on tallennettu funktion paluuarvo ja näin funktiokutsua ei voi korvata muuttujalla johon on sijoitettu sen laskennan tulos. Viittausten läpikuultavuus helpottaa suuresti ohjelmien oikeellisuuden todistamista \cite[s.362]{Hudak89}.
-%% TODO: konditionaali pois!!
+%% PUHTAAT FUNKTIOT
+\textit{Puhtaat funktiot} (pure functions) ovat funktioita matemaattisessa merkityksessä. Ohjelmoinnista puhuttaessa saatetaan funktioiksi kutsua jopa aliohjelmia joiden laskennan tulos riippuu jostain globaalista muuttujasta, jolloin saattaa päteä \textit{f(x) $\ne$ f(x)} eri kutsuhetkinä. Matemaattisilla funktioilla ei ole tilaa, eikä sivuvaikutuksia. Matemaattiset funktiot ovat kuvauksia lähtöjoukosta (domain) maalijoukkoon (range), ja ne palauttavat samoilla argumenteilla aina saman paluuarvon. Tästä seuraa että funktiokutsu voidaan korvata sen laskennan tuloksella, ja toisinpäin. Tätä ominaisuutta kutsutaan \textit{viittausten läpikuultavuudeksi} (referential transparency). Imperatiivisessa ohjelmassa tämä ei välttämättä päde koska laskennan tulos voi riippua ulkopuolisten muuttujien arvoista jolloin funktio laskee eri tuloksen eri kutsukerroilla. Toisaalta jokin toinen funktio voi kirjoittaa muuttujaan johon on tallennettu funktion paluuarvo ja näin funktiokutsua ei voi korvata muuttujalla johon on sijoitettu sen laskennan tulos. Viittausten läpikuultavuus helpottaa suuresti ohjelmien oikeellisuuden todistamista \cite[s.362]{Hudak89}.
+
+Viittausten läpikuultavuus antaa kääntäjälle mahdollisuuden korvata monta kertaa ohjelmassa esiintyvä lauseke sen arvolla, jolloin lausekkeen arvoa ei tarvitse laskea kuin kerran.
 %% TODO: salliiko alkuperäinen lisp sivuvaikutukset
-
-%% -> funktioiden laskennan järjestys voidaan vaihtaa
-%% sivuvaikutuksettomuus -> viittausten läpikuultavuus
-%%Sivuvaikutuksettomuudesta seuraa että funktioiden laskennan tulos riippuu vain niiden argumenteista
-%%\textit{Viittausten läpikuultavuus} (referential transparency)
 
 Funktionaalisessa ohjelmoinnissa ohjelma koostetaan puhtaista funktiosta, joilla ei siis ole tilaa eikä sivuvaikutuksia. Näin funktionaalinen ohjelmointi on tila- ja sivuvaikutuksetonta. Jotkin kielet, kuten Lisp ja sen johdannaiset, sallivat sivuvaikutukset joten ne eivät ole puhtaita funktionaalisia kieliä, vaan pikemminkin hybridikieliä joissa on tuki funktionaaliselle ohjelmoinnille. Tilattomuudesta seuraa että muuttujien arvoja ei voi muuttaa niiden luonnin jälkeen. 
 %% TODO: Scheme tarjoaa let-lauseen??? SICP
@@ -141,21 +191,26 @@ Funktionaalisessa ohjelmoinnissa ohjelma koostetaan puhtaista funktiosta, joilla
 Sivuvaikutuksettomuudella on sekä myönteisiä että kielteisiä seurauksia. Koska funktionaalisessa ohjelmoinnissa ei muokata tilaa, ei myöskään tietorakenteita pysty muokkaamaan niiden luonnin jälkeen, vaan esimerkiksi poistettaessa listasta alkio, luodaan uusi lista vanhan listan kopiona ilman poistettavaa alkiota. Suuria tietorakenteita kuten tietokantoja ei voida toteuttaa tehokkasti ilman sivuvaikutuksia. Jos esimerkiksi halutaan muuttaa yhden rivin yhden sarakkeen arvo tietokannassa jossa on miljoonia rivejä, tulisi muutoksen tekevän funktion palauttaa kokonaan uusi tietokanta. Lisäksi siirräntä, syöttö ja tulostus, on luonteeltaan sivuvaikutuksellista. Siirräntään tosin on kehitetty elegantteja funktionaalisia ratkaisuja. 
 %%(TODO: lähde, Haskell:n stream ja monad io),tietorakenteista, optimoiva kääntäjä?P
 %% TODO: yllä ja allaoleva lukijan mielestä ristiriitaisia.
-Sivuvaikutuksettomuudesta kuitenkin seuraa että funktioiden suoritus voidaan huoletta rinnakkaistaa ja ohjelmien tuotantokustannukset laskevat koska ohjelmia on helpompi laatia, korjata ja ylläpitää \cite[s.527]{scott}.
+Sivuvaikutukseton ohjelmointi ei siis sovi kaikkeen. Sivuvaikutuksettomuudesta kuitenkin seuraa että funktioiden suoritus voidaan huoletta rinnakkaistaa ja ohjelmien tuotantokustannukset laskevat koska ohjelmia on helpompi laatia, korjata ja ylläpitää \cite[s.527]{scott}.
 %TODO: jotain muuta sivuvaikutuksettomuudesta? Tietorakenteen ja sivuvaikutukset? Funktionaaliset tietorakenteet? sivuvaikutusten parempi määritelmä
 
 %% TODO: Toinen virke palaa ensimmäiseen virkkeeseen....
+%% FUNKTIOT ENSIMMÄISEN LUOKAN ARVOINA
+%% -- FUNKTIO ARGUMENTTINA
 \subsection{Funktiot ensimmäisen luokan arvoina} 
-\textit{Ensimmäisen luokan arvo} (first class value) voidaan välittää parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa siis funktioilla voi tehdä kaikkea tätä. Imperatiivisessa ohjelmoinnissa funktiot ovat yleensä toisen luokan arvoja, niitä ei voi välittää parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien välittämistä parametreina, funktioita ei C:ssä kuitenkaan voi luoda suoritusaikana jolloin ne eivät ole ensimmäisen luokan arvoja. Oliokielistä SmallTalk tukee funktioita ensimmäisen luokan arvoina. Yleisesti käytössä olevissa kielissä alkeistyyppiset arvot kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimmäisen luokan arvoja. 
+\textit{Ensimmäisen luokan arvo} (first class value) voidaan välittää parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa funktiot ovat ensimmäisen luokan arvoja, kun taas imperatiivisessa ohjelmoinnissa funktiot ovat yleensä toisen luokan arvoja, eikä niitä ei voi välittää parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien välittämistä parametreina, funktioita ei C:ssä kuitenkaan voi luoda suoritusaikana jolloin ne eivät ole ensimmäisen luokan arvoja. Oliokielistä SmallTalk tukee funktioita ensimmäisen luokan arvoina. Yleisesti käytössä olevissa kielissä alkeistyyppiset arvot kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimmäisen luokan arvoja. 
 
 %% TODO: taitaa olla vähän päin vittua!!
 Koska ensimmäisen luokan arvoja voi luoda ohjelmalohkojen sisällä, voidaan määritellä funktio, jonka määrittelyssä käytetään sen määrittelylohkossa näkyviä muuttujia. Funktio voidaan edelleen välittää parametrina toiselle funktiolle jolloin funktion käyttämät muuttujat ovat näkyvyysalueensa ulkopuolella, ja niitä ei voi vapauttaa muistinhallinnan toimesta, kun funktion määrittelylohkon käyttämä muisti vapautetaan. Funktiota, jonka määrittelyssä näin käytetään määrittelylohkonsa muuttujia, kutsutaan \textit{sulkeumaksi} (closure).
 %% Sulkeumilla voidaan toteuttaa tila?
 
+%% KORKEAMMAN KERTALUVUN FUNKTIOT
+%% --FUNKTIO PARAMETRINA
 \subsection{Korkeamman kertaluvun funktiot}
 \textit{Korkeamman kertaluvun funktioiksi} (higher order functions, functional forms) kutsutaan funktioita jotka ottavat parametrinaan toisen funktion, tai palauttavat paluuarvonaan funktion \cite[s. 546]{scott}. Yksi yleisimpiä tapoja käyttää korkeamman kertaluvun funktioita on rakentaa niiden avulla uusia funktioita. Esimerkiksi Haskell-kielen \textit{map}-funktio ottaa parametrinaan funktion ja listan, ja käy listan rekursiivisesti läpi soveltaen parametrinaan saamaa funktiota jokaiselle listan alkiolle. 
 
 %% TODO: silmukka pois, for,while,loop on toistoa, rekursio rekursiota, toisto saavutetaan rekursiolla
+%% FACTORIAL!
 \subsection{Rekursio}
 Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin muuttujan arvosta, ei sivuvaikutuksettomassa ohjelmoinnissa voida käyttää perinteisiä silmukoita toiston aikaansaamiseen. Funktionaalisessa ohjelmoinnissa toisto aikaansaadaan rekursiolla. Listat ovat funktionaalisissa kielissä tärkeitä koska niillä on luonnollinen rekursiivinen määritelmä. Lista voidaan määritellä parina, jonka ensimmäinen alkio on listan ensimmäinen alkio, ja parin toinen alkio on listan loppuosa. Listan loppuosa on lista tai tyhjä. Listoille on funktionaalisissa kielissä usein valmiiksi määriteltyjä alkeisoperaatioita kuten \textit{head} joka palauttaa parametrina annetun listan ensimmäisen alkion, tai \textit{tail}, joka palauttaa paramatrina annetun listan ilman ensimmäistä alkiotaan.
 %% TODO: esimerkki
@@ -187,27 +242,42 @@ Yleisesti imperatiiviset kielet käyttävät tiukkaa evaluaatiota. Funktionaaliseen
 
 Ohjelmointikielen sanotaan olevan \textit{vahvasti tyypitetty} (strongly typed) \cite[s.309]{scott}, jos se kieltää operaattorin tai funktion sovelluksen tyypille, jos funktio tai operaattori ei tue kyseistä tyyppiä. Vahva tyypitys ei myöskään salli tyyppien muuntamista toiseksi (type casting). Ohjelmointikielen sanotaan olevan \textit{staattisesti tyypitetty} \cite[s.309]{scott}, jos  tyyppien tarkastus voidaan tehdä käännösaikana. Funktionaalisista ohjelmointikielistä Haskell on staattisesti ja vahvasti tyypitetty. Imperatiivisista ohjelmointikielistä muun muassa Java ja C++ ovat staattisesti tyypitettyjä. Staattinen tyypitys auttaa ohjelmoijaa havaitsemaan tyyppivirheet käännösaikana.
  
-\textit{Tyypin päätteleminen} (type inference), tarkoittaa sitä, että lausekkeen tyyppi voidaan johtaa lausekkeen käyttöympäristöstä tai joistain lausekkeen osista \cite[s.308]{scott}. Useat dynaamisesti tyypitetyt skriptikielet johtavat lausekkeiden tyypit suoritusaikana. Tyyppien johtaminen on yleisesti tuettua funktionaalisissa ohjelmointikielissä. Näin esimerkiksi Haskell-funktion määrittelystä voidaan jättää parametrien tyypitys pois.  
+%% TYYPPIEN PÄÄTTELEMINEN
+\textit{Tyypin päätteleminen} (type inference), tarkoittaa sitä, että lausekkeen tyyppi voidaan johtaa lausekkeen käyttöympäristöstä tai joistain lausekkeen osista \cite[s.308]{scott}. Useat dynaamisesti tyypitetyt skriptikielet johtavat lausekkeiden tyypit suoritusaikana. Tyyppien johtaminen on yleisesti tuettua funktionaalisissa ohjelmointikielissä. Näin esimerkiksi Haskell-funktion määrittelystä voidaan jättää parametrien tyypitys pois. Esimerkiksi aikaisemmin esitelty \texttt{inc}-funktio voidaan määritellä ilman tyyppiannotaatiota:
+\begin{verbatim}
+  inc n = n + 1
+\end{verbatim}
+Haskell kääntäjä tai tulkki osaa päätellä funktion tyypiksi \texttt{Integer -> Integer} koska funktion määritelmässä yhtälön oikealla puolella sovelletaan \texttt{+}-operaattoria kokonaislukuun.
 
-\textit{Monimuotoisuus} (polymorphism) tarkoittaa sitä että yksi ohjelmalohko, funktio tai kokonainen ohjelma voidaan suorittaa monilla eri tyypeillä. \cite[s.309]{scott} Funktionaalisissa kielissä monimuotoisuus on tärkeä ominaisuus, koska se sallii funktioiden käytön mahdollisimman monentyyppisillä parametreilla. Lisp ja sen johdannaiset ovat dynaamisesti tyypitettyjä, ja siten luonnostaan monimuotoisia. Koska Haskell-funktioiden parametrien tyyppiä ei tarvitse määritellä, saavuttaa Haskell monimuotoisuuden tyyppien johtamisen kautta. Esimerkiksi listoja käsittelevät funktiot ovat monimuotoisia. Yleensä ne eivät edes tiedä mitä tyyppiä listan alkiot ovat, koska ne ovat kiinnostuneita vain listan rakenteesta.
+%% MONIMUOTOISUUS
+\textit{Monimuotoisuus} (polymorphism) tarkoittaa sitä että yksi ohjelmalohko, funktio tai kokonainen ohjelma voidaan suorittaa monilla eri tyypeillä \cite[s.309]{scott}. Oliokielistä puhuttaessa monimuotoisuutta on kahdenlaista, geneeristä eli parametrista monimuotoisuutta joka mahdollistaa luokkien määrittelyn tyyppiparametrien kanssa. Toinen oliokielissä esiintyvä monimuotoisuuden muoto on alityypin monimuotoisuus, eli perintään perustuva monimuotoisuus. Funktionaalisissa ohjelmointikielissä on parametrinen monimuotoisuus yleistä. Alla parametrisesta monimuotoisuudesta esimerkkinä funktio \texttt{square}. 
+\begin{verbatim}
+  square :: (Num a) => a -> a 
+  square n = n * n
+\end{verbatim}
+Funktion tyyppiannotaatiossa on tyyppimuuttuja \texttt{a} joka kertoo että funktio on monimuotoinen. Lisäksi tyyppiannotaatiosta näkee että funktio on määritelty kaikille tyypeille \texttt{a} jotka toteuttavat tyyppiluokan \texttt{Num} esittelemät funktiot, joihin kertolaskuoperaattori kuuluu.
+
+%% oikeastaan tuo on ad hoc (overloading)monimuotoisuutta, 
+
+ Funktionaalisissa kielissä monimuotoisuus on tärkeä ominaisuus, koska se sallii funktioiden käytön mahdollisimman monentyyppisillä parametreilla. Lisp ja sen johdannaiset ovat dynaamisesti tyypitettyjä, ja siten luonnostaan monimuotoisia. Koska Haskell-funktioiden parametrien tyyppiä ei tarvitse määritellä, saavuttaa Haskell monimuotoisuuden tyyppien johtamisen kautta. Esimerkiksi listoja käsittelevät funktiot ovat monimuotoisia. Yleensä ne eivät edes tiedä mitä tyyppiä listan alkiot ovat, koska ne ovat kiinnostuneita vain listan rakenteesta.
 %% TODO: kahdenlaista monimuotoisuutta, parametrista ja ajonaikaisesta sidonnasta johtuvaa (??)
 
 %% TODO: abstrakti tietotyyppi
 %% TODO: Haskell-kielen tyyppijärjestelmä
-
+%% FUNKTIONAALINEN SIIRRÄNTÄ
 \subsection{Funktionaalinen siirräntä}
-Siirräntä on sivuvaikutuksellisen luonteensa vuoksi ongelmallinen funktionaalisille ohjelmointikielille. Puhtaissa funktionaalisissa ohjelmointikielissähän funktiot palauttavat samoilla argumenteilla aina saman paluuarvon. Käyttäjältä syötteen lukeva $read$-funktiohan taas palauttaa käyttäjän syöttämän merkin tai merkkijonon, jolloin funktion paluuarvo vaihtelee kutsukerrasta toiseen.
+Siirräntä on sivuvaikutuksellisen luonteensa vuoksi ongelmallinen funktionaalisille ohjelmointikielille. Puhtaissa funktionaalisissa ohjelmointikielissähän funktiot palauttavat samoilla argumenteilla aina saman paluuarvon. Käyttäjältä syötteen lukeva \texttt{read}-funktiohan taas palauttaa käyttäjän syöttämän merkin tai merkkijonon, jolloin funktion paluuarvo vaihtelee kutsukerrasta toiseen.
 
 \textit{Sekvenssointi} (sequencing) tarkoittaa ohjelmointikielen lauseiden suorittamista järjestyksessä. Funktionaalisissa ohjelmointikielissä lausekkeiden evaluointijärjestyksellä ei ole väliä. Siirräntää taas ei voi toteuttaa ilman että voidaan määrätä toimintojen järjestys.
 
 %% TODO: tämä kappale paremmin!!!
-Haskell toteuttaa siirrännän \textit{monadien} (monad) avulla. Monadi on on abstrakti tietotyyppi joka tukee sekvenssoinnin käsitettä. Haskellin siirräntämonadin arvot ovat \textit{toimintoja} (action), jotka ohjelmoija voi pakottaa suoritettavaksi tietyssä järjestyksessä \cite[s.543]{scott}. Toiminnot ovat funktionaalisesta siirrännästä puhuttaessa erilaisia luku- tai kirjoitustoimintoja. Haskellin siirräntämonadin funktiot joko palauttavat tai ottavat parametreikseen toimintoja. Esimerkiksi $getChar$-funktio palauttaa siirräntätoiminnon joka lukee syötteestä yhden merkin. Vastaavasti $putChar$-funktio palauttaa toiminnon joka kirjoittaa merkin ulostuloon. Siirräntätoimintoja palauttavien funktioiden kutsut tulee sekvensoida $do$-operaattorin avulla. 
+Haskell toteuttaa siirrännän \textit{monadien} (monad) avulla. Monadi on on abstrakti tietotyyppi joka tukee sekvenssoinnin käsitettä. Haskellin siirräntämonadin arvot ovat \textit{toimintoja} (action), jotka ohjelmoija voi pakottaa suoritettavaksi tietyssä järjestyksessä \cite[s.543]{scott}. Toiminnot ovat funktionaalisesta siirrännästä puhuttaessa erilaisia luku- tai kirjoitustoimintoja. Haskellin siirräntämonadin funktiot joko palauttavat tai ottavat parametreikseen toimintoja. Esimerkiksi \texttt{getChar}-funktio palauttaa siirräntätoiminnon joka lukee syötteestä yhden merkin. Vastaavasti \texttt{putChar}-funktio palauttaa toiminnon joka kirjoittaa merkin ulostuloon. Siirräntätoimintoja palauttavien funktioiden kutsut tulee sekvensoida \texttt{do}-operaattorin avulla. 
 
-%%Näin esimerkiksi yksinkertainen kaksi riviä tulostava Haskell ohjelma olisi seuraavanlainen:
-%%\begin{displaymath}
-%%main = do putStr "Hoi \n"
-%%          putStr "maailma!"
-%%\end{displaymath}
+Näin esimerkiksi yksinkertainen kaksi riviä tulostava Haskell ohjelma olisi seuraavanlainen:
+\begin{verbatim}
+  main = do putStr "Hoi \n"
+            putStr "maailma!"
+\end{verbatim}
 
 \section{Yhteenveto}
 Funktionaalinen ohjelmointi on kehittynyt matemaattisesta formalismista varteenotettavaksi ohjelmointiparadigmaksi. Taustalla on halu saada ohjelmille esitysmuoto jossa ohjelmien oikeaksitodistaminen olisi helpompaa. Lisäksi funktionaalinen ohjelmointi tarjoaa voimakkaita korkean tason käsitteitä ohjelmien kirjoittamiseen ja ongelmien ratkontaan. 
