@@ -91,7 +91,7 @@ Funktionaalisten ohjelmointikielten tutkimus oli kovassa nousussa 1980-luvun lop
 Haskell on moderni yleiskäyttöinen funktionaalinen ohjelmointikieli, ja de facto-standardi funktionaalisten ohjelmointikielten tutkimuksessa. 
 
 \subsection{Lausekkeita, arvoja ja tyyppejä}
-Funktionaalisessa ohjelmoinnissa kaikki laskenta tapahtuu evaluoimalla \textit{lausekkeita} (expression), jolloin tuloksena saadaan \textit{arvoja} (value). Jokaiseen arvoon liittyy \textit{tyyppi} (type). Lausekkeita ovat atomiset arvot kuten kokonaisluku \texttt{7} tai merkki \texttt{'a'}, funktiot kuten \texttt{$\backslash$x->x+1}, sekä yhdistelmätyypit kuten lista \texttt{[1,2,3]} ja pari \texttt{(1, 'a')}. 
+Funktionaalisessa ohjelmoinnissa kaikki laskenta tapahtuu evaluoimalla \textit{lausekkeita} (expression), jolloin tuloksena saadaan \textit{arvoja} (value). Jokaiseen arvoon liittyy \textit{tyyppi} (type). Lausekkeita ovat atomiset arvot kuten kokonaisluku \texttt{7} tai merkki \texttt{'a'}, funktiot kuten \texttt{$\backslash$x->x+1}, sekä yhdistelmätyypit kuten lista \texttt{[1,2,3]} ja pari \texttt{(1, 'a')}. Määritelmä \texttt{$\backslash$x->x+1} tarkoittaa anonyymiä funktiota jolla on yksi parametri (\texttt{x}) ja joka lisää parametrinsa arvoon ykkösen.
 
 Arvoihin liittyviä tyyppejä voivat olla esimerkiksi \texttt{Integer} (kokonaisluvut), \texttt{Char} (merkit), \texttt{Integer->Integer} (funktiot jotka kuvaavat kokonaisluvut kokonaisluvuille), \texttt{[Integer]} (kokonaisluvuista koostuva lista) ja \texttt{(Integer, Char)} (kokonaisluvuista ja merkeistä koostuvat parit).
 
@@ -121,7 +121,7 @@ Nyt tyyppikonstruktori ja toinen arvokonstruktori ovat samannimisiä. Tämä on mah
 %% Parametrisoitu monimuotoisuus myöhemmin, listojen yhteydessä
 
 \subsection{Tyyppisynonyymit}
-Haskell tarjoaa yksinkertaisen rakenteen jolla määritellä \texttt{tyyppisynonyymeja} (type synonyms). Esimerkiksi Haskell 98 -standardissa \texttt{String} on määritelty tyyppisynonyymiksi merkkitaulukolle (\texttt{[Char]}). Tyyppisynonyymeja määritellään seuraavan esimerkin mukaan.
+Haskell tarjoaa yksinkertaisen rakenteen jolla määritellä \texttt{tyyppisynonyymeja} (type synonyms). Esimerkiksi Haskell 98 -standardissa \texttt{String} on määritelty tyyppisynonyymiksi merkkilistalle (\texttt{[Char]}). Tyyppisynonyymeja määritellään seuraavan esimerkin mukaan.
 \begin{verbatim}
 type String = [Char]
 
@@ -140,7 +140,7 @@ Funktiot määritellään Haskellissa yhtälöinä. Esimerkiksi funktio joka ottaa para
 \begin{verbatim}
  inc n = n + 1
 \end{verbatim}
-Haskellin tyyppijärjestelmä osaa päätellä lausekkeiden tyypit, mutta lisäämällä tyyppiannotaatio tehdään voidaan välttää virheitä, ja lisätä koodin luettavuutta. Funktion tyypin voi merkitä tyyppiannotaatiolla näin:
+Haskellin tyyppijärjestelmä osaa päätellä lausekkeiden tyypit, mutta lisäämällä tyyppiannotaatio voidaan välttää virheitä, ja lisätä koodin luettavuutta. Funktion tyypin voi merkitä tyyppiannotaatiolla näin:
 \begin{verbatim}
  inc          :: Integer -> Integer
 \end{verbatim}
