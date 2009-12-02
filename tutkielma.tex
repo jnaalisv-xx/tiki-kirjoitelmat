@@ -103,17 +103,18 @@ Merkint‰ \texttt{a :: b} tarkoittaa ett‰ lauseke \texttt{a} on tyyppi‰ \texttt{b
 
 Uusia tyyppej‰ voi m‰‰ritell‰ avainsanan \texttt{data} avulla. Esimerkiksi totuusarvot m‰‰ritell‰‰n n‰in:
 \begin{verbatim}
-  data Bool         = False
-                    | True
+ data Bool         = False
+                   | True
 \end{verbatim}
-\texttt{Bool} on tyhj‰ tyyppikonstruktori. \texttt{False} ja \texttt{True} ovat parametrittomia arvokonstruktoreita, jotka luovat \texttt{Bool}-tyyppisi‰ arvoja. \texttt{Bool} on enumeroituva tyyppi, koska se koostuu ‰‰rellisest‰ m‰‰r‰st‰ parametrittomia arvokonstruktoreita. 
+Uuden tyypin m‰‰ritelm‰ on yht‰lˆ, jossa yht‰suuruusmerkin vasemmalla puolella annetaan uuden \textit{tyyppikonstruktorin} (type constructor) nimi, ja yht‰suuruusmerkin oikealla puolella annetaan uusien \textit{arvokonstruktorien} (value constructors) nimi tai nimet pystyviivalla erotettuina. Merkint‰ tarkoittaa ett‰ arvokonstruktoreilla \texttt{False} ja \texttt{True} voi luoda \texttt{Bool}-tyyppisi‰ arvoja. T‰ss‰ tapauksessa sek‰ tyyppi- ett‰ arvokonstruktorit ovat parametrittomia. \texttt{Bool} on enumeroituva tyyppi, koska se koostuu ‰‰rellisest‰ m‰‰r‰st‰ parametrittomia arvokonstruktoreita. Arvokonstruktorit ovat analogisia Javan konstruktoreiden kanssa. Arvokonstruktori
 
 Kokonaislukuja s‰ilˆv‰ bin‰‰ripuu voidaan m‰‰ritell‰ seuraavasti:
 \begin{verbatim}
-data BinaryTree   = EmptyTree
-                  | BinaryTree Integer BinaryTree BinaryTree 
+ data BinaryTree   = EmptyTree
+                   | BinaryTree Integer BinaryTree BinaryTree 
 \end{verbatim}
-Nyt tyyppikonstruktori ja toinen arvokonstruktori ovat samannimisi‰. T‰m‰ on mahdollista, koska Haskellissa tyyppikonstruktorit ja arvokonstruktorit asuvat eri nimiavaruuksissa, jolloin ei ole vaaraa niitten sekoittamisesta. \texttt{EmptyTree} on parametriton konstruktori joka luo tyhj‰n puun. Arvokonstruktori \texttt{BinaryTree} ottaa parametreikseen kokonaisluvun ja kaksi tyyppi‰ \texttt{BinaryTree} olevaa bin‰‰ripuuta, joista ensimm‰inen on puun vasen oksa, ja toinen on puun oikea oksa.
+Nyt tyyppikonstruktori ja toinen arvokonstruktori ovat samannimisi‰. T‰m‰ on mahdollista, koska Haskellissa tyyppikonstruktorit ja arvokonstruktorit asuvat eri nimiavaruuksissa, jolloin ei ole vaaraa niiden sekoittumisesta. \texttt{EmptyTree} on parametriton arvokonstruktori joka luo tyhj‰n puun. Arvokonstruktori \texttt{BinaryTree} ottaa parametreikseen kokonaisluvun ja kaksi tyyppi‰ \texttt{BinaryTree} olevaa bin‰‰ripuuta, joista ensimm‰inen on puun vasen oksa, ja toinen on puun oikea oksa. Arvokonstruktorit ovat oikeastaan funktioita, esimerkiksi t‰ss‰ tapauksessa arvokonstruktori \texttt{BinaryTree}:n tyyppi on \texttt{Integer -> BinaryTree -> BinaryTree -> BinaryTree}. Koska tyypin \texttt{BinaryTree} toisessa arvokonstruktorissa on kaksi \texttt{BinaryTree} tyyppist‰ parametria, on \texttt{BinaryTree} rekursiivinen tietotyyppi. 
+%% Parametrisoitu monimuotoisuus myˆhemmin, listojen yhteydess‰
 
 \subsection{Tyyppiluokat}
 \textit{Tyyppiluokka} (type class) esittelee joukon funktioita, jotka kyseisen tyyppiluokan toteuttavien tyyppien tulee toteuttaa. Kyseess‰ on siis Javan rajapintoja vastaava ominaisuus. Merkint‰ \texttt{(TyyppiLuokka a) => a} tarkoittaa ett‰ tyyppi \texttt{a} toteuttaa tyyppiluokassa \texttt{TyyppiLuokka} esitellyt funktiot. Esimerkiksi yht‰suuruusoperaattorin (\textit{==}) tyyppimerkint‰ \texttt{(==) :: (Eq a) => a -> a -> Bool} tarkoittaa ett‰ yht‰suuruusoperaatorilla voidaan verrata kaikkia niit‰ tyyppej‰ \texttt{a}, jotka toteuttavat tyyppiluokan \texttt{Eq}. 
@@ -142,10 +143,10 @@ Seuraava esimerkki havainnollistaa \textit{ehtojen} (guards) k‰yttˆ‰ funktion m‰
  boolToInt2 b | b == True = 1
               | otherwise = 0
 \end{verbatim}
-Ehto on pystyviivan ja yht‰suuruusmerkin (\texttt{=}) v‰liss‰ oleva lauseke, joka on tyyppi‰ \texttt{Bool}. \texttt{otherwise} on synonyymi arvolle \texttt{True}. Ehdot k‰yd‰‰n j‰rjestyksess‰ l‰pi ylh‰‰lt‰ alas. Jos jokin ehdoista evaluoituu todeksi, pys‰ytet‰‰n l‰pik‰ynti ja funktio saa arvoksi yht‰lˆn oikean puolen arvon.
+Ehto on pystyviivan ja yht‰suuruusmerkin (\texttt{=}) v‰liss‰ oleva lauseke, joka on tyyppi‰ \texttt{Bool}. \texttt{otherwise} on synonyymi arvolle \texttt{True}. Ehdot k‰yd‰‰n j‰rjestyksess‰ l‰pi ylh‰‰lt‰ alas. Jos jokin ehdoista evaluoituu todeksi, pys‰ytet‰‰n l‰pik‰ynti ja funktio saa arvoksi yht‰lˆn oikean puolen arvon. \texttt{boolToInt} ja \texttt{boolToInt2}-funktioiden tyyppi on \texttt{Bool -> Integer}.
 
 \subsection{Operaattorit}
-Haskell sis‰lt‰‰ kaikki tavanomaiset sis‰merkint‰operaattorit, kuten yhteenlaskun \texttt{+}, miinuslaskun \texttt{-}, jakolaskun \texttt{/}, kertolaskun \texttt{*} sek‰ muita tarpeellisia operaattoreita. Operaattorit saattavat assosioida vasemmalle, kuten edell‰mainitut, tai oikealla, kuten potenssioperaattori \texttt{\^}. Lis‰ksi Haskell tarjoaa kaksi listojen k‰sittelyyn soveltuvaa operaattoria, listakonstruktori \texttt{:}, ja listojen yhdistysoperaattori \texttt{++}. Operaattoreille on m‰‰ritelty normaalit presedenssit, esimerkiksi kertolasku sitoo tiukemmin kuin yhteenlasku. Sis‰merkint‰operaattoreilla on myˆs tyyppi, esimerkiksi kertolaskuoperaattorin tyyppi on \texttt{(*) :: Num a => a -> a -> a}. T‰ss‰ merkint‰ \texttt{Num a =>} tarkoittaa ett‰ kertolaskuoperaattorin argumentit ovat tyyppi‰ \texttt{a} joka toteuttaa tyyppiluokassa \texttt{Num} m‰‰ritellyt funktiot. Haskellin operaattorit eroavat funktioista kahdella tapaa, funktion sovellus argumenttiinsa sitoo tiukemmin kuin operaattorin sovellus argumenttiinsa ja funktioille ei voi m‰‰ritell‰ presedenssi‰.
+Haskell sis‰lt‰‰ kaikki tavanomaiset sis‰merkint‰operaattorit, kuten yhteenlaskun \texttt{+}, miinuslaskun \texttt{-}, jakolaskun \texttt{/}, kertolaskun \texttt{*} sek‰ muita tarpeellisia operaattoreita. Operaattorit saattavat assosioida vasemmalle, kuten edell‰mainitut, tai oikealla, kuten potenssioperaattori \texttt{\^}. Lis‰ksi Haskell tarjoaa kaksi listojen k‰sittelyyn soveltuvaa operaattoria, listakonstruktori \texttt{:}, ja listojen yhdistysoperaattori \texttt{++}. Operaattoreille on m‰‰ritelty normaalit presedenssit, esimerkiksi kertolasku sitoo tiukemmin kuin yhteenlasku. Sis‰merkint‰operaattoreilla on myˆs tyyppi, esimerkiksi kertolaskuoperaattorin tyyppi on \texttt{(Num a) => a -> a -> a}. T‰ss‰ merkint‰ \texttt{Num a =>} tarkoittaa ett‰ kertolaskuoperaattorin argumentit ovat tyyppi‰ \texttt{a} joka toteuttaa tyyppiluokassa \texttt{Num} m‰‰ritellyt funktiot. Haskellin operaattorit eroavat funktioista kahdella tapaa, funktion sovellus argumenttiinsa sitoo tiukemmin kuin operaattorin sovellus argumenttiinsa ja funktioille ei voi m‰‰ritell‰ presedenssi‰.
 
 Listaoperaattoreita (\texttt{:}, \texttt{++}) voidaan k‰ytt‰‰ listojen konstruoinnissa seuraavasti:
 \begin{verbatim}
@@ -155,7 +156,7 @@ Listaoperaattoreita (\texttt{:}, \texttt{++}) voidaan k‰ytt‰‰ listojen konstruoi
  addToList :: Integer -> [Integer] -> [Integer]
  addToList n l = n:l
 \end{verbatim}
-Operaattori \texttt{++} siis yhdist‰‰ kaksi listaa. Lauseke \texttt{concatenate [1,2] [3,4]} saa arvokseen listan \texttt{[1,2,3,4]}. Operaattori \texttt{:} lis‰‰ ensimm‰isen‰ argumenttinaan saamansa kokonaisluvun toisena argumenttina saadun kokonaislukulistan k‰rkeen. Lauseke \texttt{addToList 1 [2,3,4]} saa arvokseen listan \texttt{[1,2,3,4]}. 
+Operaattori \texttt{++} siis yhdist‰‰ kaksi listaa. Lauseke \texttt{concatenate [1,2] [3,4]} evaluoituu arvoksi \texttt{[1,2,3,4]}. Operaattori \texttt{:} lis‰‰ ensimm‰isen‰ argumenttinaan saamansa kokonaisluvun toisena argumenttina saadun kokonaislukulistan k‰rkeen. Lauseke \texttt{addToList 1 [2,3,4]} evaluoituu arvoksi \texttt{[1,2,3,4]}. 
 
 
 %% FUNKTIONAALISEN OHJELMOINNIN ERITYISPIIRTEITƒ
@@ -198,7 +199,10 @@ Sivuvaikutukseton ohjelmointi ei siis sovi kaikkeen. Sivuvaikutuksettomuudesta k
 %% FUNKTIOT ENSIMMƒISEN LUOKAN ARVOINA
 %% -- FUNKTIO ARGUMENTTINA
 \subsection{Funktiot ensimm‰isen luokan arvoina} 
-\textit{Ensimm‰isen luokan arvo} (first class value) voidaan v‰litt‰‰ parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa funktiot ovat ensimm‰isen luokan arvoja, kun taas imperatiivisessa ohjelmoinnissa funktiot ovat yleens‰ toisen luokan arvoja, eik‰ niit‰ ei voi v‰litt‰‰ parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien v‰litt‰mist‰ parametreina, funktioita ei C:ss‰ kuitenkaan voi luoda suoritusaikana jolloin ne eiv‰t ole ensimm‰isen luokan arvoja. Oliokielist‰ SmallTalk tukee funktioita ensimm‰isen luokan arvoina. Yleisesti k‰ytˆss‰ olevissa kieliss‰ alkeistyyppiset arvot kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimm‰isen luokan arvoja. 
+\textit{Ensimm‰isen luokan arvo} (first class value) voidaan v‰litt‰‰ parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa funktiot ovat ensimm‰isen luokan arvoja, kun taas imperatiivisessa ohjelmoinnissa funktiot ovat yleens‰ toisen luokan arvoja, eik‰ niit‰ ei voi v‰litt‰‰ parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien v‰litt‰mist‰ parametreina. Funktioita ei C:ss‰ kuitenkaan voi luoda suoritusaikana jolloin ne eiv‰t ole ensimm‰isen luokan arvoja. Oliokielist‰ SmallTalk tukee funktioita ensimm‰isen luokan arvoina. Yleisesti k‰ytˆss‰ olevissa kieliss‰ alkeistyyppiset arvot kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimm‰isen luokan arvoja. 
+
+%% TODO: esimerkki!!
+
 
 %% TODO: taitaa olla v‰h‰n p‰in vittua!!
 Koska ensimm‰isen luokan arvoja voi luoda ohjelmalohkojen sis‰ll‰, voidaan m‰‰ritell‰ funktio, jonka m‰‰rittelyss‰ k‰ytet‰‰n sen m‰‰rittelylohkossa n‰kyvi‰ muuttujia. Funktio voidaan edelleen v‰litt‰‰ parametrina toiselle funktiolle jolloin funktion k‰ytt‰m‰t muuttujat ovat n‰kyvyysalueensa ulkopuolella, ja niit‰ ei voi vapauttaa muistinhallinnan toimesta, kun funktion m‰‰rittelylohkon k‰ytt‰m‰ muisti vapautetaan. Funktiota, jonka m‰‰rittelyss‰ n‰in k‰ytet‰‰n m‰‰rittelylohkonsa muuttujia, kutsutaan \textit{sulkeumaksi} (closure).
@@ -212,7 +216,26 @@ Koska ensimm‰isen luokan arvoja voi luoda ohjelmalohkojen sis‰ll‰, voidaan m‰‰ri
 %% TODO: silmukka pois, for,while,loop on toistoa, rekursio rekursiota, toisto saavutetaan rekursiolla
 %% FACTORIAL!
 \subsection{Rekursio}
-Koska ohjelmasilmukoiden toiminta riippuu ohjelman tilasta, toisin sanoen jonkin muuttujan arvosta, ei sivuvaikutuksettomassa ohjelmoinnissa voida k‰ytt‰‰ perinteisi‰ silmukoita toiston aikaansaamiseen. Funktionaalisessa ohjelmoinnissa toisto aikaansaadaan rekursiolla. Listat ovat funktionaalisissa kieliss‰ t‰rkeit‰ koska niill‰ on luonnollinen rekursiivinen m‰‰ritelm‰. Lista voidaan m‰‰ritell‰ parina, jonka ensimm‰inen alkio on listan ensimm‰inen alkio, ja parin toinen alkio on listan loppuosa. Listan loppuosa on lista tai tyhj‰. Listoille on funktionaalisissa kieliss‰ usein valmiiksi m‰‰riteltyj‰ alkeisoperaatioita kuten \textit{head} joka palauttaa parametrina annetun listan ensimm‰isen alkion, tai \textit{tail}, joka palauttaa paramatrina annetun listan ilman ensimm‰ist‰ alkiotaan.
+Imperatiivisessa ohjelmoinnissa toisto saadaan aikaan \texttt{for}-, \texttt{while}- tai \texttt{loop}-lauseilla. Yleisess‰ tapauksess n‰m‰ lauseet tutkivat jonkin muuttujan tilaa, ja sen perusteella p‰‰tt‰v‰t‰ suoritetaanko niihin liitetty koodilohko uudestaan vai ei. Funktionaalisessa ohjelmoinnissa toisto saadaan aikaan rekursiolla. Klassinen esimerkki rekursiosta on kertomafunktio:
+\begin{verbatim}
+ factorial :: Integer -> Integer
+ factorial 0 = 1
+ factorial n | n > 0 = n * factorial (n-1)
+             | otherwise = -1
+\end{verbatim}
+Funktio \texttt{factorial} siis kuvaa kokonaislukujen joukon kokonaisluvuille. Funktion sovellus nollaan evaluoituu ykkˆseksi. Jos funktiolle annettu parametri on suurempi kuin nolla, kutsutaan rekursiivisesti \texttt{factorial}-funktiota jotta saadaan luvun \texttt{n-1} kertoma. Nollaa pienemmille luvuille kertomaa ei ole m‰‰ritelty.
+
+Listat ovat funktionaalisissa kieliss‰ t‰rkeit‰ koska niill‰ on luonnollinen rekursiivinen m‰‰ritelm‰. Lista ja siihen liittyv‰t apufunktiot voidaan m‰‰ritell‰ vaikkapa n‰in:
+\begin{verbatim}
+ data List a = Nil
+             | Cons a (List a)
+\end{verbatim}
+
+
+
+
+
+Listoille on funktionaalisissa kieliss‰ usein valmiiksi m‰‰riteltyj‰ alkeisoperaatioita kuten \textit{head} joka palauttaa parametrina annetun listan ensimm‰isen alkion, tai \textit{tail}, joka palauttaa paramatrina annetun listan ilman ensimm‰ist‰ alkiotaan.
 %% TODO: esimerkki
 %%\begin{displaymath}
 %%Lista a = Pair a (Lista a)
@@ -231,7 +254,8 @@ Yleisesti imperatiiviset kielet k‰ytt‰v‰t tiukkaa evaluaatiota. Funktionaaliseen
 
 %\textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}), sivuvaikutuksettomuuden seuraus, mit‰ siit‰ seuraa, tiukka evaluaatio, laiskat tietorakenteet, haskell ja lisp, \textit{laiska funktio} 
 
-%% TODO: hullun pitk‰ length lause, uusiksi!
+%% TODO: 
+%% TODO: esimerkki
 \subsection{Hahmontunnistus}
 \textit{Hahmontunnistus} (pattern matching, kuuluu olennaisesti nykyaikaisiin funktionaalisiin kieliin \cite[s. 388]{Hudak89}. Esimerkiksi Haskell-ohjelmoija voisi m‰‰ritell‰ listoille funktion $length$ m‰‰rittelem‰ll‰ ensin funktion $length$, joka saa argumentikseen tyhj‰n listan ja palauttaa nollan, ja seuraavaksi funktion $length$, joka saa argumentikseen listan ja palauttaa ykkˆsen ja argumenttina annetun listan loppuosaan sovelletun $length$-funktion summan. Nyt siis mik‰li $length$-funktiota sovelletaan tyhj‰lle listalle, se evaluoituu nollaksi. Mik‰li $length$-funktiolle annetaan argumenttina lista jossa on $n$ alkiota, se kutsuu itse‰‰n listan loppuosalle ja lis‰‰ rekursiivisen kutsun arvoon ykkˆsen. 
 
