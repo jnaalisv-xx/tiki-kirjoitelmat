@@ -50,24 +50,28 @@ Funktionaalisen ohjelmoinnin laskennan mallina on funktio, sen matemaattisessa m
 
 Funktionaalisen paradigman l‰htˆkohtana on koostaa ohjelma lukuisista pienist‰, helposti testattavista, funktioista. Funktioita voi myˆs v‰litt‰‰ parametreina, tai palauttaa paluuarvoina. Funktionaaliselle ohjelmoinnille tyypillist‰ on runsas listojen ja rekursion k‰yttˆ. Lista onkin useimmissa funktionaalisissa kieliss‰ perustietotyyppi. Koska funktionaalisessa ohjelmoinnissa ei ole tilaa, ei myˆsk‰‰n tilaan perustuvia toistorakenteita, kuten for-lausetta voi k‰ytt‰‰. Toisto saadaankin aikaan rekursiolla.
 
-Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan evaluoimalla, eli sievent‰m‰ll‰ lausekkeita. Lauseke koostuu funktiosta ja sille annetuista argumentista. Argumentit voivat olla toisia funktioita, lausekkeita tai arvoja. Lausekkeen evaluoinnissa funktion formaalit parametrit korvataan argumenteilla. Tuloksena saatua lauseketta sievennet‰‰n kunnes p‰‰st‰‰n lausekkeen normaalimuotoon, jota ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on laskennan tulos.
+%% Onko liian syv‰‰ tavaraa johdantoon?
+Funktionaalisessa ohjelmoinnissa ohjelmaa suoritetaan evaluoimalla, eli sievent‰m‰ll‰ lausekkeita. Lauseke voi olla arvo, funktio tai funktion sovellus argumenttiinsa. Argumentit ovat lausekkeita, eli arvoja, funktioita tai funktioiden sovelluksia argumentteihinsa. Lausekkeen evaluoinnissa arvot ja funktiot ovat jo normaalimuodossaan, eiv‰tk‰ en‰‰ sievenny yksinkertaisempaan muotoon. Evaluoitaessa funktion sovellusta argumenttiinsa, funktion formaalit parametrit korvataan argumenteilla. Jos tuloksena saatu lauseke on normaalimuotoinen, evaluointi p‰‰ttyy. Muutoin tuloslauseketta sievennet‰‰n kunnes p‰‰st‰‰n lausekkeen normaalimuotoon, jota ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on laskennan tulos.
 
+%% V‰h‰n kˆkkˆ‰
 Funktionaalisen ohjelmoinnin laskennan malli on otettu Alonzo Churchin vuonna 1936 kehitt‰m‰st‰ \textit{lambda-laskennasta} (lambda-calculus). Church kehitti lambda-laskennan formalismiksi, jolla m‰‰ritell‰ kaikki laskettavissa olevat funktiot. Vuonna 1958 kehitettiin ensimm‰inen funktionaaliseen ohjelmointiin soveltuva kieli, Lisp (LISt Processing Language). Kielen kehitt‰j‰, John McCarthy, halusi kieleens‰ mahdollisuuden v‰litt‰‰ funktioita argumentteina, ja lambda-kalkyyli tarjosi t‰h‰n sopivan notaation. 
+%1950-luvun loppupuolella John McCarthy kehitti kielt‰ teko‰lytutkimukseen. Kielen oli sovelluttava symboliseen laskeentaan ja McCarthy halusi siihen mahdollisuuden k‰ytt‰‰ funktioargumentteja. Sopiva malli lˆytyi lambda-laskennasta.
+%% Funktionaalisten ohjelmointikielten tutkimus k‰ynnistyi kun lambda-laskennan malli p‰‰tyi er‰‰seen ohjelmointikieleen 50-luvun lopulla.
 
 Lispin johdannaiset, Scheme ja Common Lisp, ovat edelleen k‰ytˆss‰. Muita funktionaaliseen ohjelmointiin soveltuvia kieli‰ ovat muun muassa, Scala, F\#, Standard ML, Erlang ja Python. Edell‰mainitut kielet eiv‰t kuitenkaan ole puhtaasti funktionaalisia, joko ne sallivat sivuvaikutukset, tai ovat moniparadigmakieli‰. Haskell on sivuvaikutukseton alun alkaen funktionaaliseen ohjelmointiin suunniteltu kieli. 
 
 \section{Historiaa}
 Funktionaalinen ohjelmointiparadigma on l‰hes yht‰ vanha kuin tietokoneet, ja sen teoreettinen pohja luotiin ennenkuin ensimm‰inen elektroninen tietokone oli n‰hnyt p‰iv‰nvalon. T‰ss‰ kappaleessa kerrotaan lyhyesti lambda-laskennasta, johon funktionaalisen ohjelmoinnin malli pohjautuu, ensimm‰isest‰ funktionaaliseen ohjelmointiin soveltuvasta ohjelmointikielest‰ sek‰ lopuksi mainitaan muutamia suosituimpia nykyisin k‰ytˆss‰ olevia funktionaalisia kieli‰.
 
-%% WANHAA KAMAA
+%% toistoa?
 \subsection{Lambda-laskenta}
-Vuonna 1936 Alonzo Church kehitti lambda-laskennan matemaattisena formalismina, jonka avulla pystyttiin m‰‰rittelem‰‰n kaikki laskettavissa olevat funktiot. H‰nen tarkoituksenaan oli ratkaista \textit{pys‰htymisongelma} (saks. \textit{entscheidungsproblem}). Osoittautui, ett‰ ei voida m‰‰ritell‰ algoritmia jolla laskea kaikki laskettavissa olevat funktiot. Samaan aikaan Alan Turing p‰‰tyi samaan tulokseen omalla laskennan mallillaan, \textit{turing-koneella} (Turing machine) \cite[s.5]{lambda}. Osoittautui myˆs ett‰ Churchin ja Turingin kehitt‰m‰t mallit kaikkien laskettavissa olevien funktioiden m‰‰rittelyyn olivat ilmaisuvoimaltaan yht‰l‰isi‰.
+Vuonna 1936 Alonzo Church kehitti lambda-laskennan matemaattisena formalismina, jonka avulla pystyttiin m‰‰rittelem‰‰n kaikki laskettavissa olevat funktiot. H‰nen tarkoituksenaan oli ratkaista \textit{pys‰htymisongelma} (saks. \textit{entscheidungsproblem}). Osoittautui, ett‰ ei voida m‰‰ritell‰ algoritmia jolla laskea kaikki laskettavissa olevat funktiot. Samaan aikaan Alan Turing p‰‰tyi samaan tulokseen omalla laskennan mallillaan, \textit{turing-koneella} (Turing machine) \cite[s.5]{lambda}. Turing osoitti ett‰ h‰nen kehitt‰m‰ns‰ laskennan malli oli ilmaisuvoimaltaan yht‰ voimakas, toisin sanoen m‰‰ritteli saman funktioiden joukon, kuin Churchin lambda-laskenta.
 %% TODO: mit‰ osoittautui? aikaj‰rjestys, faktat? "turing osoitti..."
 
 %% TODO: esimerkki‰. selostusta, mit‰ viel‰?, UUSIKS, EI TƒTƒ KUKAAN TAJUU!!!
-Lambda-laskennassa on yksi sievennyss‰‰ntˆ, jonka mukaan funktion formaali parametri korvataan sille annetulla argumentilla funktion vartalossa. Funktioita ja niiden sovelluksia sis‰lt‰vi‰ lausekkeita sievennet‰‰n kunnes p‰‰st‰‰n normaalimuotoon, eli lauseketta ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on lambda-laskennan tulos. Lambda-laskenta on hyvin yksinkertainen, mutta ilmaisuvoimainen sievennyss‰‰nnˆstˆ. Lambda-laskenta koostuu \textit{lambda-lausekkeista}, joita ovat \textit{abstraktio}, joka m‰‰rittelee funktion, \textit{sovellus}, joka on funktion sovellus argumenttiinsa, tai \textit{muuttuja}. Funktion vartalo on lambda-lauseke, ja funktioilla on vain yksi argumentti. Mik‰li halutaan esimerkiksi kaksiargumenttinen funktio, voidaan m‰‰ritell‰ funktio, joka palauttaa toisen funktion sitoen argumenttinsa palauttamansa funktion vartalossa.
-%% TODO: argumentti vs parametri
+Lambda-laskennassa on yksi sievennyss‰‰ntˆ, jonka mukaan funktion formaali parametri korvataan sille annetulla argumentilla funktion vartalossa. Funktioita ja niiden sovelluksia sis‰lt‰vi‰ lausekkeita sievennet‰‰n kunnes p‰‰st‰‰n normaalimuotoon, eli lauseketta ei voi en‰‰ sievent‰‰. T‰m‰ normaalimuoto on lambda-laskennan tulos. Lambda-laskenta on hyvin yksinkertainen, mutta ilmaisuvoimainen sievennyss‰‰nnˆstˆ. Lambda-laskenta koostuu \textit{lambda-lausekkeista}, joita ovat \textit{abstraktio} (function abstraction), joka m‰‰rittelee funktion, \textit{sovellus} (application), joka on funktion sovellus argumenttiinsa, tai \textit{muuttuja} (variable). Funktion vartalo on lambda-lauseke, ja funktioilla on vain yksi argumentti. Mik‰li halutaan esimerkiksi kaksiargumenttinen funktio, voidaan m‰‰ritell‰ funktio, joka palauttaa toisen funktion sitoen argumenttinsa palauttamansa funktion vartalossa.
 
+%% toistoa johdannon kanssa
 \subsection{Lisp}
 Ensimm‰inen funktionaaliseen ohjelmointiin soveltuva kieli oli listojen k‰sittelyyn ja symboliseen laskentaan kehitetty \textit{Lisp} (LISt Processing language). Sen kehitti vuonna 1958 John McCarthy \cite{lisp}. Lisp on toiseksi vanhin korkean tason kieli, Fortranin ollessa vanhin. Lispiss‰, kuten l‰hes kaikissa funktionaalisissa kieliss‰, on perustietorakenteena lista ja alkeisoperaattoreina funktiot, jotka palauttavat listan ensimm‰isen solmun tai listan h‰nn‰n. McCarthy perusti kielens‰ Alonzo Churchin 1932 kehitt‰m‰‰n lambda-kalkyyliin \cite[s.5]{lambda} 
 
@@ -106,15 +110,26 @@ Uusia tyyppej‰ voi m‰‰ritell‰ avainsanan \texttt{data} avulla. Esimerkiksi totuu
  data Bool         = False
                    | True
 \end{verbatim}
-Uuden tyypin m‰‰ritelm‰ on yht‰lˆ, jossa yht‰suuruusmerkin vasemmalla puolella annetaan uuden \textit{tyyppikonstruktorin} (type constructor) nimi, ja yht‰suuruusmerkin oikealla puolella annetaan uusien \textit{arvokonstruktorien} (value constructors) nimi tai nimet pystyviivalla erotettuina. Merkint‰ tarkoittaa ett‰ arvokonstruktoreilla \texttt{False} ja \texttt{True} voi luoda \texttt{Bool}-tyyppisi‰ arvoja. T‰ss‰ tapauksessa sek‰ tyyppi- ett‰ arvokonstruktorit ovat parametrittomia. \texttt{Bool} on enumeroituva tyyppi, koska se koostuu ‰‰rellisest‰ m‰‰r‰st‰ parametrittomia arvokonstruktoreita. Arvokonstruktorit ovat analogisia Javan konstruktoreiden kanssa. Arvokonstruktori
+Uuden tyypin m‰‰ritelm‰ on yht‰lˆ, jossa yht‰suuruusmerkin vasemmalla puolella annetaan uuden \textit{tyyppikonstruktorin} (type constructor) nimi, ja yht‰suuruusmerkin oikealla puolella annetaan uusien \textit{arvokonstruktorien} (value constructors) nimi tai nimet pystyviivalla erotettuina. Merkint‰ tarkoittaa ett‰ arvokonstruktoreilla \texttt{False} ja \texttt{True} voi luoda \texttt{Bool}-tyyppisi‰ arvoja. T‰ss‰ tapauksessa sek‰ tyyppi- ett‰ arvokonstruktorit ovat parametrittomia. \texttt{Bool} on enumeroituva tyyppi, koska se koostuu ‰‰rellisest‰ m‰‰r‰st‰ parametrittomia arvokonstruktoreita. Arvokonstruktorit ovat analogisia Javan konstruktoreiden kanssa. 
 
 Kokonaislukuja s‰ilˆv‰ bin‰‰ripuu voidaan m‰‰ritell‰ seuraavasti:
 \begin{verbatim}
  data BinaryTree   = EmptyTree
                    | BinaryTree Integer BinaryTree BinaryTree 
 \end{verbatim}
-Nyt tyyppikonstruktori ja toinen arvokonstruktori ovat samannimisi‰. T‰m‰ on mahdollista, koska Haskellissa tyyppikonstruktorit ja arvokonstruktorit asuvat eri nimiavaruuksissa, jolloin ei ole vaaraa niiden sekoittumisesta. \texttt{EmptyTree} on parametriton arvokonstruktori joka luo tyhj‰n puun. Arvokonstruktori \texttt{BinaryTree} ottaa parametreikseen kokonaisluvun ja kaksi tyyppi‰ \texttt{BinaryTree} olevaa bin‰‰ripuuta, joista ensimm‰inen on puun vasen oksa, ja toinen on puun oikea oksa. Arvokonstruktorit ovat oikeastaan funktioita, esimerkiksi t‰ss‰ tapauksessa arvokonstruktori \texttt{BinaryTree}:n tyyppi on \texttt{Integer -> BinaryTree -> BinaryTree -> BinaryTree}. Koska tyypin \texttt{BinaryTree} toisessa arvokonstruktorissa on kaksi \texttt{BinaryTree} tyyppist‰ parametria, on \texttt{BinaryTree} rekursiivinen tietotyyppi. 
+Nyt tyyppikonstruktori ja toinen arvokonstruktori ovat samannimisi‰. T‰m‰ on mahdollista, koska Haskellissa tyyppikonstruktorit ja arvokonstruktorit asuvat eri nimiavaruuksissa, jolloin ei ole vaaraa niiden sekoittumisesta. \texttt{EmptyTree} on parametriton arvokonstruktori joka luo tyhj‰n puun. Arvokonstruktori \texttt{BinaryTree} ottaa parametreikseen kokonaisluvun ja kaksi tyyppi‰ \texttt{BinaryTree} olevaa bin‰‰ripuuta, joista ensimm‰inen on puun vasen oksa, ja toinen on puun oikea oksa. Arvokonstruktorit ovat oikeastaan funktioita, esimerkiksi t‰ss‰ tapauksessa arvokonstruktori \texttt{BinaryTree}:n tyyppi on \texttt{Integer -> BinaryTree -> BinaryTree -> BinaryTree}. Muotoa \texttt{a -> b -> c} oleva tyyppi tarkoittaa ett‰ funktiolla on kaksi parametria, tyyppej‰ \texttt{a} ja \texttt{b}, ja funktio palauttaa tyyppi‰ \texttt{c} olevan arvon. Koska tyypin \texttt{BinaryTree} toisessa arvokonstruktorissa on kaksi \texttt{BinaryTree} tyyppist‰ parametria, on \texttt{BinaryTree} rekursiivinen tietotyyppi. 
 %% Parametrisoitu monimuotoisuus myˆhemmin, listojen yhteydess‰
+
+\subsection{Tyyppisynonyymit}
+Haskell tarjoaa yksinkertaisen rakenteen jolla m‰‰ritell‰ \texttt{tyyppisynonyymeja} (type synonyms). Esimerkiksi Haskell 98 -standardissa \texttt{String} on m‰‰ritelty tyyppisynonyymiksi merkkitaulukolle (\texttt{[Char]}). Tyyppisynonyymeja m‰‰ritell‰‰n seuraavan esimerkin mukaan.
+\begin{verbatim}
+type String = [Char]
+
+type Name = String
+type Address = String
+data Person = (Name, Address)
+\end{verbatim}
+\texttt{Person} on tyyppi joka koostuu nimi-osoite-parista. Tyyppisynonyymit parantavat l‰hdekoodin luettavuutta.
 
 \subsection{Tyyppiluokat}
 \textit{Tyyppiluokka} (type class) esittelee joukon funktioita, jotka kyseisen tyyppiluokan toteuttavien tyyppien tulee toteuttaa. Kyseess‰ on siis Javan rajapintoja vastaava ominaisuus. Merkint‰ \texttt{(TyyppiLuokka a) => a} tarkoittaa ett‰ tyyppi \texttt{a} toteuttaa tyyppiluokassa \texttt{TyyppiLuokka} esitellyt funktiot. Esimerkiksi yht‰suuruusoperaattorin (\textit{==}) tyyppimerkint‰ \texttt{(==) :: (Eq a) => a -> a -> Bool} tarkoittaa ett‰ yht‰suuruusoperaatorilla voidaan verrata kaikkia niit‰ tyyppej‰ \texttt{a}, jotka toteuttavat tyyppiluokan \texttt{Eq}. 
@@ -201,9 +216,6 @@ Sivuvaikutukseton ohjelmointi ei siis sovi kaikkeen. Sivuvaikutuksettomuudesta k
 \subsection{Funktiot ensimm‰isen luokan arvoina} 
 \textit{Ensimm‰isen luokan arvo} (first class value) voidaan v‰litt‰‰ parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa funktiot ovat ensimm‰isen luokan arvoja, kun taas imperatiivisessa ohjelmoinnissa funktiot ovat yleens‰ toisen luokan arvoja, eik‰ niit‰ ei voi v‰litt‰‰ parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien v‰litt‰mist‰ parametreina. Funktioita ei C:ss‰ kuitenkaan voi luoda suoritusaikana jolloin ne eiv‰t ole ensimm‰isen luokan arvoja. Oliokielist‰ SmallTalk tukee funktioita ensimm‰isen luokan arvoina. Yleisesti k‰ytˆss‰ olevissa kieliss‰ alkeistyyppiset arvot kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimm‰isen luokan arvoja. 
 
-%% TODO: esimerkki!!
-
-
 %% TODO: taitaa olla v‰h‰n p‰in vittua!!
 Koska ensimm‰isen luokan arvoja voi luoda ohjelmalohkojen sis‰ll‰, voidaan m‰‰ritell‰ funktio, jonka m‰‰rittelyss‰ k‰ytet‰‰n sen m‰‰rittelylohkossa n‰kyvi‰ muuttujia. Funktio voidaan edelleen v‰litt‰‰ parametrina toiselle funktiolle jolloin funktion k‰ytt‰m‰t muuttujat ovat n‰kyvyysalueensa ulkopuolella, ja niit‰ ei voi vapauttaa muistinhallinnan toimesta, kun funktion m‰‰rittelylohkon k‰ytt‰m‰ muisti vapautetaan. Funktiota, jonka m‰‰rittelyss‰ n‰in k‰ytet‰‰n m‰‰rittelylohkonsa muuttujia, kutsutaan \textit{sulkeumaksi} (closure).
 %% Sulkeumilla voidaan toteuttaa tila?
@@ -212,6 +224,7 @@ Koska ensimm‰isen luokan arvoja voi luoda ohjelmalohkojen sis‰ll‰, voidaan m‰‰ri
 %% --FUNKTIO PARAMETRINA
 \subsection{Korkeamman kertaluvun funktiot}
 \textit{Korkeamman kertaluvun funktioiksi} (higher order functions, functional forms) kutsutaan funktioita jotka ottavat parametrinaan toisen funktion, tai palauttavat paluuarvonaan funktion \cite[s. 546]{scott}. Yksi yleisimpi‰ tapoja k‰ytt‰‰ korkeamman kertaluvun funktioita on rakentaa niiden avulla uusia funktioita. Esimerkiksi Haskell-kielen \textit{map}-funktio ottaa parametrinaan funktion ja listan, ja k‰y listan rekursiivisesti l‰pi soveltaen parametrinaan saamaa funktiota jokaiselle listan alkiolle. 
+%% TODO: esimerkki map f [1,2,3,4]
 
 %% TODO: silmukka pois, for,while,loop on toistoa, rekursio rekursiota, toisto saavutetaan rekursiolla
 %% FACTORIAL!
@@ -230,10 +243,6 @@ Listat ovat funktionaalisissa kieliss‰ t‰rkeit‰ koska niill‰ on luonnollinen rek
  data List a = Nil
              | Cons a (List a)
 \end{verbatim}
-
-
-
-
 
 Listoille on funktionaalisissa kieliss‰ usein valmiiksi m‰‰riteltyj‰ alkeisoperaatioita kuten \textit{head} joka palauttaa parametrina annetun listan ensimm‰isen alkion, tai \textit{tail}, joka palauttaa paramatrina annetun listan ilman ensimm‰ist‰ alkiotaan.
 %% TODO: esimerkki
