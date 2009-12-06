@@ -83,7 +83,7 @@ Muita funktionaaliseen ohjelmointiin soveltuvia kieli‰ ovat \textit{Scheme} (Lis
 %% TODO: Haskell 1990 LƒHDE!
 %% TODO: Haskell B CURRY LƒHDE!
 \section{Haskell}
-Funktionaalisten ohjelmointikielten tutkimus oli kovassa nousussa 1980-luvun loppupuolella, jonka seurauksen myˆs funktionaalisten kielten m‰‰r‰ kasvoi voimakkaasti. Hyvin pian tutkijat p‰‰siv‰t yhteisymm‰rrykseen siit‰ ett‰ tarvittiin yleinen standardoitu funktionaalinen ohjelmointikieli. Standardoinnin tuloksena syntyi loogikko Haskell B. Curryn mukaan nimetty Haskell \cite[haskellreport]. Kielen ensimm‰inen versio julkaistiin vuonna 1990. Seuraavina vuosina Haskell kehittyi voimakkaasti, ja 1999 julkaistiin seuraava vakaa standardi, Haskell 98. T‰ss‰ kirjoitelmassa esitetyt esimerkit on kirjoitettu Haskell 98-standardin mukaisesti. Haskell kehittyy edelleen, seuraava versio, eli Haskell', on tulossa 2010.
+Funktionaalisten ohjelmointikielten tutkimus oli kovassa nousussa 1980-luvun loppupuolella, jonka seurauksen myˆs funktionaalisten kielten m‰‰r‰ kasvoi voimakkaasti. Hyvin pian tutkijat p‰‰siv‰t yhteisymm‰rrykseen siit‰ ett‰ tarvittiin yleinen standardoitu funktionaalinen ohjelmointikieli. Standardoinnin tuloksena syntyi loogikko Haskell B. Curryn mukaan nimetty Haskell \cite{haskellreport}. Kielen ensimm‰inen versio julkaistiin vuonna 1990. Seuraavina vuosina Haskell kehittyi voimakkaasti, ja 1999 julkaistiin seuraava vakaa standardi, Haskell 98. T‰ss‰ kirjoitelmassa esitetyt esimerkit on kirjoitettu Haskell 98-standardin mukaisesti. Haskell kehittyy edelleen, seuraava versio, eli Haskell', on tulossa 2010.
 
 Haskell on moderni yleisk‰yttˆinen funktionaalinen ohjelmointikieli, ja de facto-standardi funktionaalisten ohjelmointikielten tutkimuksessa. 
 
@@ -218,7 +218,34 @@ T‰ss‰ \texttt{floatEq} on alkeisfunktio joka vertaa kahden liukuluvun yht‰suuruu
 
 %% FUNKTIONAALISEN OHJELMOINNIN ERITYISPIIRTEITƒ
 \section{Funktionaalisen ohjelmoinnin erityispiirteit‰}
-T‰ss‰ kappaleessa esitell‰‰n funktionaalisen ohjelmointityylin k‰sitteit‰ ja ominaisuuksia. Funktionaalisen ohjelmoinnin piirteit‰ verrataan usein \textit{imperatiiviseen ohjelmointiin} (imperative programming). Imperatiivisella ohjelmoinnilla tarkoitetaan yleisint‰ olevaa ohjelmointitapaa, jossa laskentaa simuloidaan muuttamalla ohjelman tilaa (state), eli muuttujien arvoja, tietyss‰ j‰rjestyksess‰ suoritetuilla lauseilla. T‰ll‰isi‰ ohjelmointikieli‰ ovat mm. C, C++, Java ja Pascal. Imperatiivinen ohjelmointi siis kattaa proseduraalisen ja olio-ohjelmoinnin.
+T‰ss‰ kappaleessa esitell‰‰n funktionaalisen ohjelmointityylin k‰sitteit‰ ja ominaisuuksia esimerkkien kera. Kaikki esimerkit on kirjoitettu Haskell 98 -standardin mukaisesti. Funktionaalisen ohjelmoinnin piirteit‰ verrataan usein \textit{imperatiiviseen ohjelmointiin} (imperative programming). Imperatiivisella ohjelmoinnilla tarkoitetaan yleisint‰ olevaa ohjelmointitapaa, jossa laskentaa simuloidaan muuttamalla ohjelman tilaa (state), eli muuttujien arvoja, tietyss‰ j‰rjestyksess‰ suoritetuilla lauseilla. T‰ll‰isi‰ ohjelmointikieli‰ ovat mm. C, C++, Java ja Pascal. Imperatiivinen ohjelmointi siis kattaa proseduraalisen ja olio-ohjelmoinnin. 
+
+\subsection{Hahmontunnistus}
+\textit{Hahmontunnistus} (pattern matching, kuuluu olennaisesti nykyaikaisiin funktionaalisiin kieliin \cite[s. 388]{Hudak89}. Funktio voidaan m‰‰ritell‰ eri hahmoina, joita vastaan lausekketta sitten yritet‰‰n tunnistaa. Esimerkiksi kaksiparametriset loogiset konnektiivit \texttt{or} ja \texttt{and} voidaan m‰‰ritell‰ eri hahmojen avulla seuraavasti:
+\begin{verbatim}
+ or True _ = True
+ or _ True = True
+ or _ _    = False
+
+ and True True = True
+ and _ _ = False
+\end{verbatim}
+Funktion \texttt{or} m‰‰ritelm‰n ensimm‰in rivi sis‰lt‰‰ hahmon \texttt{True \_}, joka tarkoittaa tapausta jossa funktion ensimm‰inen argumentti on tosi. Toisen argumentin arvolla ei t‰llˆin ole v‰li‰ ja lauseke evaluoituu todeksi. M‰‰ritelm‰n toisen rivin hahmo \texttt{\_ True} taas vastaa tapausta jossa toinen argumentti on tosi, jolloin ensimm‰isen argumentin arvolla ei ole v‰li‰ ja lauseke evaluoituu todeksi. Funktion \texttt{or} m‰‰ritelm‰n kolmannen yht‰lˆn hahmo \texttt{\_ \_} sopii kaikkkiin mahdollisiin parametriyhdistelmiin. Koska t‰ss‰ vaiheessa on jo k‰yty l‰pi vaihtoehdot joissa ensimm‰inen, toinen tai molemmat argumentit olisivat tosia, saadaan t‰ll‰ yht‰lˆll‰ kiinni vain tapaukset joissa molemmat argumentit ovat ep‰tosia. Alaviiva (\texttt{\_}) sopii mihin tahansa hahmoon. Molemmat funktiot ovat tyyppi‰ \texttt{Bool -> Bool -> Bool}
+
+Funktio \texttt{empty}, joka tutkii onko parametrina annettu bin‰‰ripuu tyhj‰, voidaan kirjoittaa n‰in:
+\begin{verbatim}
+ empty EmptyTree = True
+ empty _         = False
+\end{verbatim}
+Funktion tyyppi on \texttt{BinaryTree -> Bool}.
+
+Hahmontunnistusta k‰ytet‰‰n usein listojen kanssa. 
+\begin{verbatim}
+ head (x:_) = x
+
+ tail (_:xs) = xs
+\end{verbatim}
+Funktio \texttt{head} palauttaa listan ensimm‰isen alkion. Hahmo \texttt{(x:xs)} vastaa listaa jonka ensimm‰inen alkio on \texttt{x}, ja lista loppuosa on \texttt{xs}. Funktio \texttt{tail} taas palauttaa listan loppuosan, siis argumenttina annetun listan ilman ensimm‰ist‰ alkiotaan. 
 
 \subsection{Puhtaat funktiot ja sivuvaikutuksettomuus}
 %% SIVUVAIKUTUKSET
@@ -254,20 +281,16 @@ Sivuvaikutukseton ohjelmointi ei siis sovi kaikkeen. Sivuvaikutuksettomuudesta k
 
 %% TODO: Toinen virke palaa ensimm‰iseen virkkeeseen....
 %% FUNKTIOT ENSIMMƒISEN LUOKAN ARVOINA
-%% -- FUNKTIO ARGUMENTTINA
 \subsection{Funktiot ensimm‰isen luokan arvoina} 
 \textit{Ensimm‰isen luokan arvo} (first class value) voidaan v‰litt‰‰ parametrina, palauttaa funktion paluuarvona tai luoda suoritusaikana \cite[s.526]{scott}. Funktionaalisessa ohjelmoinnissa funktiot ovat ensimm‰isen luokan arvoja, kun taas imperatiivisessa ohjelmoinnissa funktiot ovat yleens‰ toisen luokan arvoja, eik‰ niit‰ ei voi v‰litt‰‰ parametreina, palauttaa paluuarvoina tai luoda suoritusaikana. Jotkut imperatiiviset kielet kuten C tukevat funktio-osoittimien v‰litt‰mist‰ parametreina. Funktioita ei C:ss‰ kuitenkaan voi luoda suoritusaikana jolloin ne eiv‰t ole ensimm‰isen luokan arvoja. Oliokielist‰ SmallTalk tukee funktioita ensimm‰isen luokan arvoina. Yleisesti k‰ytˆss‰ olevissa kieliss‰ alkeistyyppiset arvot kuten kokonaisluvut, liukuluvut, merkit, merkkijonot ja oliot ovat ensimm‰isen luokan arvoja. 
 
-%% TODO: esimerkki!!
 %% TODO: taitaa olla v‰h‰n p‰in vittua!!
 Koska ensimm‰isen luokan arvoja voi luoda ohjelmalohkojen sis‰ll‰, voidaan m‰‰ritell‰ funktio, jonka m‰‰rittelyss‰ k‰ytet‰‰n sen m‰‰rittelylohkossa n‰kyvi‰ muuttujia. Funktio voidaan edelleen v‰litt‰‰ parametrina toiselle funktiolle jolloin funktion k‰ytt‰m‰t muuttujat ovat n‰kyvyysalueensa ulkopuolella, ja niit‰ ei voi vapauttaa muistinhallinnan toimesta, kun funktion m‰‰rittelylohkon k‰ytt‰m‰ muisti vapautetaan. Funktiota, jonka m‰‰rittelyss‰ n‰in k‰ytet‰‰n m‰‰rittelylohkonsa muuttujia, kutsutaan \textit{sulkeumaksi} (closure).
 %% Sulkeumilla voidaan toteuttaa tila?
 
 %% KORKEAMMAN KERTALUVUN FUNKTIOT
-%% --FUNKTIO PARAMETRINA
 \subsection{Korkeamman kertaluvun funktiot}
 \textit{Korkeamman kertaluvun funktioiksi} (higher order functions, functional forms) kutsutaan funktioita jotka ottavat parametrinaan toisen funktion, tai palauttavat paluuarvonaan funktion \cite[s. 546]{scott}. Yksi yleisimpi‰ tapoja k‰ytt‰‰ korkeamman kertaluvun funktioita on rakentaa niiden avulla uusia funktioita. Esimerkiksi Haskell-kielen \textit{map}-funktio ottaa parametrinaan funktion ja listan, ja k‰y listan rekursiivisesti l‰pi soveltaen parametrinaan saamaa funktiota jokaiselle listan alkiolle. 
-%% TODO: esimerkki map f [1,2,3,4]
 
 M‰‰ritell‰‰n funktio \texttt{twice} siten ett‰ se soveltaa parametrina saamaansa funktiota toisena parametrina saamaansa arvoon. 
 \begin{verbatim}
@@ -284,20 +307,77 @@ Imperatiivisessa ohjelmoinnissa toisto saadaan aikaan \texttt{for}-, \texttt{whi
  factorial n | n > 0 = n * factorial (n-1)
              | otherwise = -1
 \end{verbatim}
-Funktio \texttt{factorial} siis kuvaa kokonaislukujen joukon kokonaisluvuille. Funktion sovellus nollaan evaluoituu ykkˆseksi. Jos funktiolle annettu parametri on suurempi kuin nolla, kutsutaan rekursiivisesti \texttt{factorial}-funktiota jotta saadaan luvun \texttt{n-1} kertoma. Nollaa pienemmille luvuille kertomaa ei ole m‰‰ritelty.
+Funktio \texttt{factorial} siis kuvaa kokonaislukujen joukon kokonaisluvuille. Funktion sovellus nollaan evaluoituu ykkˆseksi. Jos funktiolle annettu parametri on suurempi kuin nolla, kutsutaan rekursiivisesti \texttt{factorial}-funktiota jotta saadaan luvun \texttt{n-1} kertoma. Nollaa pienemmille luvuille kertomaa ei ole m‰‰ritelty. Funktio \texttt{factorial} on m‰‰ritelty hahmontunnistuksen avulla, ensimm‰isess‰ yht‰lˆss‰ hahmo johon argumenttia sovitetaan on \texttt{0}, ja toisessa yht‰lˆss‰ \texttt{n} (johon sopii kaikki kokonaisluvut).
 
-Listat ovat funktionaalisissa kieliss‰ t‰rkeit‰ koska niill‰ on luonnollinen rekursiivinen m‰‰ritelm‰. Lista ja siihen liittyv‰t apufunktiot voidaan m‰‰ritell‰ vaikkapa n‰in:
+Listat ovat funktionaalisissa kieliss‰ t‰rkeit‰ koska niill‰ on luonnollinen rekursiivinen m‰‰ritelm‰. Lista voidaan m‰‰ritell‰ vaikkapa n‰in:
 \begin{verbatim}
  data List a = Nil
              | Cons a (List a)
 \end{verbatim}
+T‰ss‰ \texttt{Nil} on parametriton arvokonstruktori jolla luodaan tyhj‰ lista. Haskellissa vastaava parametriton arvokonstruktori on \texttt{[]}. \texttt{Cons a (List a)} on kaksiparametrinen arvokonstruktori joka luo uuden listan. Haskelin vastaava arvokonstruktori on sis‰merkint‰operaattori \texttt{:}. 
 
-Listoille on funktionaalisissa kieliss‰ usein valmiiksi m‰‰riteltyj‰ alkeisoperaatioita kuten \textit{head} joka palauttaa parametrina annetun listan ensimm‰isen alkion, tai \textit{tail}, joka palauttaa paramatrina annetun listan ilman ensimm‰ist‰ alkiotaan.
-%% TODO: esimerkki
-%%\begin{displaymath}
-%%Lista a = Pair a (Lista a)
-%%        | Nil
-%%\end{displaymath} 
+Allaolevassa esimerkiss‰ on kolme eri tapaa merkit‰ lista jolla on alkiot \texttt{1}, \texttt{2} ja \texttt{3}. Ensimm‰isen rivin esimerkki on oman m‰‰ritelm‰mme mukainen lista. Keskimm‰inen lista on Haskellin standardi tapa merkit‰ lista. Kolmas esimerkki on syntaktista sokeria keskimm‰iselle merkinn‰lle. 
+\begin{verbatim}
+ Cons 1 (Cons 2 (Cons 3 Nil))
+ 1 :  (2 : (3 : []))
+ [1,2,3]
+\end{verbatim}
+Funktio \texttt{length} joka laskee listan pituuden voidaan m‰‰ritell‰ seuraavasti:
+\begin{verbatim}
+ length [] = 0
+ length (x:xs) = 1 + (length xs)
+\end{verbatim}
+Mik‰li funktion argumenttina on tyhj‰ lista, evaluoituu lauseke arvoon \texttt{0}. Jos argumenttina olevassa listassa on v‰hint‰‰n yksi alkio, evaluoituu funktion paluuarvoksi listan loppuosan pituus lis‰ttyn‰ yhdell‰.
+
+Esimerkiksi lauseke \texttt{length [4,5,1,8,3]} evaluoituu seuraavasti:
+\begin{verbatim}
+ length [4,5,1,8,3]
+ 1 + (length [5,1,8,3])
+ 1 + (1 + (length [1,8,3]))
+ 1 + (1 + (1+ (length [8,3])))
+ 1 + (1 + (1+ (1+ (length [3]))))
+ 1 + (1 + (1+ (1+ (1 + (length [])))))
+ 1 + (1 + (1+ (1+ (1 + (0)))))
+ 1 + (1 + (1+ (1+ (1))))
+ 1 + (1 + (1+ (2)))
+ 1 + (1 + (3))
+ 1 + (4)
+ 5
+\end{verbatim}
+Laskennan tuloksena on siis \texttt{5}.
+
+Yleinen listojen kanssa k‰ytetty funktio on \texttt{map}, joka soveltaa ensimm‰isen‰ argumenttinaan saamaansa funktiota toisena argumenttina saamansa listan jokaiselle alkiolle. Funktion tyyppi on \texttt{(a -> b) -> [a] -> [b]}. Funktio \texttt{map} voidaan m‰‰ritell‰ n‰in:
+\begin{verbatim}
+ map _ []     = []
+ map f (x:xs) = f x : map f xs 
+\end{verbatim}
+Lauseke \texttt{map inc [0,1,2]} evaluoituu n‰in:
+\begin{verbatim}
+ map inc [0,1,2]
+ inc 0 : map inc [1,2]
+ inc 0 : inc 1 : map inc [2]
+ inc 0 : inc 1 : inc 2 : map inc []
+ inc 0 : inc 1 : inc 2 : []
+ inc 0 : inc 1 : 3 : []
+ inc 0 : inc 1 : [3]
+ inc 0 : 2 : [3]
+ inc 0 : [2,3]
+ 1 : [2,3]
+ [1,2,3]
+\end{verbatim}
+T‰ss‰ \texttt{:} on sis‰merkint‰operaattori, jolla luodaan uusi lista. Operaattori \texttt{:} on tyyppi‰ \texttt{a -> [a] -> [a]}.
+
+%% TODO: FOLD!!!
+
+Toinen yleinen listojen k‰sittelyyn soveltuva on \texttt{foldl}.
+
+Esimerkiksi kertoma voidaan m‰‰ritell‰ funktion \texttt{foldl} avulla n‰in:
+\begin{verbatim}
+ factorial2 0 = 1
+ factorial2 n  = foldr (*) 1 [1..n]
+ factorial2 _ = -1
+\end{verbatim}
+
 
 \subsection{Evaluointij‰rjestys}
 Funktionaalisten ohjelmien evaluoimiseen on vakiintunut kaksi tapaa. \textit{Tiukassa evaluaatiossa} (strict evaluation) lausekkeet, erityisesti funktioiden argumentit, evaluoidaan aina, oli siihen tarvetta tai ei. Tiukan mallin avulla voidaan k‰‰nnˆsaikana tunnistaa p‰‰ttym‰ttˆm‰t lausekkeet, toisin sanoen lausekkeet jotka eiv‰t evaluoidu, vaan hajaantuvat. Haittapuolena pit‰‰ ohjelmien m‰‰rittelyss‰ olla tarkkana, sill‰ v‰‰r‰ m‰‰rittelyj‰rjestys voi johtaa siihen ett‰ sin‰ns‰ validi ohjelma ei k‰‰nny. 
@@ -310,11 +390,6 @@ Yleisesti imperatiiviset kielet k‰ytt‰v‰t tiukkaa evaluaatiota. Funktionaaliseen
 %% TODO: scheme l‰hde
 
 %\textit{Laiska evaluatio} (engl. \textit{lazy evaluation, non-strict evaluation}), sivuvaikutuksettomuuden seuraus, mit‰ siit‰ seuraa, tiukka evaluaatio, laiskat tietorakenteet, haskell ja lisp, \textit{laiska funktio} 
-
-%% TODO: 
-%% TODO: esimerkki
-\subsection{Hahmontunnistus}
-\textit{Hahmontunnistus} (pattern matching, kuuluu olennaisesti nykyaikaisiin funktionaalisiin kieliin \cite[s. 388]{Hudak89}. Esimerkiksi Haskell-ohjelmoija voisi m‰‰ritell‰ listoille funktion $length$ m‰‰rittelem‰ll‰ ensin funktion $length$, joka saa argumentikseen tyhj‰n listan ja palauttaa nollan, ja seuraavaksi funktion $length$, joka saa argumentikseen listan ja palauttaa ykkˆsen ja argumenttina annetun listan loppuosaan sovelletun $length$-funktion summan. Nyt siis mik‰li $length$-funktiota sovelletaan tyhj‰lle listalle, se evaluoituu nollaksi. Mik‰li $length$-funktiolle annetaan argumenttina lista jossa on $n$ alkiota, se kutsuu itse‰‰n listan loppuosalle ja lis‰‰ rekursiivisen kutsun arvoon ykkˆsen. 
 
 \subsection{Tyypitys ja monimuotoisuus funktionaalisissa kieliss‰}
 
